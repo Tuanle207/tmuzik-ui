@@ -1,0 +1,178 @@
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+
+  width: 24rem;
+  height: 100%;
+
+  overflow: hidden;
+  background-color: #000;
+  color: #b3b3b3;
+  font-size: 1.4rem;
+
+  &__logo {
+    display: flex;
+    align-items: center;
+
+    height: 9rem;
+    box-sizing: border-box;
+
+    & > svg {
+      height: 6rem;
+      margin-right: 5rem;
+    }
+  }
+
+  & > * {
+    user-select: none;
+  }
+
+  &__menu-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 .8rem;
+    padding-left: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+
+    border-radius: 4px;
+    cursor: pointer;
+    animation: all 1s ease-out;
+
+    & > svg {
+      margin-right: 1.4rem;
+      width: 2rem;
+      height: 2rem;
+    }
+
+    & > span {
+      font-weight: 700;
+    }
+
+    &:nth-child(1) {
+      & > svg path {
+        stroke: currentColor;
+      }
+    }
+    &:nth-child(2) {
+      & > svg path {
+        stroke: currentColor;
+      }
+    }
+    &:nth-child(3) {
+      & > svg path {
+        fill: currentColor;
+      }
+    }
+    &:nth-child(4) {
+      & > svg path {
+        fill: currentColor;
+      }
+    }
+    &:nth-child(5) {
+      margin-top: 3rem;
+      & > svg path {
+        fill: currentColor;
+      }
+    }
+  }
+
+  &__menu-item--active {
+    background-color: #282828;
+
+    & > span {
+      color: #fff;
+    }
+
+    &:nth-child(1) {
+      & > svg path {
+        stroke: #fff;
+        fill: #fff;
+      }
+    }
+    &:nth-child(2) {
+      & > svg path {
+        stroke: #fff;
+      }
+    }
+    &:nth-child(3) {
+      & > svg path {
+        fill: #fff;
+      }
+    }
+    &:nth-child(4) {
+      & > svg path {
+        fill: #fff;
+      }
+    }
+    &:nth-child(5) {
+      & > svg path {
+        fill: #fff;
+      }
+    }
+  }
+
+  &__menu-item:hover {
+    & > span {
+      color: #fff;
+      fill: #fff;
+    }
+
+    &:nth-child(1) {
+      & > svg path {
+        stroke: #fff;
+      }
+    }
+    &:nth-child(2) {
+      & > svg path {
+        stroke: #fff;
+      }
+    }
+    &:nth-child(3) {
+      & > svg path {
+        fill: #fff;
+      }
+    }
+    &:nth-child(4) {
+      & > svg path {
+        fill: #fff;
+      }
+    }
+    &:nth-child(5) {
+      & > svg path {
+        fill: #fff;
+      }
+    }
+  }
+
+
+
+  &__playlist {
+    flex: 1;
+    margin: 1.5rem 2.5rem;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    & li {
+      text-indent: 0;
+      list-style-type: none;
+      cursor: pointer;
+      padding: .8rem 0;
+    }
+    & li:hover {
+      color: #fff;
+    }
+  }
+}
+
+.divider {
+  margin: 0.5rem 2.5rem;
+  margin-bottom: 0;
+  height: 1px;
+  background-color: #282828;
+}
