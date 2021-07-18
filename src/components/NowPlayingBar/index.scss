@@ -1,7 +1,171 @@
+@import '../../assets/scss/variable';
+@import '../../assets/scss/animation';
 
 .now-playing-bar {
+  display: flex;
+  flex-direction: row;
+
   height: 9rem;
 
   border-top: 1px solid #282828;
   background-color: #181818;
+
+  &__left {
+    flex: 2;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    & > img {
+      margin: 0 1.6rem;
+      height: 6rem;
+      width: 6rem;
+      border-radius: 2px;
+      user-select: none;
+    }
+
+    & > div {
+      margin-right: 2rem;
+      line-height: 1.2;
+
+      & > p {
+        color: #fff;
+        font-size: 1.4rem;
+        font-weight: 500;
+      }
+
+      & > span {
+        font-size: 1.2rem;
+        margin-top: 20px;
+      }
+    }
+
+    & > div {
+      margin-right: 1rem;
+
+      & > svg {
+        height: 1.8rem;
+  
+        & path {
+          fill: $color-lg;
+        }
+      }
+    }
+
+    & > div:hover {
+      
+      & > svg {
+
+        & path {
+          fill: #fff;
+        }
+      }
+     
+    }
+  }
+
+  &__main {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 4rem;
+
+    &__actions {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+
+      & > div {
+        padding: .5rem .5rem;
+        cursor: pointer;
+
+        & > svg {
+          height: 2rem;
+          width: 2rem;
+          & path {
+            fill: $color-lg;
+          }
+        }
+      } 
+  
+      & > div:hover {
+
+        & > svg {
+          & path {
+            fill: #fff;
+          }
+        }
+      } 
+  
+      & > div:nth-child(3) {
+        
+        & > svg {
+          height: 3.2rem;
+          width: 3.2rem;
+          & path {
+            fill: #fff;
+          }
+        }
+      }
+    }
+
+    &__progress {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+
+      & > span {
+        font-size: 1.2rem;
+        user-select: none;
+      }
+
+      & > .playback-bar {
+        flex: 1;
+        margin: 0 1.6rem;
+      }
+    }
+  }
+
+  &__right {
+    flex: 2;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    & > div {
+      margin: 0 .5rem;
+
+      & > svg {
+        height: 1.8rem;
+        width: 1.8rem;
+        & > path {
+          fill: $color-lg;
+        }
+      }
+    } 
+      
+    & > div:hover {
+      & > svg {
+        & path {
+          fill: #fff;
+        }
+      }
+    }
+
+    & > div:first-child {
+      margin-left: 5rem;
+    }
+
+    & > .volume-bar {
+      position: relative;
+      flex: 1;
+      margin-left: 1rem;
+      margin-right: 4rem;
+    }
+  }
 }
