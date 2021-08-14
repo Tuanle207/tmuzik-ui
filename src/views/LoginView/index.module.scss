@@ -1,0 +1,9 @@
+@import "../../assets/scss/_mixin.scss";
+
+.container {
+  @include center-content;
+  min-height: 100vh;
+  width: 100vw;
+  background-image: url('../../assets/img/green-forest.jpg'); 
+  background-position: center;
+}

@@ -5,7 +5,8 @@ import Axios, {
   AxiosError
 } from 'axios';
 import { Util } from '../../utils/interfaces';
-import { HttpException, parseQueryString } from './utils';
+import HttpException from './HttpException';
+import { parseQueryString } from './utils';
 
 export interface IHttpRequestOptions extends AxiosRequestConfig {
   headers?: { [key: string]: any }

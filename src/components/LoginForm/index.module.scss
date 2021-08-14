@@ -1,0 +1,87 @@
+@import '../../assets/scss/_variable.scss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 40rem;
+  border-radius: 8px;
+  padding: 2.5rem 2rem;
+  background-color: rgba($color-gray-xdark, .9);
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & > h2 {
+    color: $color-blue-dark;
+    font-size: $font-size-large;
+    margin-bottom: 1rem;
+  }
+
+  & > p {
+    font-size: $font-size-small;
+    color: $color-gray-xlight;
+    font-weight: $font-weight-medium;
+    text-align: center;
+  }
+}
+
+.fields {
+  margin: 1.6rem 0;
+
+  & > div:not(:last-child)  {
+    margin-bottom: 1rem;
+  }
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 2rem;
+
+  & > button {
+    flex: 1;
+    // height: 2.8rem;
+  }
+}
+
+.alternatives {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & > span {
+    margin-bottom: 1rem;
+    font-size: $font-size-tiny;
+    text-align: center;
+    font-weight: $font-weight-regular;
+    letter-spacing: 2px;
+    font-style: italic;
+  }
+}
+
+.socialButton {
+  margin: 0 1.5rem;
+  // width: 20rem;
+  // height: 2.8rem;
+  &:not(:last-child) {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.fbButton {
+  background-color: #507cc0;
+  
+  &:hover {
+    background-color: #91b6ee;
+  }
+}
+
+.ggButton {
+  background-color: #df4930;
+  &:hover {
+    background-color: #df6049;
+  }
+}

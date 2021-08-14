@@ -8,4 +8,8 @@ export namespace Util {
     payload?: T;
   }
 
+  export interface IInputError {
+    when: boolean;
+    message: string;
+  }
 }

@@ -1,8 +1,8 @@
 import { createAction } from '@reduxjs/toolkit';
 
-export const UiAction = {
+export const uiAction = {
   loadingUi: createAction( 
-    'app/loadingApp/loadingApp', 
+    'app/ui/loadingApp', 
     (payload: {
       type: string;
       loading: boolean;

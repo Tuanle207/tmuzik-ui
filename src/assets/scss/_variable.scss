@@ -1,8 +1,39 @@
 // font-size
-$fsRegular: 1.6rem;
-$fsSm: 1.4rem;
-$fsLg: 2.4rem;
-$fsXl: 3.6rem;
+$font-size-tiny: 1.0rem;
+$font-size-xsmall: 1.2rem;
+$font-size-small: 1.4rem;
+$font-size-regular: 1.6rem;
+$font-size-large: 2.4rem;
+$font-size-xlarge: 3.6rem;
+$font-size-huge: 7.2rem;
 
-// text color
-$color-lg: #b3b3b3;
+
+// font-weight
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+
+// utility colors
+$color-success: #44bf46;
+$color-error: #ff0033;
+$color-warning: #FFEF4A;
+$color-gray-xlight:  #999999;
+$color-gray-light:  #777777;
+$color-gray-medium: #555555;
+$color-gray-dark: #333333;
+$color-gray-xdark: #111111;
+// $color-gray-thin: #181818; 
+// $color-gray-light:  #282828;
+// $color-gray-medium: #181818;
+// $color-gray-dark: #181818; 
+
+$color-border: #282828;
+
+// patllete colors
+$color-black: #000;
+$color-dark: #132C33;
+$color-blue-dark: #44bf46;
+$color-blue-light: #7ECA9C ;
+$color-light: #D8E3E7;
+$color-white: #fff;

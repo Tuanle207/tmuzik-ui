@@ -1,0 +1,60 @@
+@import "../../../assets/scss/_variable.scss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputWrapper {
+  display: flex;
+  flex-direction: column-reverse;
+  background-color: rgba($color-black, .5);
+  padding: 1rem ;
+  border-radius: 4px;
+}
+
+.label {
+  text-transform: uppercase;
+  font-size: $font-size-small;
+  font-weight: $font-weight-medium;
+  color: $color-gray-xlight;
+  padding: .5rem 0;
+  
+  & > span {
+    color: #f74686;
+  }
+}
+
+.input {
+  padding: .4em;
+  background-color: transparent;
+  border: none;
+  color: $color-light;
+  font-size: $font-size-regular;
+
+  &:focus {
+    outline: none;
+    &::placeholder {
+      color: $color-gray-xlight;
+    }
+  }
+
+  &::placeholder {
+    color: $color-gray-light;
+    text-transform: lowercase;
+  }
+
+  &:focus + .label {
+    color: $color-white;
+  }
+}
+
+.error {
+  font-size: $font-size-tiny;
+  color: $color-error
+}
+
+.noError {
+  font-size: $font-size-tiny;
+  opacity: 0;
+}

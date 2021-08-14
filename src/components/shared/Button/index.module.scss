@@ -1,0 +1,82 @@
+
+@import '../../../assets/scss/variable';
+
+.button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: .4rem 1rem;
+
+  min-width: 8rem;
+  height: 2rem;
+  border-radius: 4px;
+  text-transform: none;
+  border: none;
+  cursor: pointer;
+  background-color: $color-blue-dark;
+  color: $color-white;
+  font-weight: 700;
+  font-size: $font-size-xsmall;
+  text-transform: uppercase;
+
+  & > span {
+    flex: 1;
+    text-align: start;
+  }
+
+  & > svg {
+    height: 1.8rem;
+    width: 1.8rem;
+    stroke: currentColor;
+    fill: currentColor;
+  }
+
+  & > span + svg, 
+  & > svg + span {
+    margin-left: .8rem;
+  }
+
+  &:active, &:focus {
+    border-style: none;
+    outline: none;
+  }
+
+  &:hover {
+    background-color: $color-blue-light;
+  }
+}
+
+.buttonMedium {
+  width: 20rem;
+  height: 2.8rem;
+}
+
+.buttonText {
+  background-color: transparent;
+  color: $color-blue-dark;
+
+
+  &:hover {
+    background-color: transparent;
+    color: $color-blue-light;
+  }
+}
+
+.buttonOutlined {
+  background-color: transparent;
+  color: $color-blue-dark;
+  border: 1px solid $color-blue-dark;
+  
+  &:hover {
+    background-color: transparent;
+    color: $color-blue-light;
+    border: 1px solid $color-blue-light;
+  }
+}
+
+.alignMiddle{
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center !important;
+}

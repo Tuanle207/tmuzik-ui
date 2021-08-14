@@ -1,12 +1,15 @@
 import { combineReducers } from 'redux';
-import { IUiState, UiReducer } from './UiReducer';
+import { authReducer, IAuthState } from './authReducer';
+import { IUiState, uiReducer } from './uiReducer';
 
 export interface IState {
   ui: IUiState;
+  auth: IAuthState;
 }
 
 const reducers = combineReducers<IState>({
-  ui: UiReducer
-})
+  ui: uiReducer,
+  auth: authReducer,
+});
 
 export default reducers;

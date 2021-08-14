@@ -1,0 +1,152 @@
+@import '../../assets/scss/variable';
+@import '../../assets/scss/animation';
+
+.container {
+  display: flex;
+  flex-direction: row;
+  height: 9rem;
+  border-top: 1px solid $color-border;
+  background-color: $color-gray-xdark;
+}
+
+
+.left {
+  flex: 2;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  & > img {
+    margin: 0 1.6rem;
+    height: 6rem;
+    width: 6rem;
+    border-radius: 2px;
+    user-select: none;
+  }
+
+  & > div {
+    margin-right: 2rem;
+    line-height: 1.2;
+
+    & > p {
+      color: $color-white;
+      font-size: 1.4rem;
+      font-weight: 500;
+    }
+
+    & > span {
+      font-size: 1.2rem;
+      margin-top: 20px;
+    }
+  }
+
+  & > div {
+    margin-right: 1rem;
+    color: $color-light;
+
+    & > svg {
+      height: 1.8rem;
+      fill: currentColor;
+    }
+  }
+
+  & > div:hover {
+    color: $color-white;
+  }
+}
+
+.main {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 4rem;
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  & > div {
+    padding: .5rem .5rem;
+    cursor: pointer;
+    color: $color-light;
+
+    & > svg {
+      height: 2rem;
+      width: 2rem;
+      fill: currentColor;
+    }
+  } 
+
+  & > div:hover {
+    color: $color-white;
+  } 
+
+  & > div:nth-child(3) {
+    
+    & > svg {
+      height: 3.2rem;
+      width: 3.2rem;
+      fill: $color-white;
+    }
+  }
+}
+
+.progress {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  & > span {
+    font-size: 1.2rem;
+    user-select: none;
+  }
+
+  & > div {
+    flex: 1;
+    margin: 0 1.6rem;
+  }
+}
+
+
+
+.right {
+  flex: 2;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  & > div {
+    margin: 0 .5rem;
+    color: $color-light;
+
+    & > svg {
+      height: 1.8rem;
+      width: 1.8rem;
+      fill: currentColor;
+    }
+  } 
+    
+  & > div:hover {
+    color: $color-white;
+  }
+
+  & > div:first-child {
+    margin-left: 5rem;
+  }
+
+  
+}
+
+.volumeBar {
+  position: relative;
+  flex: 1;
+  margin-left: 1rem;
+  margin-right: 4rem;
+}

@@ -1,0 +1,93 @@
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 24rem;
+  height: 100%;
+  overflow: hidden;
+  background-color: #000;
+  color: #b3b3b3;
+  font-size: 1.4rem;
+
+  
+  & > * {
+    user-select: none;
+  }
+
+  
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+
+  height: 9rem;
+  box-sizing: border-box;
+
+  & > svg {
+    height: 6rem;
+    margin-right: 5rem;
+  }
+}
+
+.menuItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0 .8rem;
+  padding-left: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  animation: all 1s ease-out;
+
+  & > svg {
+    margin-right: 1.4rem;
+    width: 2rem;
+    height: 2rem;
+    stroke: currentColor;
+    fill: currentColor;
+  }
+
+  &:hover {
+    color: #fff;
+  }
+
+  &:last-child {
+    margin-top: 3rem;
+  }
+
+}
+
+.menuItemActive {
+  background-color: #282828;
+  color: #fff;
+}
+
+.playlist {
+  flex: 1;
+  margin: 1.5rem 2.5rem;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  & li {
+    text-indent: 0;
+    list-style-type: none;
+    cursor: pointer;
+    padding: .8rem 0;
+  }
+  & li:hover {
+    color: #fff;
+  }
+}
+
+.divider {
+  margin: 0.5rem 2.5rem;
+  margin-bottom: 0;
+  height: 1px;
+  background-color: #282828;
+}

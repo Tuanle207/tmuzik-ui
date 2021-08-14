@@ -1,3 +1,3 @@
-export * from './Sidebar';
 export * from './NowPlayingBar';
-export * from './View';
+export * from './MainView';
+export * from './Sidebar'

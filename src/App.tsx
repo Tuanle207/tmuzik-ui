@@ -1,5 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { fbHandler } from './configs/fb';
+// import { connection, listen } from './configs/websocket';
 import { AppRouter } from './routings';
 import { store } from './store';
 
@@ -12,6 +14,7 @@ function App() {
     // return () => {
     //   window.removeEventListener('contextmenu', preventRightClick);
     // }
+    fbHandler.initialize();
   }, []);
 
   return (

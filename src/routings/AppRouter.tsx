@@ -1,14 +1,18 @@
 import React from 'react';
-import { Route, Router, Switch } from 'react-router';
-import { HomeView } from '../views';
-import { history } from './history';
+import { Redirect, Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { paths, routesDictionary } from './routesDictionary';
 
 export const AppRouter = () => {
 
   return (
-    <Router history={history}>
+    <Router>
       <Switch>
-        <Route path='/' exact component={HomeView} />
+        {
+          routesDictionary.map((route) => (
+            <Route key={route.path} path={route.path} exact component={route.view} />
+          ))
+        }
+        <Redirect to={paths.Home} />
       </Switch>
     </Router>
   )

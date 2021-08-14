@@ -1,3 +1,5 @@
+@import './variable';
+
 *, *::after, *::before {
   margin: 0;
   padding: 0;
@@ -10,8 +12,12 @@ html {
 
 body {
   font-family: 'Roboto', sans-serif;
-  font-size: 1.6rem;
+  font-size: $font-size-regular;
   line-height: 1.4;
-  font-weight: 400;
-  color: #b3b3b3;
+  font-weight: $font-weight-regular;
+  color: $color-light;
+}
+
+svg {
+  line-height: 100%;
 }

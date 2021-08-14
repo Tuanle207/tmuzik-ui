@@ -1,51 +1,79 @@
-import React from 'react';
-import { ICON } from '../../assets';
-import { SliderInput } from '../common';
-import './index.scss';
+import { FC, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Icon } from '../../assets';
+import logger from '../../configs/logger';
+import { signalrAction } from '../../store/actions';
+import { uiSelector } from '../../store/selectors';
+import { SliderInput } from '../shared';
+import styles from './index.module.scss';
 
-export const NowPlayingBar = () => {
+interface INowPlayingBarProps {
 
-  const [timePt, setTimePt] = React.useState(0);
-  const [volumnPt, setVolumPt] = React.useState(40);
+}
 
+export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
+
+  const dispatch = useDispatch();
+  const startingApp = useSelector(uiSelector.startingApp);
+  const [timePt, setTimePt] = useState(30);
+  const [volumnPt, setVolumPt] = useState(40);
+  const [playing, setPlaying] = useState(false);
+
+  const handleSendMessage = () => {
+
+    const message = 'test message';
+    
+    dispatch(signalrAction.sendMessage({
+      message
+    }));
+  };
+
+  useEffect(() => {
+    logger.info({startingApp})
+  }, [startingApp]);
+
+  const handlePlay = () => {
+    setPlaying((pre) => !pre);
+  }
 
   return (
-    <div className="now-playing-bar">
-      <div className="now-playing-bar__left">
+    <div className={styles.container}>
+      <div className={styles.left}>
         <img src="https://www.melodynest.com/wp-content/uploads/2019/06/SPACE_album-mock.jpg" alt="song" />
         <div>
           <p>Qua O Cua Thoi Gian</p>
           <span>Cá hồi hoàng</span>
         </div>
         <div>
-          <ICON.LOVE />
+          <Icon.Love />
         </div>
         <div>
-          <ICON.MINI_PLAYER />
+          <Icon.MiniPlayer />
         </div>
       </div>
-      <div className="now-playing-bar__main">
-        <div className="now-playing-bar__main__actions">
+      <div className={styles.main}>
+        <div className={styles.actions}>
           <div>
-            <ICON.SHUFFLE />
+            <Icon.Shuffle />
           </div>
           <div>
-            <ICON.PREVIOUS />
+            <Icon.Previous />
           </div>
-          {/*   <ICON.PAUSE /> */}
-          <div>
-            <ICON.PLAY />
-          </div>
-          <div>
-            <ICON.NEXT />
+          <div onClick={handlePlay}>
+            {
+              playing ? <Icon.Pause /> : <Icon.Play />
+            }
           </div>
           <div>
-            <ICON.LOOP />
+            <Icon.Next />
+          </div>
+          <div>
+            <Icon.Loop />
           </div>
         </div>
-        <div className="now-playing-bar__main__progress">
+        <div className={styles.progress}>
           <span>1:23</span>
-          <div className="playback-bar">
+          <div>
             <SliderInput
               value={timePt}
               onValueChange={setTimePt}
@@ -55,17 +83,17 @@ export const NowPlayingBar = () => {
         </div>
 
       </div>
-      <div className="now-playing-bar__right">
+      <div className={styles.right}>
         <div>
-          <ICON.LYRICS />
+          <Icon.Lyrics />
         </div>
         <div>
-          <ICON.PLAYING_QUEUE />
+          <Icon.PlayingQueue />
         </div>
         <div>
-          <ICON.VOLUME_3 />
+          <Icon.VolumeLarge />
         </div>
-        <div className="volume-bar"
+        <div className={styles.volumeBar}
         >
           <SliderInput
             value={volumnPt}
