@@ -1,46 +1,114 @@
-# Getting Started with Create React App
+# Tmuzik
+## Pipeline status
+[![CircleCI](https://circleci.com/gh/circleci/circleci-docs.svg?style=shield)](https://app.circleci.com/pipelines/github/Tuanle207/tmuzik-api?branch=master)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The application is hosted at http://tuanle207.tech:3001
 
-## Available Scripts
+Tmuzik is a audio streaming application that gives you the abilities to share and manage you audio content. Of course, you can access to others' audio content as well.
 
-In the project directory, you can run:
+## Features
 
-### `yarn start`
+- Share and manage audio contents
+- Live stream/stream audio
+- User interaction
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Tech
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Tmuzik uses a number of open source projects, development tools and technologies to work properly:
 
-### `yarn test`
+- [.NET] - a developer platform with tools and libraries for building web applications
+- [React.js] - an awesome JavaScript library for building user interfaces
+- [Redux] - a Predictable State Container for JS Applications
+- [Entityframework Core] - a lightweight, extensible, open source and cross-platform version of the popular Entity Framework data access technology
+- [PostgreSQL] - the World's Most Advanced Open Source Relational Database
+- [Microsoft SignalR] - incredibly simple real-time web for ASP.NET, an implementaion of Websocket protocol
+- [CircleCI] - powerful continuous integration and delivery for any platform
+- [Nginx] - high performance web server application running on Ubuntu VPS
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Installation
 
-### `yarn build`
+Tmuzik Api requires [.NET] 5  to run
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Edit **connection string** in **app setting files** with your own one in **Tmuzik.Api diectory** and update database command:
+```sh
+git clone https://github.com/Tuanle207/tmuzik-api
+cd tmuzik-api/src/Tmuzik.Api
+dotnet restore
+dotnet ef database update -c AppDbContext -p ../Tmuzik.Data/Tmuzik.Data.csproj
+```
+Then start the server:
+```sh
+dotnet run
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Finally, verify the application start properly by navigating to your server address in
+your preferred browser.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```sh
+127.0.0.1:5000
+```
 
-### `yarn eject`
+## Development
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Want to contribute? Great!
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Just open your favorite Terminal and run these commands:
+```sh
+git clone https://github.com/Tuanle207/tmuzik-api
+cd tmuzik-api/src/Tmuzik.Api
+dotnet run
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+To run add-migration command (**from Tmuzik.Api working directory**):
+```sh
+dotnet ef migrations add <MIGRATION_NAME> -c AppDbContext -p ../Tmuzik.Data/Tmuzik.Data.csproj -o ../Tmuzik.Data/Migrations
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+To run remove-migration command:
+```sh
+dotnet ef migrations remove -c AppDbContext -p ../Tmuzik.Data/Tmuzik.Data.csproj -o ../Tmuzik.Data/Migrations
+```
 
-## Learn More
+To run update-database command:
+```sh
+dotnet ef database update -c AppDbContext -p ../Tmuzik.Data/Tmuzik.Data.csproj
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+To run drop-database command:
+```sh
+dotnet ef database drop -c AppDbContext -p ../Tmuzik.Data/Tmuzik.Data.csproj
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### Building for source
+
+For production release:
+
+```sh
+git clone https://github.com/Tuanle207/tmuzik-api
+cd tmuzik-api
+dotnet publish -c Release -o dist
+```
+
+To generate SQL scripts for release:
+```sh
+git clone https://github.com/Tuanle207/tmuzik-api
+cd tmuzik-api/src/Tmuzik.Api
+dotnet ef migrations script -i -c AppDbContext -p ../Tmuzik.Data/Tmuzik.Data.csproj -o ../../dist/migrations_script.sql
+```
+## Author
+
+**Tuanle207**
+
+Got any question? Please feel free to get contact via tuanle2x7@gmail.com
+
+**Thanks for your concern!**
+
+
+   [.NET]: <https://dotnet.microsoft.com/>
+   [React.js]: <https://reactjs.org/>
+   [Redux]: <https://redux.js.org/>
+   [Entityframework Core]: <https://docs.microsoft.com/en-us/ef/core/>
+   [PostgreSQL]: <https://www.postgresql.org/>
+   [Microsoft SignalR]: <https://dotnet.microsoft.com/apps/aspnet/signalr>
+   [CircleCi]: <https://circleci.com/>
+   [Nginx]: <https://www.nginx.com/>
