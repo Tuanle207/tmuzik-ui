@@ -1,11 +1,33 @@
-import React from 'react';
-import { Provider } from 'react-redux';
-import { fbHandler } from './configs/fb';
-// import { connection, listen } from './configs/websocket';
+import React, { FC, useEffect } from 'react';
+import { Provider, useDispatch, useSelector } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 import { AppRouter } from './routings';
-import { store } from './store';
+import { persistor, store } from './store';
+import { authAction } from './store/actions';
+import { uiSelector } from './store/selectors';
 
-function App() {
+const Container: FC = () => {
+
+  const dispatch = useDispatch();
+  const startingApp = useSelector(uiSelector.startingApp);
+
+  useEffect(() => {
+    dispatch(authAction.checkLogin());
+  }, [ dispatch ]);
+
+  return (
+    <>
+      {
+        startingApp ? 
+        <div style={{ color: 'red' }}>loading...</div> :
+        <AppRouter />
+      }
+    </>
+  );
+};
+
+const App: FC = () => {
+
 
   React.useEffect(() => {
     // const preventRightClick = (e: any) => e.preventDefault();
@@ -14,12 +36,15 @@ function App() {
     // return () => {
     //   window.removeEventListener('contextmenu', preventRightClick);
     // }
-    fbHandler.initialize();
+    // fbHandler.initialize();
   }, []);
 
   return (
     <Provider store={store}>
-      <AppRouter />
+      <PersistGate loading={null} persistor={persistor}>
+        <Container />
+      </PersistGate> 
+      {/* <Container /> */}
     </Provider>
   );
 }

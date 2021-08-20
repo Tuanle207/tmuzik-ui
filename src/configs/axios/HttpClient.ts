@@ -1,33 +1,22 @@
 import Axios, {
   AxiosInstance,
-  AxiosResponse,
   AxiosRequestConfig,
   AxiosError
 } from 'axios';
-import { Util } from '../../utils/interfaces';
+import { IObject } from '../../utils/interfaces';
 import HttpException from './HttpException';
 import { parseQueryString } from './utils';
 
-export interface IHttpRequestOptions extends AxiosRequestConfig {
-  headers?: { [key: string]: any }
-}
-
-export interface IHttpResponse<T> extends AxiosResponse { 
-  reponseType: T
-}
-
 export class HttpClient {
-  private baseUrl: string;
   private instance: AxiosInstance;
 
-  constructor({ baseUrl }: {
+  constructor({ baseUrl, options = {} }: {
     baseUrl: string;
-    options?: IHttpRequestOptions;
-    interceptors?: any
+    options?: AxiosRequestConfig;
   }) {
-    this.baseUrl = baseUrl;
     this.instance = Axios.create({
-      baseURL: this.baseUrl
+      baseURL: baseUrl,
+      ...options
     })
   }
 
@@ -54,7 +43,7 @@ export class HttpClient {
     return this;
   }
 
-  async get<T>(endpoint: string, params: Util.IObject = {}): Promise<T> {
+  async get<T>(endpoint: string, params: IObject = {}): Promise<T> {
     try {
       const queryString = parseQueryString(params);
       const reqEndpoint = `${endpoint}${queryString}`;
@@ -65,7 +54,7 @@ export class HttpClient {
     }
   }
 
-  async post<T>(endpoint: string, body: Util.IObject | string = {}): Promise<T> {
+  async post<T>(endpoint: string, body: IObject = {}): Promise<T> {
     try {
       const result = await this.instance.post(endpoint, body);
       return result?.data;
@@ -74,7 +63,7 @@ export class HttpClient {
     }
   }
 
-  async postFormData<T>(endpoint: string, body: Util.IObject = {}): Promise<T> {
+  async postFormData<T>(endpoint: string, body: IObject = {}): Promise<T> {
     try {
       const headers = {
         'Content-Type': 'multipart/form-data',
@@ -88,7 +77,7 @@ export class HttpClient {
     }
   }
 
-  async put<T>(endpoint: string, body: Util.IObject = {}): Promise<T> {
+  async put<T>(endpoint: string, body: IObject = {}): Promise<T> {
     try {
       const result = await this.instance.put(endpoint, body);
       return result?.data;
@@ -97,7 +86,7 @@ export class HttpClient {
     }
   }
 
-  async patch<T>(endpoint: string, body: Util.IObject = {}): Promise<T> {
+  async patch<T>(endpoint: string, body: IObject = {}): Promise<T> {
     try {
       const result = await this.instance.patch(endpoint, body);
       return result?.data;
@@ -106,7 +95,7 @@ export class HttpClient {
     }
   }
 
-  async delete(endpoint: string, body: Util.IObject = {}): Promise<void> {
+  async delete(endpoint: string, body: IObject = {}): Promise<void> {
     try {
       await this.instance.delete(endpoint, {
         data: body

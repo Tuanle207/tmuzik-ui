@@ -1,5 +1,6 @@
 
-@import '../../../assets/scss/variable';
+@import "../../assets/scss/_variable.scss";
+@import "../../assets/scss/_mixin.scss";
 
 .button {
   display: flex;
@@ -8,12 +9,10 @@
   justify-content: space-between;
   padding: .4rem 1rem;
 
+  @include reset-button;
   min-width: 8rem;
   height: 2rem;
   border-radius: 4px;
-  text-transform: none;
-  border: none;
-  cursor: pointer;
   background-color: $color-blue-dark;
   color: $color-white;
   font-weight: 700;

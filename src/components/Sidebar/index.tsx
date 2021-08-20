@@ -1,7 +1,5 @@
-import { useEffect } from 'react';
 import { useHistory } from 'react-router';
 import { Icon } from '../../assets';
-import logger from '../../configs/logger';
 import { paths } from '../../routings';
 import styles from './index.module.scss';
 
@@ -11,15 +9,8 @@ export const Sidebar = () => {
   const history = useHistory();
 
   const navigate = (path: string) => {
-    logger.info('navigating', 'gege');
     history.push(path);
   }
-
-  useEffect(() => {
-    logger.info('rendering');
-    logger.info('navigating', 'gege');
-
-  }, []);
 
   return (
     <div className={styles.container}>

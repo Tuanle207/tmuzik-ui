@@ -3,9 +3,7 @@ import { RootState } from '..';
 
 export const uiSelector = {
   startingApp: createSelector(
-    (state: RootState) => 
-      state.ui.startingApp, 
-    (startingApp) => 
-      startingApp
+    (state: RootState) => state.ui.startingApp, 
+    (startingApp) => startingApp
   )
 };

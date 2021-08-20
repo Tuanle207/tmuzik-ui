@@ -2,11 +2,10 @@ import { FC } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { ApiRequest } from '../../api/interfaces';
-import { Icon } from '../../assets';
-import { paths } from '../../routings';
-import { authAction } from '../../store/actions';
-import { Button, TextField } from '../shared';
+import { Icon } from '../../../assets';
+import { paths } from '../../../routings';
+import { authAction } from '../../../store/actions';
+import { Button, TextField } from '../../../components';
 import styles from './index.module.scss';
 
 interface ILoginFormProps { }
@@ -61,6 +60,7 @@ export const LoginForm: FC<ILoginFormProps> = () => {
               value={value}
               onValueChange={onChange}
               onBlur={onBlur}
+              autoComplete="none"
               label="Email Address"
               placeholder="you@company.com"
               validate={[
@@ -86,6 +86,7 @@ export const LoginForm: FC<ILoginFormProps> = () => {
               value={value}
               onValueChange={onChange}
               onBlur={onBlur}
+              autoComplete="none"
               label="Password"
               placeholder="5+ characters"
               validate={[

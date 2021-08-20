@@ -1,21 +1,21 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { Util } from '../../utils/interfaces';
+import { IObject } from '../../utils/interfaces';
 import { uiAction } from '../actions';
 
 
-export interface IUiState {
+export interface IUIState extends IObject<boolean> {
   startingApp: boolean;
 }
 
-const initial: IUiState = {
+const initial: IUIState = {
   startingApp: false,
 };
 
 export const uiReducer = createReducer(initial, build => {
   build
-    .addCase(
-      uiAction.loadingUi, 
-      (state: Util.IObject, action: Util.IAction) => {
+    .addCase(uiAction.loadingUi, 
+      (state , action) => {
         state[action.payload.type] = action.payload.loading;
+        return state;
     });
 });

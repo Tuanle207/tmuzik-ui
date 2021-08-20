@@ -1,10 +1,6 @@
-import { FC, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { FC, useState } from 'react';
 import { Icon } from '../../assets';
-import logger from '../../configs/logger';
-import { signalrAction } from '../../store/actions';
-import { uiSelector } from '../../store/selectors';
-import { SliderInput } from '../shared';
+import { SliderInput } from '../SliderInput';
 import styles from './index.module.scss';
 
 interface INowPlayingBarProps {
@@ -13,24 +9,9 @@ interface INowPlayingBarProps {
 
 export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
 
-  const dispatch = useDispatch();
-  const startingApp = useSelector(uiSelector.startingApp);
   const [timePt, setTimePt] = useState(30);
   const [volumnPt, setVolumPt] = useState(40);
   const [playing, setPlaying] = useState(false);
-
-  const handleSendMessage = () => {
-
-    const message = 'test message';
-    
-    dispatch(signalrAction.sendMessage({
-      message
-    }));
-  };
-
-  useEffect(() => {
-    logger.info({startingApp})
-  }, [startingApp]);
 
   const handlePlay = () => {
     setPlaying((pre) => !pre);

@@ -1,12 +1,19 @@
 import { HttpClient } from './HttpClient';
 import ENV from '../env';
-import { configHttpRequest, configHttpResponse } from './interceptors';
+import { interceptHttpRequest, interceptHttpResponse } from './interceptors';
 
 const httpClient = new HttpClient({
-  baseUrl: ENV.apiUrl
+  baseUrl: ENV.apiUrl,
+  options: {
+    timeout: 10000,
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  }
 });
 
-httpClient.use(configHttpRequest);
-httpClient.use(configHttpResponse);
+httpClient
+  .use(interceptHttpRequest)
+  .use(interceptHttpResponse);
 
 export default httpClient;

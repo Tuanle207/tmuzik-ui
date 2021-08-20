@@ -1,6 +1,6 @@
 import { AnyAction, configureStore, EmptyObject, EnhancedStore } from '@reduxjs/toolkit';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import storage  from 'redux-persist/lib/storage';
+import storage  from 'redux-persist/es/storage';
 import reducers, { IState } from './reducers';
 import persistReducer, { PersistPartial } from 'redux-persist/es/persistReducer';
 import persistStore from 'redux-persist/es/persistStore';

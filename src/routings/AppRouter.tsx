@@ -1,18 +1,44 @@
-import React from 'react';
-import { Redirect, Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Redirect, BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { authSelectors } from '../store/selectors';
+import { LoginView } from '../views';
+import { ProtectedRoute } from './ProtectedRoute';
 import { paths, routesDictionary } from './routesDictionary';
 
 export const AppRouter = () => {
+
+  const isAuthenticated = useSelector(authSelectors.isAuthenticated);
 
   return (
     <Router>
       <Switch>
         {
-          routesDictionary.map((route) => (
-            <Route key={route.path} path={route.path} exact component={route.view} />
-          ))
+          !isAuthenticated ? (
+            <>
+              <Route
+                path={paths.Login} 
+                exact 
+                component={LoginView}
+              />
+              <Redirect to={paths.Login} />
+            </>
+          ) :
+          <>
+            {
+              routesDictionary.map((route) => route.path === paths.Login ? 
+                null : (
+                <ProtectedRoute 
+                  key={route.path} 
+                  path={route.path} 
+                  exact 
+                  component={route.view}
+                  isAuthenticated={isAuthenticated} 
+                />
+              ))
+            }
+            <Redirect to={paths.Home} />
+          </>
         }
-        <Redirect to={paths.Home} />
       </Switch>
     </Router>
   )

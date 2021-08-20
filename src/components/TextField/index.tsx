@@ -1,5 +1,5 @@
-import { DetailedHTMLProps, FC, InputHTMLAttributes, useMemo, useState } from 'react';
-import { Util } from '../../../utils/interfaces';
+import { DetailedHTMLProps, FC, InputHTMLAttributes } from 'react';
+import { IInputError } from '../../utils/interfaces';
 import styles from './index.module.scss';
 
 
@@ -12,7 +12,7 @@ interface ITextFieldProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLInpu
   label?: string;
   multipleLine?: boolean;
   lineCount?: number;
-  validate?: Util.IInputError[]; 
+  validate?: IInputError[]; 
 }
 
 export const TextField: FC<ITextFieldProps> = ({
@@ -39,7 +39,6 @@ export const TextField: FC<ITextFieldProps> = ({
           value={value} 
           onChange={(e) => onValueChange(e.target.value)}
           placeholder={placeholder}
-          autoComplete="off"
           type={type}
           {...args}
         />

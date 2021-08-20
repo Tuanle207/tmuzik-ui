@@ -1,0 +1,133 @@
+@import "../../assets/scss/_variable.scss";
+
+.container {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  height: 6rem;
+  width: 100%;
+  background-color: rgba($color-gray-dark, .75);
+}
+
+.navigation {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 7rem;
+  height: 100%;
+  padding: 0 2rem;
+
+  & > button:first-child() {
+    margin-right: 2rem;
+  }
+}
+
+.customChildren {
+  flex: 1;
+}
+
+.menuView {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  min-width: 16rem;
+  border-radius: 100px;
+  padding: 1px;
+  background-color: rgba($color-gray-xdark, .95);
+  color: $color-white;
+  
+  cursor: pointer;
+
+  & > * {
+    user-select: none;
+  }
+
+  & > img {
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 50%;
+    margin-right: .8rem;
+  }
+
+  & > p {
+    font-size: $font-size-small;
+    font-weight: $font-weight-bold;
+    margin-right: auto;
+  }
+
+  & > svg {
+    fill: $color-white;
+    width: 1.4rem;
+    height: 1.4rem;
+    padding: 0 .8rem;
+  }
+
+  &:hover {
+    background-color: rgba($color-gray-xdark, .6);
+  }
+}
+
+.buttonBgLight {
+  background-color: rgba($color-gray-xdark, .6);
+}
+
+.menu {
+  position: absolute;
+  top: 5rem;
+  right: 2rem;
+  width: 18rem;
+  border-radius: 4px;
+  background: $color-gray-dark;
+  padding: .4rem;
+  box-shadow: 0px 0px 8px $color-gray-xdark;
+}
+
+.menuHidden {
+  display: none;
+}
+
+.menuList {
+  margin:0;
+  padding: 0;
+  text-indent: 0;
+  list-style-type: none;
+}
+
+.menuItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 1rem 1.2rem;
+  font-size: $font-size-xsmall;
+  font-weight: $font-weight-medium;
+  border-radius: 2px;
+  cursor: pointer;
+  user-select: none;
+
+
+  & > span {
+    margin-right: auto;
+  }
+
+  & > svg {
+    width: 1.6rem;
+    height: 1.6rem;
+    fill: currentColor;
+  }
+
+  &:hover {
+    background-color: rgba($color-gray-light, .2);
+  }
+}

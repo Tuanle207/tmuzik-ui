@@ -1,44 +1,34 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { FbAuthStatus } from '../../configs/fb/FbAuthStatus';
 import { IFbAuthResponse } from '../../configs/fb/IFbAuthResponse';
 import { authAction } from '../actions';
 
 export interface IAuthState {
-  internal: {
-    token: string;
-    expiryTime: string;
-    refreshToken: string;
-  },
-  fb: IFbAuthResponse,
-  userProfile: any; 
+  isAuthenticated: boolean; 
+  token: string;
+  expiryTime: string;
+  refreshToken: string;
+  fb: IFbAuthResponse | null;
+  userProfile: ApiResponse.LoginResponseData | null; 
 }
 
 const initial: IAuthState = {
-  internal: {
-    token: '',
-    expiryTime: '',
-    refreshToken: ''
-  },
-  fb: {
-    status: FbAuthStatus.Unknown,
-    authResponse: {
-      accessToken: '',
-      expiresIn: 0,
-      signedRequest: '',
-      userID: '',
-      data_access_expiration_time: 0,
-      graphDomain: ''
-    }
-  },
-  userProfile: {}
+  isAuthenticated: false,
+  token: '',
+  expiryTime: '',
+  refreshToken: '',
+  fb: null,
+  userProfile: null
 };
 
 export const authReducer = createReducer(initial, (builder) => 
   builder
     .addCase(authAction.setLoginStorage,
       (state, action) => {
-        state.internal.token = action.payload.token;
-        state.userProfile = action.payload;
+        state.refreshToken = action.payload.token.refreshToken;
+        state.token = action.payload.token.accessToken;
+        state.expiryTime = action.payload.token.accessTokenExpiresAt;
+        state.userProfile = action.payload.data;
+        state.isAuthenticated = true;
         return state;
       }
     )
@@ -48,11 +38,30 @@ export const authReducer = createReducer(initial, (builder) =>
         return state;
       }
     )
-    .addCase(authAction.setFbUserProfile,
+    .addCase(authAction.setAuthenticationStatus,
       (state, action) => {
-        state.userProfile = action.payload;
+        state.isAuthenticated = action.payload;
         return state;
       }
     )
-
+    .addCase(authAction.setRefreshTokenResult,
+      (state, action) => {
+        state.isAuthenticated = true;
+        state.token = action.payload.accessToken;
+        state.expiryTime = action.payload.accessTokenExpiresAt;
+        return state;
+      }
+    )
+    .addCase(authAction.setToken,
+      (state, action) => {
+        state.token = action.payload.accessToken;
+        state.expiryTime = action.payload.accessTokenExpiresAt;
+        state.refreshToken = action.payload.refreshToken;
+      }
+    )
+    .addCase(authAction.setUserProfile,
+      (state, action) => {
+        state.userProfile = action.payload;
+      }
+    )
 );

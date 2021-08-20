@@ -1,4 +1,4 @@
-@import "../../../assets/scss/_variable.scss";
+@import "../../assets/scss/_variable.scss";
 
 .container {
   display: flex;
@@ -47,6 +47,23 @@
   &:focus + .label {
     color: $color-white;
   }
+}
+
+.input-webkit-autofill,
+.input:-webkit-autofill:hover, 
+.input:-webkit-autofill:focus,
+.input:-internal-autofill-selected {
+  // border: unset;
+  // -webkit-text-fill-color: unset;
+  // box-shadow: unset;
+  // -webkit-box-shadow: unset;
+  // transition: unset;
+  appearance: unset !important;
+  background-color: unset !important;
+  color: unset !important;
+  // background-image: unset !important;
+  transition: background-color 5000s ease-in-out 0s;
+
 }
 
 .error {
