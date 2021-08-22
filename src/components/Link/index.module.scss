@@ -1,0 +1,12 @@
+@import "../../assets/scss/_variable.scss";
+
+.root {
+  font-size: $font-size-xsmall;
+  font-weight: $font-weight-medium;
+  color: $color-white;
+  text-decoration: none;
+}
+
+.root:hover {
+  text-decoration: underline;
+}

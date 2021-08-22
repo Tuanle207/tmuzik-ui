@@ -24,3 +24,9 @@
     stroke: $color-white;
   }
 }
+
+.container:focus-visible {
+  outline: none;
+  border-radius: 50%;
+  border: 2px solid $color-white;
+}

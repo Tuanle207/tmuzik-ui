@@ -1,20 +1,24 @@
-import { FC, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { Icon } from '../../assets';
 import { useHiddenOnBlurred } from '../../hooks';
+import { paths } from '../../routings';
 import { authAction } from '../../store/actions';
 import { authSelectors } from '../../store/selectors';
 import { IconButton } from '../IconButton';
 import styles from './index.module.scss';
 
 
-interface IHeaderProps {
 
-}
+interface IHeaderMenuProps { userId: string; }
 
-const HeaderMenu = () => {
+const HeaderMenu: FC<IHeaderMenuProps> = ({ 
+  userId
+}) => {
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const onSignoutClicked = () => {
     dispatch(authAction.postLogout());
@@ -25,7 +29,7 @@ const HeaderMenu = () => {
   };
 
   const onProfileClicked = () => {
-
+    history.push(paths.Profile.replace(':userId', userId));
   };
 
   const onPremiumUpgradeClicked = () => {
@@ -58,9 +62,15 @@ const HeaderMenu = () => {
       </li>
     </ul>
   );
+};
+
+interface IHeaderProps {
+  transparent?: boolean;
 }
 
-export const Header: FC<IHeaderProps> = () => {
+export const Header: FC<IHeaderProps> = ({
+  transparent = true
+}) => {
 
   const menuRef = useRef(null);
   const buttonMenuRef = useRef(null);
@@ -80,7 +90,7 @@ export const Header: FC<IHeaderProps> = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={[styles.container, transparent ? styles.transparentBg : ''].join(' ')}>
       <div className={styles.navigation}>
         <IconButton>
           <Icon.Left />
@@ -91,6 +101,11 @@ export const Header: FC<IHeaderProps> = () => {
       </div>
       <div className={styles.customChildren}>
 
+      </div>
+      <div className={styles.buttonGroup}>
+        <IconButton className={styles.uploadButton}>
+          <Icon.Upload />
+        </IconButton>
       </div>
       <div className={styles.menuView}>
         <div 
@@ -112,7 +127,7 @@ export const Header: FC<IHeaderProps> = () => {
         {
           showMenu && (
             <div ref={menuRef} id="header-menu" className={styles.menu}>
-              <HeaderMenu />
+              <HeaderMenu userId={userProfile?.id || ''} />
             </div>
           )
         }

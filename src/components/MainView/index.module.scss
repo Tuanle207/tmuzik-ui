@@ -1,3 +1,4 @@
+@import "../../assets/scss/_variable.scss";
 
 .container {
   display: flex;
@@ -19,4 +20,33 @@
   min-height: 0;
 
   background-color: #121212;
+}
+
+.viewContainter {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  flex: 1;
+  background-color: $color-gray-xdark;
+  overflow-x: auto;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: transparent; 
+    position: absolute;
+  }
+  
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+  
+  &::-webkit-scrollbar-thumb{
+    background-color: rgba($color-gray-light, .8);
+  }
+}
+
+.viewContent {
+  flex: 1;
+  min-height: 0;
 }

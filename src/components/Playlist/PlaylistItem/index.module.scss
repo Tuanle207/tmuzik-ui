@@ -1,0 +1,110 @@
+@import "../../../assets/scss/_variable.scss";
+
+.root {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  padding: .4rem 1.6rem;
+  box-sizing: border-box;
+  border-radius: 4px;
+  user-select: none;
+}
+
+.root:hover {
+  background-color: rgba($color-gray-medium, .65);
+}
+
+.index {
+  position: relative;
+  width: 3rem;
+  margin-right: 1.2rem;
+  font-size: $font-size-small !important;
+
+  & > p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.playIcon {
+  position: absolute;
+  background-color: transparent;
+  margin-right: 1.6rem;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  visibility: hidden;
+
+  & > svg {
+    fill: $color-white;
+  }
+}
+
+.root:hover > .index > p {
+  visibility: hidden;
+}
+
+.root:hover > .index > .playIcon {
+  visibility: visible;
+}
+
+.mainInfo {
+  flex: 2;
+  display: flex;
+  flex-direction: row;
+}
+
+.photo {
+  height: 4rem;
+  width: 4rem;
+  margin-right: 1.4rem;
+}
+
+.album {
+  flex: 1;
+}
+
+.mainText {
+  font-size: $font-size-small;
+  font-weight: $font-weight-bold;
+}
+
+.secondaryText {
+  font-size: $font-size-xsmall;
+  font-weight: $font-weight-medium;
+  color: $color-gray-xlight;
+}
+
+.root:hover .secondaryText {
+  color: $color-white;
+}
+
+.length {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 10rem;
+  text-align: center;
+
+  & > button {
+    background-color: transparent;
+    width: 1.6rem;
+    height: 1.6rem;
+    visibility: hidden;
+  }
+
+  & > button > svg {
+    fill: white;
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+}
+
+.root:hover > .length > button {
+  visibility: visible;
+}

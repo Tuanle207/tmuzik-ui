@@ -1,0 +1,56 @@
+@import "../../../assets/scss/_variable.scss";
+
+.container {
+  display: flex;
+  flex-direction: row;
+  padding: 3rem;
+  background: linear-gradient(to bottom, $color-gray-medium 0% , $color-gray-dark 75%);
+}
+
+.avatar {
+  width: 20rem;
+  height: 20rem;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 4px 8px 100px $color-border;
+
+  & > img {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.userInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  color: $color-white;
+  margin-left: 3.2rem;
+
+  & > h2 {
+    font-size: 9rem;
+    margin-top: auto;
+  }
+}
+
+.userStats {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin-top: auto;
+  line-height: 1.2rem;
+  
+  & > p {
+    font-size: $font-size-xsmall;
+    font-weight: $font-weight-bold;
+    color: #a5a5a5;
+  }
+}
+
+.dot {
+  height: .6rem;
+  width: .6rem;
+  margin: 0 .4rem;
+  border-radius: 50%;
+  background: $color-light;
+}

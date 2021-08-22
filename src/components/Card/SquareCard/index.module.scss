@@ -1,0 +1,51 @@
+@import "../../../assets/scss/_variable.scss";
+
+@keyframes change-background {
+  from {background-color: $color-gray-dark;}
+  to {background-color: rgba($color-gray-medium, .9);}
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 14rem;
+  padding: 1.6rem;
+  background-color: rgba($color-gray-dark, .5);
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: background .5s ease-out;
+
+  &:hover {
+    background-color: rgba($color-gray-medium, .8);
+  }
+}
+
+.cover {
+  width: 14rem;
+  height: 14rem;
+  border-radius: 8px;
+  box-shadow: 4px 4px 20px $color-gray-dark;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  color: $color-white;
+}
+
+.title {
+  font-size: $font-size-regular;
+  font-weight: $font-weight-medium;
+  margin-top: 1.2rem;
+}
+
+.description {
+  margin-top: .4rem;
+  font-size: $font-size-small;
+  line-height: 1.6rem;
+  height: 3.2rem;
+  font-size: $font-size-xsmall;
+  font-weight: $font-weight-medium;
+  color: $color-gray-xlight;
+}

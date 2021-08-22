@@ -1,0 +1,32 @@
+@import "../../../assets/scss/_variable.scss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(to bottom, $color-gray-dark 1rem, $color-gray-xdark 25rem);
+  padding: 3rem;
+}
+
+.section {
+  width: 100%;
+}
+
+.section:not(:first-child) {
+  margin-top: 3.6rem;
+}
+
+.about {
+  margin-bottom: 1.6rem;
+}
+
+.title {
+  color: $color-white;
+  font-size: $font-size-medium;
+  margin-bottom: .8rem;
+}
+
+.noteText {
+  color: $color-gray-light;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-xsmall;
+}
