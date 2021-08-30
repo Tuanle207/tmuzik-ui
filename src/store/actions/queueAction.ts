@@ -14,12 +14,10 @@ export const queueAction = {
     'app/queue/clearQueue'
   ),
   goNext: createAction(
-    'app/queue/playNext',
-    (payload: { id: string }) => ({payload}),
+    'app/queue/goNext',
   ),
   goPrevious: createAction(
-    'app/queue/playPrevious',
-    (payload: { id: string }) => ({payload}),
+    'app/queue/goPrevious',
   ),
   goTo: createAction(
     'app/queue/goTo',

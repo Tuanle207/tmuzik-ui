@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '..';
 
-export const audioSelectors = {
+export const audioSelector = {
   uploadedList: createSelector(
     (state: RootState) => 
       state.audio.uploadedList, 

@@ -1,3 +1,4 @@
-export * from './uiSelectors';
-export * from './authSelectors';
-export * from './audioSelectors';
+export * from './uiSelector';
+export * from './authSelector';
+export * from './audioSelector';
+export * from './queueSelector';

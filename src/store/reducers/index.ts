@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { audioReducer, IAudioState } from './audioReducer';
 import { authReducer, IAuthState } from './authReducer';
 import { uiReducer, IUIState } from './uiReducer';
-import { queueReducer, IQueueState } from './queue';
+import { queueReducer, IQueueState } from './queueReducer';
 
 export interface IState {
   ui: IUIState;

@@ -5,7 +5,7 @@ import { Icon } from '../../assets';
 import { useHiddenOnBlurred } from '../../hooks';
 import { paths } from '../../routings';
 import { authAction } from '../../store/actions';
-import { authSelectors } from '../../store/selectors';
+import { authSelector } from '../../store/selectors';
 import { IconButton } from '../IconButton';
 import styles from './index.module.scss';
 
@@ -78,7 +78,7 @@ export const Header: FC<IHeaderProps> = ({
 
   const [ showMenu, setShowMenu ] = useState(false);
   
-  const userProfile = useSelector(authSelectors.userProfile); 
+  const userProfile = useSelector(authSelector.userProfile); 
 
   useHiddenOnBlurred({
     display: showMenu,

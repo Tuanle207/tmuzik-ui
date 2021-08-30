@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '..';
 
-export const queueSelectors = {
+export const queueSelector = {
   queue: createSelector(
     (state: RootState) => state.queue.queue, 
     (queue) => queue
@@ -17,5 +17,9 @@ export const queueSelectors = {
   shuffle: createSelector(
     (state: RootState) => state.queue.shuffle, 
     (shuffle) => shuffle
+  ),
+  canPlayNext: createSelector(
+    (state: RootState) => state.queue.canPlayNext, 
+    (canPlayNext) => canPlayNext
   ),
 };

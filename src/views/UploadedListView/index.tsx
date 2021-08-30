@@ -3,7 +3,7 @@ import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu';
 import { useDispatch, useSelector } from 'react-redux';
 import { Playlist, Typography, ViewWrapper } from '../../components';
 import { audioAction } from '../../store/actions';
-import { audioSelectors } from '../../store/selectors';
+import { audioSelector } from '../../store/selectors';
 import { PageModelRequest } from '../../utils/interfaces';
 import styles from './index.module.scss';
 
@@ -17,7 +17,7 @@ export const UploadedListView: FC<IUploadedListViewProps> = () => {
   
   const dispatch = useDispatch();
 
-  const uploadedList = useSelector(audioSelectors.uploadedList);
+  const uploadedList = useSelector(audioSelector.uploadedList);
 
   useEffect(() => {
     if (uploadedList.items.length === 0) {

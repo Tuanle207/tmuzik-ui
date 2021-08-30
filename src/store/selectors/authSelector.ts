@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '..';
 
-export const authSelectors = {
+export const authSelector = {
   isAuthenticated: createSelector(
     (state: RootState) => 
       state.auth.isAuthenticated, 

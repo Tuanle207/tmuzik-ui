@@ -1,13 +1,13 @@
 import { useSelector } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
-import { authSelectors } from '../store/selectors';
+import { authSelector } from '../store/selectors';
 import { HomeView } from '../views';
 import { ProtectedRoute } from './ProtectedRoute';
 import { paths, routesDictionary } from './routesDictionary';
 
 export const AppRouter = () => {
 
-  const isAuthenticated = useSelector(authSelectors.isAuthenticated);
+  const isAuthenticated = useSelector(authSelector.isAuthenticated);
 
   return (
     <Route>

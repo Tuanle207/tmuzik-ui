@@ -4,7 +4,7 @@ import { NowPlayingBar } from '../NowPlayingBar';
 import styles from './index.module.scss';
 import { SpinLoader } from '../Loader';
 import { useSelector } from 'react-redux';
-import { authSelectors, uiSelector } from '../../store/selectors';
+import { authSelector, uiSelector } from '../../store/selectors';
 import { AppRouter, paths } from '../../routings';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { LoginView } from '../../views';
@@ -15,7 +15,7 @@ export const MainView: FC<IMainViewProps> = () => {
 
   const viewLoading = useSelector(uiSelector.viewLoading);
   const viewLoadingText = useSelector(uiSelector.viewLoadingText);
-  const isAuthenticated = useSelector(authSelectors.isAuthenticated);
+  const isAuthenticated = useSelector(authSelector.isAuthenticated);
 
   return (
     <Router>

@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Icon } from '../../assets';
 import { paths } from '../../routings';
-import { queueSelectors } from '../../store/selectors/queueSelectors';
+import { queueAction } from '../../store/actions';
+import { queueSelector } from '../../store/selectors';
 import { IconButton } from '../IconButton';
 import { SliderInput } from '../SliderInput';
 import styles from './index.module.scss';
@@ -40,7 +41,10 @@ export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
   })
 
   const dispatch = useDispatch();
-  const currentPlaying = useSelector(queueSelectors.current);
+  const currentPlaying = useSelector(queueSelector.current);
+  const canPlayNext = useSelector(queueSelector.canPlayNext);
+  const loop = useSelector(queueSelector.loop);
+  const shuffle = useSelector(queueSelector.shuffle);
 
   useEffect(() => {
     if (currentPlaying) {
@@ -100,11 +104,27 @@ export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
   };
 
   const onCurrentPlayEnd = () => {
-    
-  }
+    onPlayNextClicked();
+  };
+
+  const onPlayNextClicked = () => {
+    if (!canPlayNext) { return; }
+    dispatch(queueAction.goNext());
+  };
+
+  const onPlayPreviousClicked = () => {
+    dispatch(queueAction.goPrevious());
+  };
+
+  const onLoopClicked = () => {
+    dispatch(queueAction.setLoop(!loop));
+  };
+
+  const onShuffleClicked = () => {
+    dispatch(queueAction.setLoop(!loop));
+  };
 
   const onQueueClicked = () => {
-    console.log('push');
     history.push(paths.Queue);
   };
 
@@ -133,21 +153,21 @@ export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
           onEnded={onCurrentPlayEnd}
         />
         <div className={styles.actions}>
-          <IconButton className={styles.iconButton}>
+          <IconButton className={styles.iconButton} onClick={onShuffleClicked}>
             <Icon.Shuffle />
           </IconButton>
-          <IconButton className={styles.iconButton}>
+          <IconButton className={styles.iconButton} onClick={onPlayPreviousClicked}>
             <Icon.Previous />
           </IconButton>
           <IconButton className={styles.iconButton} onClick={onTooglePlayClicked}>
-            {
-              playing ? <Icon.Pause /> : <Icon.Play />
-            }
+          {
+            playing ? <Icon.Pause /> : <Icon.Play />
+          }
           </IconButton>
-          <IconButton className={styles.iconButton}>
+          <IconButton className={styles.iconButton} onClick={onPlayNextClicked}>
             <Icon.Next />
           </IconButton>
-          <IconButton className={styles.iconButton}>
+          <IconButton className={styles.iconButton} onClick={onLoopClicked}>
             <Icon.Loop />
           </IconButton>
         </div>
