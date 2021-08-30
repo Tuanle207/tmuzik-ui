@@ -13,6 +13,10 @@
   background-color: transparent;
 }
 
+.iconButtonActive {
+  color: $color-blue-dark !important;
+}
+
 .left {
   flex: 2;
   display: flex;

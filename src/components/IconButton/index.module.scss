@@ -30,3 +30,9 @@
   border-radius: 50%;
   border: 2px solid $color-white;
 }
+
+.container:disabled {
+  color: $color-gray-light !important;
+  // cursor: default;
+  pointer-events: none;
+}

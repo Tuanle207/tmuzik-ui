@@ -22,6 +22,8 @@ interface IPlayingItem {
   album?: string;
 }
 
+type PlayingState = 'play' | 'pause' | 'changing';
+
 export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
   
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -29,8 +31,9 @@ export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
   const history = useHistory();
 
   const [ currTime, setCurrTime ] = useState(0);
-  const [ volumnPt, setVolumPt ] = useState(40);
-  const [ playing, setPlaying ] = useState(false);
+  const [ volumnPt, setVolumPt ] = useState(70);
+  const [ mute, setMute ] = useState(false);
+  const [ playingStatus, setPlayingStatus ] = useState<PlayingState>('pause');
  
   const [ playingItem, setPlayingItem ] = useState<IPlayingItem>({
     name: '',
@@ -43,6 +46,7 @@ export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
   const dispatch = useDispatch();
   const currentPlaying = useSelector(queueSelector.current);
   const canPlayNext = useSelector(queueSelector.canPlayNext);
+  const canPlayPrevious = useSelector(queueSelector.canPlayPrevious);
   const loop = useSelector(queueSelector.loop);
   const shuffle = useSelector(queueSelector.shuffle);
 
@@ -56,38 +60,61 @@ export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
         album: currentPlaying.albumTag,
         cover: currentPlaying.cover
       });
-      setPlaying(true);
     }
   }, [ currentPlaying ]);
 
   useEffect(() => {
-    const audioIns = audioRef.current;
-    if (audioIns === null) { return; }
-    audioIns.volume = volumnPt / 100;
-  }, [ volumnPt ])
-
+    if (playingItem.src && playingItem.src.trim() !== '') {
+      setPlayingStatus('changing');
+    }
+  }, [ playingItem ]);
+  
   useEffect(() => {
-    
-    const play = async () => {
-      const audioIns = audioRef.current;
-      if (audioIns === null) { return; }
-      await audioIns.play();
-    };
-    const pause = async () => {
-      const audioIns = audioRef.current;
-      if (audioIns === null) { return; }
-      audioIns.pause();
-    };
-
-    if (playing) {
+    if (playingStatus === 'changing') {
+      setPlayingStatus('play');
+    } else if (playingStatus === 'play') {
       play();
-    } else {
+    } else if (playingStatus === 'pause') {
       pause();
     }
-  }, [ playing ])
+  }, [ playingStatus ]);
+
+  useEffect(() => {
+    const audioIns = audioRef.current;
+    if (audioIns === null) { return; }
+    
+    if (mute) {
+      audioIns.volume = 0;
+    } else {
+      audioIns.volume = volumnPt / 100;
+    }
+  }, [ volumnPt, mute ]);
+
+
+  const play = async () => {
+    const audioIns = audioRef.current;
+    if (audioIns === null) { return; }
+    await audioIns.play();
+  };
+
+  const pause = async () => {
+    const audioIns = audioRef.current;
+    if (audioIns === null) { return; }
+    audioIns.pause();
+  };
+
+  // const onSrcLoad = () => {
+  //   const audioIns = audioRef.current;
+  //   if (audioIns === null) { return; }
+  //   audioIns.play();
+  // };
 
   const onTooglePlayClicked = async () => {
-    setPlaying((prev) => !prev);
+    if (playingStatus === 'play') {
+      setPlayingStatus('pause');
+    } else if (playingStatus === 'pause') {
+      setPlayingStatus('play');
+    }
   };
 
   const onInputCurrentTimeChange = (currentTime: number) => {
@@ -103,8 +130,17 @@ export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
     setCurrTime(value);
   };
 
+  const onVolChanged = (value: number) => {
+    if (mute) { setMute(false); }
+    setVolumPt(value);
+  };
+
   const onCurrentPlayEnd = () => {
-    onPlayNextClicked();
+    if (canPlayNext) {
+      onPlayNextClicked();
+    } else {
+      setPlayingStatus('pause');
+    }
   };
 
   const onPlayNextClicked = () => {
@@ -121,7 +157,11 @@ export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
   };
 
   const onShuffleClicked = () => {
-    dispatch(queueAction.setLoop(!loop));
+    dispatch(queueAction.setShuffle(!shuffle));
+  };
+
+  const onMuteClicked = () => {
+    setMute((prev) => !prev);
   };
 
   const onQueueClicked = () => {
@@ -153,21 +193,37 @@ export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
           onEnded={onCurrentPlayEnd}
         />
         <div className={styles.actions}>
-          <IconButton className={styles.iconButton} onClick={onShuffleClicked}>
+          <IconButton
+            className={[styles.iconButton, shuffle ? styles.iconButtonActive : ''].join(' ')} 
+            onClick={onShuffleClicked}
+          >
             <Icon.Shuffle />
           </IconButton>
-          <IconButton className={styles.iconButton} onClick={onPlayPreviousClicked}>
+          <IconButton 
+            className={styles.iconButton} 
+            onClick={onPlayPreviousClicked}
+            disabled={!canPlayPrevious}
+          >
             <Icon.Previous />
           </IconButton>
-          <IconButton className={styles.iconButton} onClick={onTooglePlayClicked}>
+          <IconButton 
+            className={styles.iconButton} 
+            onClick={onTooglePlayClicked}
+          >
           {
-            playing ? <Icon.Pause /> : <Icon.Play />
+            playingStatus === 'play' ? <Icon.Pause /> : <Icon.Play />
           }
           </IconButton>
-          <IconButton className={styles.iconButton} onClick={onPlayNextClicked}>
+          <IconButton 
+            className={styles.iconButton} 
+            onClick={onPlayNextClicked}
+            disabled={!canPlayNext}
+          >
             <Icon.Next />
           </IconButton>
-          <IconButton className={styles.iconButton} onClick={onLoopClicked}>
+          <IconButton
+            className={[styles.iconButton, loop ? styles.iconButtonActive : ''].join(' ')} 
+            onClick={onLoopClicked}>
             <Icon.Loop />
           </IconButton>
         </div>
@@ -178,10 +234,10 @@ export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
               value={currTime}
               onValueChange={onInputCurrentTimeChange}
               min={0}
-              max={297}
+              max={playingItem.length}
             />
           </div>
-          <span>{ moment(297 * 1000).format("mm:ss") }</span>
+          <span>{ moment(playingItem.length * 1000).format("mm:ss") }</span>
         </div>
 
       </div>
@@ -192,14 +248,19 @@ export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
         <IconButton className={styles.iconButton} onClick={onQueueClicked}>
           <Icon.PlayingQueue />
         </IconButton>
-        <IconButton className={styles.iconButton}>
-          <Icon.VolumeLarge />
+        <IconButton className={styles.iconButton} onClick={onMuteClicked}>
+        {
+          volumnPt === 0 || mute ? <Icon.VolumeMute /> :
+          volumnPt >= 70 ? <Icon.VolumeLarge /> :
+          volumnPt >= 30 ? <Icon.VolumeMedium /> : 
+          <Icon.VolumeSmall />
+        }
         </IconButton>
         <div className={styles.volumeBar}
         >
           <SliderInput
-            value={volumnPt}
-            onValueChange={setVolumPt}
+            value={mute ? 0 : volumnPt}
+            onValueChange={onVolChanged}
           />
         </div>
       </div>
