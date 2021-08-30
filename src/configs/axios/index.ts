@@ -5,7 +5,7 @@ import { interceptHttpRequest, interceptHttpResponse } from './interceptors';
 const httpClient = new HttpClient({
   baseUrl: ENV.apiUrl,
   options: {
-    timeout: 10000,
+    timeout: ENV.requestTimeout,
     headers: {
       'Content-Type': 'application/json',
     }

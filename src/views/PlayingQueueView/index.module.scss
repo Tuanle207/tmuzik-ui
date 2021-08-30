@@ -1,0 +1,19 @@
+
+.container {
+  padding: 2rem;
+}
+
+.heading {
+  margin-bottom: 1.6rem;
+}
+
+.list {
+
+  &:not(:last-child) {
+    margin-bottom: 3.2rem;
+  }
+
+  .subTitle {
+    margin-bottom: 1.6rem;
+  }
+}

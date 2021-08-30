@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { MainView } from '../../components';
+import { ViewWrapper } from '../../components';
 
 interface ILibraryViewProps {
 
@@ -8,10 +8,10 @@ interface ILibraryViewProps {
 export const LibraryView:FC<ILibraryViewProps> = () => {
 
   return (
-    <MainView>
+    <ViewWrapper>
       <div>
         library
       </div>
-    </MainView>
+    </ViewWrapper>
   );
 };

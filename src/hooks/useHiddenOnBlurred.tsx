@@ -1,33 +1,51 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { MutableRefObject, useEffect } from 'react';
+import { useEffect } from 'react';
 import { isDescendant } from '../utils/isDescendant';
 
 interface IHiddenOnBlurredInput {
   display: boolean;
   displaySetter: (display: boolean) => void;
-  exceptSpaceRef?: MutableRefObject<null>[];
+  exceptSpaceNodes?: (React.MutableRefObject<any> | Element | null)[];
+  callback?: () => void;
 }
 
 export const useHiddenOnBlurred = ({
-  exceptSpaceRef = [],
+  exceptSpaceNodes = [],
   display,
-  displaySetter
+  displaySetter,
+  callback = () => {}
 }: IHiddenOnBlurredInput) => {
 
   useEffect(() => {
     const hideMenuOnBlurred = (e: any) => {
       let handle = true;
 
-      exceptSpaceRef.forEach((ref) => {
-        const ins = ref?.current;
-        if (e.target === ins || isDescendant(ins, e.target)) {
+      exceptSpaceNodes.forEach((node) => {
+
+        if (node === null) { 
+          console.log('node === null')
+          return;
+        }
+        
+        const ins = (node as React.MutableRefObject<Element>).current;
+
+        if (ins && (e.target === ins || isDescendant(ins, e.target))) {
+          handle = false;
+          console.log('e.target === ins || isDescendant(ins, e.target))')
+
+          return;
+        }
+
+        if (e.target === node || isDescendant(node, e.target)) {
+          console.log('e.target === node || isDescendant(node, e.target)')
           handle = false;
         }
-      })
+      });
 
       if (display && handle) 
       { 
         displaySetter(false);
+        callback();
       }
     };
 

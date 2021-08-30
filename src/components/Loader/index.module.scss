@@ -1,0 +1,30 @@
+@import '../../assets/scss/animation';
+@import "../../assets/scss/_variable.scss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: rgba($color-black, 0.92);
+
+  & > p {
+    margin-top: 1.6rem;
+    text-transform: lowercase;
+    font-size: $font-size-small;
+
+    &:first-letter {
+      text-transform: capitalize;
+    }
+  }
+
+  & > svg {
+    width: 7.2rem;
+    height: 7.2rem;
+    fill: $color-blue-dark;
+    animation: spin 1000ms linear infinite;
+  }
+}

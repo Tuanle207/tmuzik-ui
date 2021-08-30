@@ -1,0 +1,129 @@
+@import "../../assets/scss/_variable.scss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column-reverse;
+  background-color: rgba($color-black, .5);
+  padding: 1rem ;
+  border-radius: 4px;
+}
+
+.label {
+  text-transform: uppercase;
+  font-size: $font-size-small;
+  font-weight: $font-weight-medium;
+  color: $color-gray-xlight;
+  padding: .5rem 0;
+  
+  & > span {
+    color: #f74686;
+  }
+}
+
+.select {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.dropDownBtn {
+  background-color: transparent;
+
+  & > svg {
+    fill: $color-white;
+    height: 1.2rem;
+    width: 1.2rem;
+  }
+}
+
+.input {
+  flex: 1;
+  padding: .4em;
+  background-color: transparent;
+  border: none;
+  color: $color-light;
+  font-size: $font-size-regular;
+
+  &:focus {
+    outline: none;
+    &::placeholder {
+      color: $color-gray-xlight;
+    }
+  }
+
+  &::placeholder {
+    color: $color-gray-light;
+    text-transform: lowercase;
+  }
+
+  &:focus + .label {
+    color: $color-white;
+  }
+}
+
+.input-webkit-autofill,
+.input:-webkit-autofill:hover, 
+.input:-webkit-autofill:focus,
+.input:-internal-autofill-selected {
+  // border: unset;
+  // -webkit-text-fill-color: unset;
+  // box-shadow: unset;
+  // -webkit-box-shadow: unset;
+  // transition: unset;
+  appearance: unset !important;
+  background-color: unset !important;
+  color: unset !important;
+  // background-image: unset !important;
+  transition: background-color 5000s ease-in-out 0s;
+
+}
+
+.error {
+  font-size: $font-size-tiny;
+  color: $color-error
+}
+
+.noError {
+  font-size: $font-size-tiny;
+  opacity: 0;
+}
+
+.dropdownList {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: translateY(100%);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
+  background-color: $color-gray-dark;
+  padding: 1rem 0;
+  max-height: 20rem;
+  overflow-y: auto;
+
+  & > p {
+    padding: .4rem 1.6rem;
+    font-size: $font-size-xsmall;
+    user-select: none;
+  }
+
+  & > p:hover {
+    background-color: $color-gray-xdark;
+  }
+
+  & > span {
+    font-size: $font-size-xsmall;
+    align-self: center;
+  }
+}
+
+.activeOption {
+  background-color: $color-gray-dark;
+}

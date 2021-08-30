@@ -1,0 +1,36 @@
+@import "../../../assets/scss/_variable.scss";
+
+.container {
+  margin-top: 7.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.inform {
+  color: $color-white;
+  font-size: $font-size-xlarge;
+}
+
+.icon {
+  margin-top: 3.2rem;
+  margin-bottom: 3.2rem;
+  width: 10rem;
+  height: 10rem;
+  fill: $color-success;
+}
+
+.note {
+  font-size: $font-size-regular;
+
+  & > a {
+    font-size: inherit;
+  }
+}
+
+.continue {
+  margin-top: 1.6rem;
+}

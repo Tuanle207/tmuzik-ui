@@ -3,50 +3,25 @@
 .container {
   display: flex;
   flex-direction: column;
-
   height: 100vh;
   width: 100vw;
-
   background-color: olive;
-
-  
 }
 
 .content {
+  position: relative;
   display: flex;
   flex-direction: row;
-
   flex: 1;
   min-height: 0;
-
   background-color: #121212;
 }
 
-.viewContainter {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  flex: 1;
-  background-color: $color-gray-xdark;
-  overflow-x: auto;
-  overflow-y: auto;
-
-  &::-webkit-scrollbar-track {
-    border-radius: 10px;
-    background: transparent; 
-    position: absolute;
-  }
-  
-  &::-webkit-scrollbar {
-    width: 12px;
-  }
-  
-  &::-webkit-scrollbar-thumb{
-    background-color: rgba($color-gray-light, .8);
-  }
-}
-
-.viewContent {
-  flex: 1;
-  min-height: 0;
+.loaderWrapper {
+  position: absolute;
+  width: calc(100% - 24rem);
+  height: 100%;
+  bottom: 0;
+  right: 0;
+  z-index: 10;
 }

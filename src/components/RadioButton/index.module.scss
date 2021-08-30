@@ -1,0 +1,59 @@
+
+@import "../../assets/scss/_variable.scss";
+
+.container {
+  & * {
+    user-select: none;
+  }
+}
+
+.label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+
+  & > span {
+    margin-left: .8rem;
+  }
+}
+
+.selectButton {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 16px;
+  height: 16px;
+  background-color: $color-white;
+  border-radius: 50%;
+  border: 1px solid $color-blue-light;
+}
+
+.selectButton::after {
+  content: "";
+  display: none;
+  width: 8px;
+  height: 8px;
+  background-color: $color-blue-dark;
+  border-radius: 50%;
+}
+
+.selectButton::before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  // border: 1px solid $color-blue-dark;
+  // border: 1px solid $color-border;
+  border-radius: 50%;
+}
+
+.input:checked + label > .selectButton::after {
+  display: block;
+}
+
+.input:checked + label > .selectButton {
+  border: 1px solid $color-blue-dark;
+}

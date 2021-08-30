@@ -60,7 +60,7 @@ export const LoginForm: FC<ILoginFormProps> = () => {
               value={value}
               onValueChange={onChange}
               onBlur={onBlur}
-              autoComplete="none"
+              autoComplete="off"
               label="Email Address"
               placeholder="you@company.com"
               validate={[
@@ -86,7 +86,7 @@ export const LoginForm: FC<ILoginFormProps> = () => {
               value={value}
               onValueChange={onChange}
               onBlur={onBlur}
-              autoComplete="none"
+              autoComplete="off"
               label="Password"
               placeholder="5+ characters"
               validate={[

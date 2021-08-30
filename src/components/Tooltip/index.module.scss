@@ -1,0 +1,63 @@
+@import "../../assets/scss/_variable.scss";
+
+.container {
+  position: relative;
+}
+
+.tooltipText {
+  display: none;
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  min-width: 20rem;
+  max-width: 30rem;
+  transform: translate(-50%, 100%);
+  background-color: $color-border;
+  padding: 1.2rem;
+  border-radius: 8px;
+  font-size: $font-size-xsmall;
+}
+
+.tooltipText::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent $color-border transparent;
+}
+
+
+.container:hover > .tooltipText {
+  display: block;
+}
+
+.tooltipTextLeft {
+  
+  &::after {
+    border-color: $color-border transparent transparent transparent;
+  }
+}
+
+.tooltipTextRight {
+  top: 50%;
+  right: 50%;
+
+  &::after {
+    border-color: $color-border transparent transparent transparent;
+  }
+}
+
+.tooltipTextTop {
+  top: -12px;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  &::after {
+    bottom: 0;
+    left: 50%;
+    transform: translateY(100%);
+    border-color: $color-border transparent transparent transparent;
+  }
+}

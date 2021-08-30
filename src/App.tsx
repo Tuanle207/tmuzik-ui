@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from 'react';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import { AppRouter } from './routings';
+import { MainView } from './components';
 import { persistor, store } from './store';
 import { authAction } from './store/actions';
 import { uiSelector } from './store/selectors';
@@ -20,7 +20,7 @@ const Container: FC = () => {
       {
         startingApp ? 
         <div style={{ color: 'red' }}>loading...</div> :
-        <AppRouter />
+        <MainView />
       }
     </>
   );
@@ -44,7 +44,6 @@ const App: FC = () => {
       <PersistGate loading={null} persistor={persistor}>
         <Container />
       </PersistGate> 
-      {/* <Container /> */}
     </Provider>
   );
 }

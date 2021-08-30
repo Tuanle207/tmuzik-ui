@@ -5,6 +5,7 @@ export interface IENV {
     appId: string;
     version: string;
   };
+  requestTimeout: number;
   enableLogger: boolean;
 };
 

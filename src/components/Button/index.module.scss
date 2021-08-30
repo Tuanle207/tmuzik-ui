@@ -21,7 +21,7 @@
 
   & > span {
     flex: 1;
-    text-align: start;
+    text-align: center;
   }
 
   & > svg {
@@ -77,5 +77,4 @@
 .alignMiddle{
   margin-left: auto;
   margin-right: auto;
-  text-align: center !important;
 }

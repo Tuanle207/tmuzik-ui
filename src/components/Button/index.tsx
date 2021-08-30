@@ -9,7 +9,8 @@ interface IButtonProps {
   size?: 'small' | 'medium';
   className?: string;
   type?: 'button' | 'submit';
-  onClick?: MouseEventHandler<HTMLButtonElement>;
+  form?: string;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
 export const Button: FC<IButtonProps> = ({
@@ -20,6 +21,7 @@ export const Button: FC<IButtonProps> = ({
   className,
   size = 'medium',
   type = 'button',
+  form,
   onClick = () => {}
 }) => {
 
@@ -30,8 +32,9 @@ export const Button: FC<IButtonProps> = ({
         variant === 'text' ? styles.buttonText :
         variant === 'outlined' ? styles.buttonOutlined : '',
         size === 'medium' ? styles.buttonMedium : '',
-        className ? className : ''
+        className || ''
       ].join(' ')}
+      form={form}
       type={type}
       onClick={onClick}
     >

@@ -68,7 +68,13 @@ export class HttpClient {
       const headers = {
         'Content-Type': 'multipart/form-data',
       };
-      const result = await this.instance.post(endpoint, body, {
+
+      const formData = new FormData();
+      Object.keys(body).forEach((key) => {
+        formData.append(key, body[key]);
+      })
+
+      const result = await this.instance.post(endpoint, formData, {
         headers
       });
       return result?.data;

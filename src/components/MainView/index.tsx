@@ -1,48 +1,54 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC } from 'react';
 import { Sidebar } from '../Sidebar';
 import { NowPlayingBar } from '../NowPlayingBar';
-import { Header } from '../Header';
-import { Footer } from '../Footer';
 import styles from './index.module.scss';
+import { SpinLoader } from '../Loader';
+import { useSelector } from 'react-redux';
+import { authSelectors, uiSelector } from '../../store/selectors';
+import { AppRouter, paths } from '../../routings';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { LoginView } from '../../views';
 
-interface IMainViewProps {
-  header?: (transparent: boolean) => JSX.Element;
-}
+interface IMainViewProps { }
 
-export const MainView: FC<IMainViewProps> = ({ 
-  children,
-  header
-}) => {
+export const MainView: FC<IMainViewProps> = () => {
 
-  const [ transparentBg, setTransparentBg ]  = useState(false);
-
-  const onScrolled = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
-    const target = e.nativeEvent.target || { scrollTop: 0 };
-    const yOffset = (target as any).scrollTop;
-    
-    if (yOffset > 100) {
-      setTransparentBg(false);
-    } else {
-      setTransparentBg(true);
-    }
-  };
+  const viewLoading = useSelector(uiSelector.viewLoading);
+  const viewLoadingText = useSelector(uiSelector.viewLoadingText);
+  const isAuthenticated = useSelector(authSelectors.isAuthenticated);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.content}>
-        <Sidebar />
-        <div className={styles.viewContainter} onScroll={onScrolled}>
-          { header ? header(transparentBg) : (
-              <Header transparent={transparentBg} />
-          )}
-          <div className={styles.viewContent}>
-            { children }
-            <Footer />
-          </div>
-        </div>
-      </div>
-      <NowPlayingBar />
-    </div>
+    <Router>
+      <Route>
+        {
+          !isAuthenticated ? (
+            <Switch>
+              <Route
+                path={paths.Login} 
+                exact 
+                component={LoginView}
+              />
+              <Route component={LoginView} />
+            </Switch>
+          ) : (
+            <div className={styles.container}>
+              <div className={styles.content}>
+                <Sidebar />
+                {
+                  viewLoading && (
+                    <div className={styles.loaderWrapper}>
+                      <SpinLoader text={viewLoadingText}/>
+                    </div>    
+                  )
+                }
+                <AppRouter />
+              </div>
+              <NowPlayingBar />
+            </div>
+          )
+        }
+      </Route>
+    </Router>
   );
 };
 

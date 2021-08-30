@@ -1,5 +1,11 @@
-import { FC, useState } from 'react';
+import moment from 'moment';
+import { FC, useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { Icon } from '../../assets';
+import { paths } from '../../routings';
+import { queueSelectors } from '../../store/selectors/queueSelectors';
+import { IconButton } from '../IconButton';
 import { SliderInput } from '../SliderInput';
 import styles from './index.module.scss';
 
@@ -7,73 +13,168 @@ interface INowPlayingBarProps {
 
 }
 
+interface IPlayingItem {
+  src: string;
+  length: number;
+  cover?: string;
+  name: string;
+  album?: string;
+}
+
 export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
+  
+  const audioRef = useRef<HTMLAudioElement>(null);
 
-  const [timePt, setTimePt] = useState(30);
-  const [volumnPt, setVolumPt] = useState(40);
-  const [playing, setPlaying] = useState(false);
+  const history = useHistory();
 
-  const handlePlay = () => {
-    setPlaying((pre) => !pre);
+  const [ currTime, setCurrTime ] = useState(0);
+  const [ volumnPt, setVolumPt ] = useState(40);
+  const [ playing, setPlaying ] = useState(false);
+ 
+  const [ playingItem, setPlayingItem ] = useState<IPlayingItem>({
+    name: '',
+    length: 0,
+    album: '',
+    cover: '',
+    src: ''
+  })
+
+  const dispatch = useDispatch();
+  const currentPlaying = useSelector(queueSelectors.current);
+
+  useEffect(() => {
+    if (currentPlaying) {
+      setCurrTime(0);
+      setPlayingItem({
+        name: currentPlaying.name,
+        length: currentPlaying.length,
+        src: currentPlaying.url,
+        album: currentPlaying.albumTag,
+        cover: currentPlaying.cover
+      });
+      setPlaying(true);
+    }
+  }, [ currentPlaying ]);
+
+  useEffect(() => {
+    const audioIns = audioRef.current;
+    if (audioIns === null) { return; }
+    audioIns.volume = volumnPt / 100;
+  }, [ volumnPt ])
+
+  useEffect(() => {
+    
+    const play = async () => {
+      const audioIns = audioRef.current;
+      if (audioIns === null) { return; }
+      await audioIns.play();
+    };
+    const pause = async () => {
+      const audioIns = audioRef.current;
+      if (audioIns === null) { return; }
+      audioIns.pause();
+    };
+
+    if (playing) {
+      play();
+    } else {
+      pause();
+    }
+  }, [ playing ])
+
+  const onTooglePlayClicked = async () => {
+    setPlaying((prev) => !prev);
+  };
+
+  const onInputCurrentTimeChange = (currentTime: number) => {
+    const audioIns = audioRef.current;
+    if (audioIns === null) { return; }
+
+    audioIns.currentTime = currentTime;
+    setCurrTime(currTime);
+  };
+
+  const onAudioCurrentTimeChange = (e: React.SyntheticEvent<HTMLAudioElement, Event>) => {
+    const value = e.currentTarget.currentTime;
+    setCurrTime(value);
+  };
+
+  const onCurrentPlayEnd = () => {
+    
   }
+
+  const onQueueClicked = () => {
+    console.log('push');
+    history.push(paths.Queue);
+  };
 
   return (
     <div className={styles.container}>
       <div className={styles.left}>
-        <img src="https://www.melodynest.com/wp-content/uploads/2019/06/SPACE_album-mock.jpg" alt="song" />
+        <img src={playingItem.cover} alt="cover" />
         <div>
-          <p>Qua O Cua Thoi Gian</p>
-          <span>Cá hồi hoàng</span>
+          <p>{ playingItem.name }</p>
+          <span>{ playingItem.album || '' }</span>
         </div>
-        <div>
+        <IconButton className={styles.iconButton}>
           <Icon.Love />
-        </div>
-        <div>
+        </IconButton>
+        <IconButton className={styles.iconButton}>
           <Icon.MiniPlayer />
-        </div>
+        </IconButton>
       </div>
       <div className={styles.main}>
+        <audio 
+          ref={audioRef} 
+          hidden 
+          autoPlay={false}
+          src={playingItem.src}
+          onTimeUpdate={onAudioCurrentTimeChange}
+          onEnded={onCurrentPlayEnd}
+        />
         <div className={styles.actions}>
-          <div>
+          <IconButton className={styles.iconButton}>
             <Icon.Shuffle />
-          </div>
-          <div>
+          </IconButton>
+          <IconButton className={styles.iconButton}>
             <Icon.Previous />
-          </div>
-          <div onClick={handlePlay}>
+          </IconButton>
+          <IconButton className={styles.iconButton} onClick={onTooglePlayClicked}>
             {
               playing ? <Icon.Pause /> : <Icon.Play />
             }
-          </div>
-          <div>
+          </IconButton>
+          <IconButton className={styles.iconButton}>
             <Icon.Next />
-          </div>
-          <div>
+          </IconButton>
+          <IconButton className={styles.iconButton}>
             <Icon.Loop />
-          </div>
+          </IconButton>
         </div>
         <div className={styles.progress}>
-          <span>1:23</span>
+          <span>{ moment(currTime * 1000).format("mm:ss") }</span>
           <div>
             <SliderInput
-              value={timePt}
-              onValueChange={setTimePt}
+              value={currTime}
+              onValueChange={onInputCurrentTimeChange}
+              min={0}
+              max={297}
             />
           </div>
-          <span>4:26</span>
+          <span>{ moment(297 * 1000).format("mm:ss") }</span>
         </div>
 
       </div>
       <div className={styles.right}>
-        <div>
+        <IconButton className={styles.iconButton}>
           <Icon.Lyrics />
-        </div>
-        <div>
+        </IconButton>
+        <IconButton className={styles.iconButton} onClick={onQueueClicked}>
           <Icon.PlayingQueue />
-        </div>
-        <div>
+        </IconButton>
+        <IconButton className={styles.iconButton}>
           <Icon.VolumeLarge />
-        </div>
+        </IconButton>
         <div className={styles.volumeBar}
         >
           <SliderInput

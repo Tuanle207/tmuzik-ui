@@ -1,0 +1,35 @@
+@import "../../../assets/scss/_variable.scss";
+
+.container {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50rem;
+  height: 40rem;
+  margin: 3.2rem 0;
+  border-radius: 8px;
+  border: 1px solid $color-border;
+  
+  & * {
+    user-select: none;
+  }
+}
+
+.dragActive {
+  background-color: $color-dark;
+}
+
+.dropText {
+  margin: 2rem 0;
+  font-size: $font-size-medium;
+  color: $color-white;
+  font-weight: $font-weight-medium;
+}
+
+.icon {
+  height: 9.6rem;
+  width: 9.6rem;
+  fill: $color-gray-light;
+}

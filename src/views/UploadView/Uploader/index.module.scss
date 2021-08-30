@@ -1,0 +1,76 @@
+@import "../../../assets/scss/_variable.scss";
+
+.container {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: row;
+}
+
+.preview {
+  position: relative;
+  width: 30rem;
+  height: 30rem;
+  margin-right: 5rem;
+  background-color: $color-gray-light;
+}
+
+.preview:hover > .uploadButton {
+  display: flex;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+}
+
+.uploadButton {
+  position: absolute;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12rem;
+  height: 2.4rem;
+  background-color: $color-gray-light;
+  display: none;
+
+  & span {
+    font-size: $font-size-tiny !important;
+  }
+
+  & svg {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+}
+
+.input {
+  width: 50rem;
+}
+
+.privacy {
+
+  & > p {
+    margin-bottom: 1rem;
+    user-select: none;
+  }
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 100%;
+  margin-top: 2.4rem;
+}
+
+.cancelButton {
+  color: $color-white
+}

@@ -18,15 +18,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
-    "downlevelIteration": true,
-    "typeRoots": [
-      "src/@types",
-      "node_modules/@types"
-    ]
+    "jsx": "react-jsx"
   },
   "include": [
     "src",
     "./node_modules/redux-persist/types"
-  ],
+  ]
 }

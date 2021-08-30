@@ -1,0 +1,38 @@
+@import "../../assets/scss/_variable.scss";
+
+.viewContainter {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  flex: 1;
+  background-color: $color-gray-xdark;
+  overflow-x: auto;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: transparent; 
+    position: absolute;
+  }
+  
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+  
+  &::-webkit-scrollbar-thumb{
+    background-color: rgba($color-gray-light, .8);
+  }
+}
+
+.viewContent {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  box-sizing: border-box;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 15rem);
+}

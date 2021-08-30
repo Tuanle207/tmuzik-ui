@@ -1,24 +1,24 @@
-import { FC } from 'react';
+import { forwardRef } from 'react';
 import styles from './index.module.scss';
 
 interface IIConButtonProps {
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  children: React.ReactNode;
   className?: string;
 }
 
-export const IconButton: FC<IIConButtonProps> = ({
-  children,
-  onClick = () => {},
-  className = ''
-}) => {
-  
-
+export const IconButton = forwardRef<HTMLButtonElement, IIConButtonProps>((props, ref) => {
+  const {
+    children,
+    onClick = () => {},
+    className = ''
+  } = props;
 
   return (
-    <button onClick={onClick} type="button" className={[styles.container, className].join(' ')}>
+    <button ref={ref} onClick={onClick} type="button" className={[styles.container, className].join(' ')}>
       {
         children
       }
     </button>
   )
-};
+});

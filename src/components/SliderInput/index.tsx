@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import styles from './index.module.scss';
 
 interface ISliderInputProps {
@@ -17,12 +16,11 @@ export const SliderInput = ({
   onValueChange = () => {}
 }: ISliderInputProps) => {
 
-  const rangedInputRef = useRef<any>();
+  const progressWidthPt = 100 * value / max;
 
   return (
     <div className={styles.container}>
       <input
-        ref={rangedInputRef}
         type="range" 
         min={min}
         max={max}
@@ -32,7 +30,7 @@ export const SliderInput = ({
         style={{  }}
       >
       </input>
-      <div style={{ width: `${value}%` }}></div>
+      <div style={{ width: `${progressWidthPt}%` }}></div>
       <div className={styles.faceMask}></div>
     </div>
   );

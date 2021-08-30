@@ -65,6 +65,12 @@
 
 .album {
   flex: 1;
+  margin: 0 2rem;
+}
+
+.creationTime {
+  margin-right: 12rem;
+  width: 10rem;
 }
 
 .mainText {
@@ -107,4 +113,31 @@
 
 .root:hover > .length > button {
   visibility: visible;
+}
+
+
+// header
+.durationIcon {
+  stroke: currentColor;
+  height: 1.6rem;
+  width: 1.6rem;
+  align-self: center;
+  margin: 0 auto;
+}
+
+.noHover {
+  &:hover {
+    background-color: unset;
+  }
+
+  
+  &:hover .secondaryText {
+    color: $color-gray-xlight;
+  }
+
+  
+  &:hover > .index > p {
+    visibility: visible;
+  }
+
 }

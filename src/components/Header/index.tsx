@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Icon } from '../../assets';
@@ -34,7 +34,7 @@ const HeaderMenu: FC<IHeaderMenuProps> = ({
 
   const onPremiumUpgradeClicked = () => {
 
-  }
+  };
 
   return (
     <ul className={styles.menuList}>
@@ -72,8 +72,9 @@ export const Header: FC<IHeaderProps> = ({
   transparent = true
 }) => {
 
-  const menuRef = useRef(null);
-  const buttonMenuRef = useRef(null);
+  const history = useHistory();
+
+  const menuRef = useRef<HTMLDivElement>(null);
 
   const [ showMenu, setShowMenu ] = useState(false);
   
@@ -82,11 +83,15 @@ export const Header: FC<IHeaderProps> = ({
   useHiddenOnBlurred({
     display: showMenu,
     displaySetter: setShowMenu,
-    exceptSpaceRef: [ menuRef, buttonMenuRef ]
+    exceptSpaceNodes: [ menuRef ]
   });
 
   const onMenuClicked = () => {
     setShowMenu((prev) => !prev);
+  };
+
+  const onUploadButtonClicked = () => {
+    history.push(paths.Upload);
   };
 
   return (
@@ -103,13 +108,12 @@ export const Header: FC<IHeaderProps> = ({
 
       </div>
       <div className={styles.buttonGroup}>
-        <IconButton className={styles.uploadButton}>
+        <IconButton className={styles.uploadButton} onClick={onUploadButtonClicked}>
           <Icon.Upload />
         </IconButton>
       </div>
       <div className={styles.menuView}>
         <div 
-          ref={buttonMenuRef} 
           className={[styles.button, showMenu ? styles.buttonBgLight : ''].join(' ')} 
           onClick={onMenuClicked}
         >

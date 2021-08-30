@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { CardList, Playlist } from '../../../components';
+import { CardList, Playlist, Typography } from '../../../components';
 import styles from './index.module.scss';
 
 interface IUserContentBoxProps { }
@@ -10,33 +10,45 @@ const UserContentBox: FC<IUserContentBoxProps> = () => {
     <div className={styles.container}>
       <div className={styles.section}>
         <div className={styles.about}>
-          <h3 className={styles.title}>Nghe gần đây</h3>
-          <p className={styles.noteText}>Chỉ hiển thị với bạn</p>
+          <Typography variant="h3" className={styles.title}>
+            Nghe gần đây
+          </Typography>
+          <Typography variant="p2">
+            Chỉ hiển thị với bạn
+          </Typography>
         </div>
         <Playlist />
       </div>
       <div className={styles.section}>
         <div className={styles.about}>
-          <h3 className={styles.title}>Tải lên</h3>
-          <p className={styles.noteText}>Chỉ hiển thị với bạn</p>
+          <Typography variant="h3" className={styles.title}>Tải lên</Typography>
+          <Typography variant="p2">
+            Chỉ hiển thị với bạn
+          </Typography>
         </div>
         <Playlist />
       </div>
       <div className={styles.section}>
         <div className={styles.about}>
-          <h3 className={styles.title}>Playlist công khai</h3>
+          <Typography variant="h3" className={styles.title}>
+            Playlist công khai
+          </Typography>
         </div>
         <CardList />
       </div>
       <div className={styles.section}>
         <div className={styles.about}>
-          <h3 className={styles.title}>Người theo dõi</h3>
+          <Typography variant="h3" className={styles.title}>
+            Người theo dõi
+          </Typography>
         </div>
         <CardList />
       </div>
       <div className={styles.section}>
         <div className={styles.about}>
-          <h3 className={styles.title}>Đang theo dõi</h3>
+          <Typography variant="h3" className={styles.title}>
+            Đang theo dõi
+          </Typography>
         </div>
         <CardList />
       </div>

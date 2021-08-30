@@ -9,7 +9,8 @@ import { rootSaga } from './saga';
 const persistConfig = {
   key: 'root',
   storage: storage ,
-  whilelist: ['auth']
+  whilelist: ['auth'],
+  blacklist: ['ui', 'audio', 'queue']
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

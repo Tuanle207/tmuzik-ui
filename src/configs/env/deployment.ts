@@ -7,6 +7,7 @@ const ENV: IENV = {
     appId: '2964497603821160',
     version: 'v11.0',
   },
+  requestTimeout: 15000,
   enableLogger: false
 };
 
