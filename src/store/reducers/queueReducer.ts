@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { IObject } from '../../utils/interfaces';
 import { queueAction } from '../actions';
-import { IPlayingAudioItem } from '../interface/queue';
+import { IPlayingAudioItem, PlayingState } from '../interface/queue';
 
 
 export interface IQueueState extends IObject {
@@ -11,6 +11,7 @@ export interface IQueueState extends IObject {
   shuffle: boolean;
   canPlayNext: boolean;
   canPlayPrevious: boolean;
+  playingStatus: PlayingState;
 }
 
 const initial: IQueueState = {
@@ -20,10 +21,16 @@ const initial: IQueueState = {
   shuffle: false,
   canPlayNext: false,
   canPlayPrevious: false,
+  playingStatus: 'pause',
 };
 
 export const queueReducer = createReducer(initial, build => {
   build
+    .addCase(queueAction.changePlayingStatus,
+      (state, action) => {
+        state.playingStatus = action.payload;
+        return state;
+    })
     .addCase(queueAction.addAudio,
       (state, action) => {
         
@@ -36,6 +43,29 @@ export const queueReducer = createReducer(initial, build => {
         } else {
           state.canPlayNext = true;
         }
+        return state;
+    })
+    .addCase(queueAction.addAndPlayAudio,
+      (state, action) => {
+        // there's no items in queue
+        if (state.current === null) {
+          state.queue.push(action.payload);
+          state.current = action.payload;
+          return state;
+        }  
+        // there's some items in queue
+        const index = state.queue.findIndex((x) => x.id === state.current?.id);
+        state.queue.splice(index + 1, 0, action.payload);
+        state.current = state.queue[index + 1];
+
+        if (state.loop || state.shuffle) {
+          return state;
+        }
+        if (!state.queue[index + 2]) {
+          state.canPlayNext = false;
+        }
+        state.canPlayPrevious = true;
+        
         return state;
     })
     .addCase(queueAction.removeAudio,
@@ -164,7 +194,7 @@ export const queueReducer = createReducer(initial, build => {
 
         // check & set canPlayPrevious flag to true
         if (!state.queue[index - 2]) {
-          state.canPlayNext = false;
+          state.canPlayPrevious = false;
         }
 
         return state;

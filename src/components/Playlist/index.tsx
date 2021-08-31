@@ -11,13 +11,17 @@ import { queueAction } from '../../store/actions';
 interface IPlaylistProps {
   data?: IData[];
   render?: (data: IData, index: number) => JSX.Element;
+  renderHeader?: () => JSX.Element;
   showHeader?: boolean;
+  activeItemId?: string;
 }
 
 export const Playlist: FC<IPlaylistProps> = ({
   data = [],
   render,
+  renderHeader,
   showHeader = false,
+  activeItemId,
 }) => {
 
   const [ menuId ] = useState('context-menu-id');
@@ -53,19 +57,24 @@ export const Playlist: FC<IPlaylistProps> = ({
         {
           showHeader && (
             <div className={styles.header}>
-              <PlaylistHeader hidden={{creationTime: false}} />
+              {
+                renderHeader ? renderHeader() : (
+                  <PlaylistHeader hidden={{creationTime: true}} />
+                )
+              }
             </div>
           )
         }
         {
           render ? data.map((el, index) => render(el, index + 1)) :
           data.map((el, index) => 
-          <PlaylistItem 
+          <PlaylistItem
             key={el.id} 
             index={index + 1} 
             data={el} 
-            hidden={{creationTime: false}} 
+            hidden={{creationTime: true}} 
             contextMenuId={menuId}
+            isActiveItem={el.id === activeItemId}
           />)
         }
         <ContextMenu id={menuId}>

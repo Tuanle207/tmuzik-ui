@@ -7,3 +7,5 @@ export interface IPlayingAudioItem {
   albumTag: string;
   artist: string;
 }
+
+export type PlayingState = 'play' | 'pause' | 'changing';

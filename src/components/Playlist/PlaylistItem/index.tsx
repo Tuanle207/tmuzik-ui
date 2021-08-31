@@ -2,10 +2,14 @@ import moment from 'moment';
 import { FC, useRef } from 'react';
 import { Icon } from '../../../assets';
 import { IconButton } from '../../IconButton';
-import styles from './index.module.scss';
-import defaultCover from '../../../assets/img/default_music_cover.png';
 import { ContextMenuTrigger } from 'react-contextmenu';
 import { triggerRightClick } from '../../../utils/triggerRightClick';
+import styles from './index.module.scss';
+import defaultCover from '../../../assets/img/default_music_cover.png';
+import equaliserAnimationGif from '../../../assets/img/equaliser-animated-green.gif';
+import { useDispatch, useSelector } from 'react-redux';
+import { queueSelector } from '../../../store/selectors';
+import { queueAction } from '../../../store/actions';
 
 export interface IData {
   id: string; 
@@ -14,7 +18,7 @@ export interface IData {
   artist: string; 
   album: string; 
   length: number; 
-  creationTime: string;
+  creationTime?: string;
   url: string;
 }
 
@@ -28,6 +32,7 @@ interface IPlaylistItemProps {
   index: number;
   hidden?: HiddenOptions;
   contextMenuId: string;
+  isActiveItem?: boolean;
 }
 
 interface IPlaylistHeaderProps {
@@ -42,10 +47,15 @@ export const PlaylistItem: FC<IPlaylistItemProps> = ({
     album: false,
     creationTime: true
   },
-  contextMenuId
+  contextMenuId,
+  isActiveItem = false,
 }) => {
 
   const optionsButtonRef = useRef<HTMLButtonElement>(null);
+
+  const dispatch = useDispatch();
+  const playingStatus = useSelector(queueSelector.playingStatus);
+  const playingItem = useSelector(queueSelector.current);
 
   const onOptionsClicked = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const element = optionsButtonRef.current;
@@ -56,16 +66,51 @@ export const PlaylistItem: FC<IPlaylistItemProps> = ({
     triggerRightClick(element, {x,y});
   };
 
+  const onPauseClicked = () => {
+    dispatch(queueAction.changePlayingStatus('pause'))
+  };
+
+  const onPlayClicked = () => {
+    if (playingItem?.id !== data.id) {
+      dispatch(queueAction.addAndPlayAudio({
+        id: data.id,
+        name: data.name,
+        albumTag: data.album,
+        artist: data.artist,
+        cover: data.photo,
+        length: data.length,
+        url: data.url
+      }));
+    } else {
+      dispatch(queueAction.changePlayingStatus('play'));
+    }
+  };
+
   return (
     <ContextMenuTrigger id={contextMenuId} attributes={{ itemID: data.id }}>
       <div className={styles.root}>
         <div className={styles.index}>
-          <p className={styles.secondaryText}>
-            { index }
-          </p>
-          <IconButton className={styles.playIcon}>
-            <Icon.PlayNoRoundBorder />
-          </IconButton>
+          {
+            isActiveItem && playingStatus === 'play' ? (
+              <>
+                <img src={equaliserAnimationGif} alt="visualizer" />
+                <IconButton className={styles.playIcon} onClick={onPauseClicked}>
+                  <Icon.PauseNoRoundBorder />
+                </IconButton>
+              </>
+            ) : 
+            (
+              <>
+                <p className={[styles.secondaryText, isActiveItem ? styles.activeColor : ''].join(' ')}>
+                  { index }
+                </p>
+                <IconButton className={styles.playIcon} onClick={onPlayClicked}>
+                  <Icon.PlayNoRoundBorder />
+                </IconButton>
+              </>
+            )
+          }
+          
         </div>
         <div className={styles.mainInfo}>
           <img
@@ -74,7 +119,7 @@ export const PlaylistItem: FC<IPlaylistItemProps> = ({
             src={ data.photo || defaultCover}
           />
           <div>
-            <p className={styles.mainText}>
+            <p className={[styles.mainText, isActiveItem ? styles.activeColor : ''].join(' ')}>
               { data.name }
             </p>
             <p className={styles.secondaryText}>

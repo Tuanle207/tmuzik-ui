@@ -1,9 +1,13 @@
 import { createAction } from '@reduxjs/toolkit';
-import { IPlayingAudioItem } from '../interface/queue';
+import { IPlayingAudioItem, PlayingState } from '../interface/queue';
 
 export const queueAction = {
   addAudio: createAction(
     'app/queue/addAudio',
+    (payload: IPlayingAudioItem) => ({payload})
+  ),
+  addAndPlayAudio: createAction(
+    'app/queue/addAndPlayAudio',
     (payload: IPlayingAudioItem) => ({payload})
   ),
   removeAudio: createAction(
@@ -31,4 +35,8 @@ export const queueAction = {
     'app/queue/setLoop',
     (payload: boolean) => ({payload}),
   ),
+  changePlayingStatus: createAction(
+    'app/queue/changePlayingStatus',
+    (payload: PlayingState) => ({payload})
+  )
 }

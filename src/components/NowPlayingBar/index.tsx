@@ -9,7 +9,7 @@ import { queueSelector } from '../../store/selectors';
 import { IconButton } from '../IconButton';
 import { SliderInput } from '../SliderInput';
 import styles from './index.module.scss';
-
+import defaultCoverfrom from '../../assets/img/default_music_cover.png';
 interface INowPlayingBarProps {
 
 }
@@ -34,6 +34,7 @@ export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
   const [ volumnPt, setVolumPt ] = useState(70);
   const [ mute, setMute ] = useState(false);
   const [ playingStatus, setPlayingStatus ] = useState<PlayingState>('pause');
+  const playingStatus1 = useSelector(queueSelector.playingStatus);
  
   const [ playingItem, setPlayingItem ] = useState<IPlayingItem>({
     name: '',
@@ -65,19 +66,21 @@ export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
 
   useEffect(() => {
     if (playingItem.src && playingItem.src.trim() !== '') {
-      setPlayingStatus('changing');
+      dispatch(queueAction.changePlayingStatus('changing'));
+      // setPlayingStatus('changing');
     }
-  }, [ playingItem ]);
+  }, [ playingItem, dispatch ]);
   
   useEffect(() => {
-    if (playingStatus === 'changing') {
-      setPlayingStatus('play');
-    } else if (playingStatus === 'play') {
+    if (playingStatus1 === 'changing') {
+      // setPlayingStatus1('play');
+      dispatch(queueAction.changePlayingStatus('play'));
+    } else if (playingStatus1 === 'play') {
       play();
-    } else if (playingStatus === 'pause') {
+    } else if (playingStatus1 === 'pause') {
       pause();
     }
-  }, [ playingStatus ]);
+  }, [ playingStatus1, dispatch ]);
 
   useEffect(() => {
     const audioIns = audioRef.current;
@@ -103,17 +106,13 @@ export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
     audioIns.pause();
   };
 
-  // const onSrcLoad = () => {
-  //   const audioIns = audioRef.current;
-  //   if (audioIns === null) { return; }
-  //   audioIns.play();
-  // };
-
   const onTooglePlayClicked = async () => {
-    if (playingStatus === 'play') {
-      setPlayingStatus('pause');
-    } else if (playingStatus === 'pause') {
-      setPlayingStatus('play');
+    if (playingStatus1 === 'play') {
+      // setPlayingStatus('pause');
+      dispatch(queueAction.changePlayingStatus('pause'));
+    } else if (playingStatus1 === 'pause') {
+      dispatch(queueAction.changePlayingStatus('play'));
+      // setPlayingStatus('play');
     }
   };
 
@@ -139,7 +138,8 @@ export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
     if (canPlayNext) {
       onPlayNextClicked();
     } else {
-      setPlayingStatus('pause');
+      // setPlayingStatus('pause');
+      dispatch(queueAction.changePlayingStatus('pause'));
     }
   };
 
@@ -171,7 +171,7 @@ export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
   return (
     <div className={styles.container}>
       <div className={styles.left}>
-        <img src={playingItem.cover} alt="cover" />
+        <img src={playingItem.cover || defaultCoverfrom} alt="cover" />
         <div>
           <p>{ playingItem.name }</p>
           <span>{ playingItem.album || '' }</span>
@@ -211,7 +211,7 @@ export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
             onClick={onTooglePlayClicked}
           >
           {
-            playingStatus === 'play' ? <Icon.Pause /> : <Icon.Play />
+            playingStatus1 === 'play' ? <Icon.Pause /> : <Icon.Play />
           }
           </IconButton>
           <IconButton 

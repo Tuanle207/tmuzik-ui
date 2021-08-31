@@ -26,4 +26,8 @@ export const queueSelector = {
     (state: RootState) => state.queue.canPlayPrevious, 
     (canPlayPrevious) => canPlayPrevious
   ),
+  playingStatus: createSelector(
+    (state: RootState) => state.queue.playingStatus, 
+    (playingStatus) => playingStatus
+  ),
 };

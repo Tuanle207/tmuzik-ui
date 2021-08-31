@@ -9,6 +9,7 @@
   box-sizing: border-box;
   border-radius: 4px;
   user-select: none;
+  line-height: 1.2;
 }
 
 .root:hover {
@@ -26,6 +27,21 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+  }
+
+  & > img {
+    height: 1.2rem;
+    width: 1.2rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.root:hover {
+  & > .index > img {
+    display: none;
   }
 }
 
@@ -55,6 +71,12 @@
   flex: 2;
   display: flex;
   flex-direction: row;
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 }
 
 .photo {
@@ -140,4 +162,8 @@
     visibility: visible;
   }
 
+}
+
+.activeColor {
+  color: $color-blue-dark;
 }
