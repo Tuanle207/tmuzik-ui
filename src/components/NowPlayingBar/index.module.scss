@@ -23,17 +23,20 @@
   flex-direction: row;
   align-items: center;
 
-  & > img {
+  & > img, & > svg {
     margin: 0 1.6rem;
     height: 6rem;
     width: 6rem;
     border-radius: 2px;
     user-select: none;
+    box-shadow: 0px 0px 40px $color-border;
+    box-shadow: 0 0 10px rgba($color-black, .4);
   }
 
   & > div {
     margin-right: 2rem;
     line-height: 1.2;
+    flex: 1;
 
     & > p {
       color: $color-white;

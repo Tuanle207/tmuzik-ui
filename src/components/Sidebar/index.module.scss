@@ -1,3 +1,4 @@
+@import "../../assets/scss/_variable.scss";
 
 .container {
   display: flex;
@@ -81,7 +82,7 @@
     padding: .8rem 0;
   }
   & li:hover {
-    color: #fff;
+    color: $color-white;
   }
 }
 
@@ -90,4 +91,8 @@
   margin-bottom: 0;
   height: 1px;
   background-color: #282828;
+}
+
+.activeColor {
+  color: $color-white;
 }

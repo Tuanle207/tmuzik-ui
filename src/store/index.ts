@@ -5,12 +5,14 @@ import reducers, { IState } from './reducers';
 import persistReducer, { PersistPartial } from 'redux-persist/es/persistReducer';
 import persistStore from 'redux-persist/es/persistStore';
 import { rootSaga } from './saga';
+import { history } from '../routings';
+import { routerMiddleware } from 'connected-react-router';
 
 const persistConfig = {
   key: 'root',
   storage: storage ,
   whilelist: ['auth'],
-  blacklist: ['ui', 'audio', 'queue']
+  blacklist: ['router', 'ui', 'audio', 'queue', 'playlist']
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
@@ -20,6 +22,7 @@ const sagaMiddleware = createSagaMiddleware();
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: [
+    routerMiddleware(history),
     sagaMiddleware,
   ]
 });

@@ -25,12 +25,12 @@ export const interceptHttpRequest = (axios: AxiosInstance) => {
       
     try { // Get new token with refresh token if it's expired
       if (isTokenExpired(expiryTime) && userId && refreshToken && refreshToken.trim() !== '') {
-        const reqBody: ApiRequest.RefreshLogin = {
+        const reqBody: API.RefreshLoginRequest = {
           refreshToken,
           userId
         } 
-        const refreshTokenResult = await axios.post<ApiRequest.RefreshLogin,
-          AxiosResponse<ApiResponse.RefreshLogin>>('/api/auth/refresh', reqBody);
+        const refreshTokenResult = await axios.post<API.RefreshLoginRequest,
+          AxiosResponse<API.RefreshLoginResponse>>('/api/auth/refresh', reqBody);
 
         newToken = refreshTokenResult.data.accessToken;
 

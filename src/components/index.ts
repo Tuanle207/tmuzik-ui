@@ -17,3 +17,6 @@ export * from './RadioGroup';
 export * from './Loader';
 export * from './Tooltip';
 export * from './Typography';
+export * from './IntroCard';
+export * from './LinearEffectBackground';
+export * from './Modal';

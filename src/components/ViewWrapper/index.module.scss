@@ -6,6 +6,13 @@
   position: relative;
   flex: 1;
   background-color: $color-gray-xdark;
+}
+
+.viewContent {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  box-sizing: border-box;
   overflow-x: auto;
   overflow-y: auto;
 
@@ -13,6 +20,11 @@
     border-radius: 10px;
     background: transparent; 
     position: absolute;
+    // right: -10px;
+    overflow: overlay;
+    scrollbar-gutter: stable;
+    z-index: 10;
+
   }
   
   &::-webkit-scrollbar {
@@ -24,15 +36,12 @@
   }
 }
 
-.viewContent {
-  position: relative;
-  flex: 1;
-  min-height: 0;
-  box-sizing: border-box;
-}
-
 .content {
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - 15rem);
+  min-height: calc(100vh - 7rem);
+
+  & > *:first-child {
+    padding-top: 6rem;
+  }
 }

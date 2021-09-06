@@ -1,29 +1,33 @@
-import httpClient from '../../configs/axios'
+import BaseApiService from './base';
 
-class AuthApiService {
+class AuthApiService extends BaseApiService {
 
-  async postLoginAsync(input: ApiRequest.Login) {
-    const result = await httpClient.post<ApiResponse.Login>('/api/auth/login', input);
+  constructor() {
+    super('auth');
+  }
+
+  loginAsync = async (input: API.LoginRequest) => {
+    const result = await this.post<API.LoginResponse>('login', input);
     return result;
   }
 
-  async postLoginWithFbAsync(input: ApiRequest.LoginWithFacebook) {
-    const result = await httpClient.post<ApiResponse.Login>('/api/auth/loginWithFacebook', input);
+  loginWithFbAsync = async (input: API.LoginWithFacebookRequest) => {
+    const result = await this.post<API.LoginResponse>('loginWithFacebook', input);
     return result; 
   }
 
-  async signupAsync(input: ApiRequest.Signup) {
-    const result = await httpClient.post<ApiResponse.Signup>('/api/auth/signup', input);
+  signupAsync = async (input: API.SignupRequest) => {
+    const result = await this.post<API.SignupResponse>('signup', input);
     return result;
   }
 
-  async refreshLoginAsync(input: ApiRequest.RefreshLogin) {
-    const result = await httpClient.post<ApiResponse.RefreshLogin>('/api/auth/refresh', input);
+  refreshLoginAsync = async (input: API.RefreshLoginRequest) => {
+    const result = await this.post<API.RefreshLoginResponse>('refresh', input);
     return result;
   }
 
-  async revokeLoginAsync(input: ApiRequest.RevokeLogin) {
-    return await httpClient.post<void>('/api/auth/revoke', input);
+  revokeLoginAsync = async (input: API.RevokeLoginRequest) => {
+    return await this.post<void>('revoke', input);
   }
 }
 

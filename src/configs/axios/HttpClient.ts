@@ -63,18 +63,13 @@ export class HttpClient {
     }
   }
 
-  async postFormData<T>(endpoint: string, body: IObject = {}): Promise<T> {
+  async postFormData<T>(endpoint: string, body: FormData): Promise<T> {
     try {
       const headers = {
         'Content-Type': 'multipart/form-data',
       };
 
-      const formData = new FormData();
-      Object.keys(body).forEach((key) => {
-        formData.append(key, body[key]);
-      })
-
-      const result = await this.instance.post(endpoint, formData, {
+      const result = await this.instance.post(endpoint, body, {
         headers
       });
       return result?.data;

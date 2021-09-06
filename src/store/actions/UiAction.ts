@@ -14,4 +14,8 @@ export const uiAction = {
     'app/ui/setLoadingResult',
     (payload: LoadingResult) => ({ payload })
   ),
+  setDominantColor: createAction(
+    'app/ui/setDominantColor',
+    (payload: string | undefined) => ({ payload })
+  )
 };

@@ -1,27 +1,33 @@
-export interface AccessToken {
+export interface AccessTokenResponse {
   accessToken: string;
   accessTokenExpiresAt: string;
 }
 
 export interface LoginResponseData {
   id: string;
+  profileId: string;
   email: string;
+  verified: boolean;
+  creationTime: string;
   fullName: string;
-  avatar: string;
   dob: string;
+  avatar?: string;
+  cover?: string;
+  isPremium: boolean;
+  isArtist: boolean;
 }
 
-export interface LoginResponseToken extends AccessToken {
+export interface LoginResponseToken extends AccessTokenResponse {
   refreshToken: string;
 }
 
-export interface Login {
+export interface LoginResponse {
   token: LoginResponseToken;
   data: LoginResponseData;
 }
 
-export interface RefreshLogin extends AccessToken {}
+export interface RefreshLoginResponse extends AccessTokenResponse {}
 
-export interface Signup {
+export interface SignupResponse {
   message: string;
 }

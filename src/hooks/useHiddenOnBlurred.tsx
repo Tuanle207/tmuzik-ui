@@ -23,7 +23,6 @@ export const useHiddenOnBlurred = ({
       exceptSpaceNodes.forEach((node) => {
 
         if (node === null) { 
-          console.log('node === null')
           return;
         }
         
@@ -31,13 +30,10 @@ export const useHiddenOnBlurred = ({
 
         if (ins && (e.target === ins || isDescendant(ins, e.target))) {
           handle = false;
-          console.log('e.target === ins || isDescendant(ins, e.target))')
-
           return;
         }
 
         if (e.target === node || isDescendant(node, e.target)) {
-          console.log('e.target === node || isDescendant(node, e.target)')
           handle = false;
         }
       });

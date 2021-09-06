@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { push } from 'connected-react-router';
 import { Icon } from '../../../assets';
 import { paths } from '../../../routings';
 import { authAction } from '../../../store/actions';
@@ -12,11 +12,9 @@ interface ILoginFormProps { }
 
 export const LoginForm: FC<ILoginFormProps> = () => {
 
-  const history = useHistory();
-
   const dispatch = useDispatch();
   
-  const { control, handleSubmit, formState: { errors } } = useForm<ApiRequest.Login>({
+  const { control, handleSubmit, formState: { errors } } = useForm<API.LoginRequest>({
     defaultValues: {
       email: '',
       password: '',
@@ -25,14 +23,14 @@ export const LoginForm: FC<ILoginFormProps> = () => {
 
 
   const onSignupClicked = () => {
-    history.push(paths.Signup);
+    dispatch(push(paths.Signup));
   };
   
   const onSigninClicked = () => {
     handleSubmit(onSubmit);
   };
   
-  const onSubmit = (data: ApiRequest.Login) => {
+  const onSubmit = (data: API.LoginRequest) => {
     dispatch(authAction.postLogin(data));
   };
 
@@ -71,7 +69,6 @@ export const LoginForm: FC<ILoginFormProps> = () => {
               ]}
             />}
           />
-        
         </div>
         <div>
           <Controller

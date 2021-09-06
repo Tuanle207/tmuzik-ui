@@ -1,16 +1,49 @@
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Icon } from '../../assets';
-import { paths } from '../../routings';
+import { IPlaylistViewParams, paths } from '../../routings';
+import { playlistAction } from '../../store/actions';
+import { playlistSelector } from '../../store/selectors';
+import { paramsSelectorCreator } from '../../utils/selectorCreators';
 import styles from './index.module.scss';
 
 
 export const Sidebar = () => {
 
   const history = useHistory();
+  
+  const dispatch = useDispatch();
+  const userPlaylists = useSelector(playlistSelector.userPlaylists);
+  const { playlistId } = useSelector(paramsSelectorCreator<IPlaylistViewParams>(paths.Playlist));
+
+  useEffect(() => {
+    dispatch(playlistAction.getUserPlaylists());
+  }, [dispatch]);
+
+  useEffect(() => {
+    // if (playlistId) {
+    //   console.log({playlistId});
+    // }
+  }, [playlistId]);
 
   const navigate = (path: string) => {
     history.push(path);
-  }
+  };
+
+  const navigateToPlaylist = (id: string) => {
+    const path = paths.Playlist.replace(':playlistId', id);
+    history.push(path);
+  };
+
+  const onCreatePlaylistClicked = () => {
+    const PLAYLIST_COUNT = userPlaylists.length;
+    const name = `Playlist #${PLAYLIST_COUNT + 1}`;
+    dispatch(playlistAction.createPlaylist({
+      name,
+      description: ''
+    }));
+  };
 
   return (
     <div className={styles.container}>
@@ -40,7 +73,7 @@ export const Sidebar = () => {
           <Icon.Favorite />
           <span>Bài hát yêu thích</span>
         </li>
-        <li className={styles.menuItem}>
+        <li className={styles.menuItem} onClick={onCreatePlaylistClicked}>
           <Icon.AddPlaylist />
           <span>Tạo playlist</span>
         </li>
@@ -48,37 +81,17 @@ export const Sidebar = () => {
       <div className={styles.divider} />
       <div className={styles.playlist} >
         <ul>
-          <li>
-            <span>Nhạc hay tháng 12</span>
-          </li>
-          <li>
-            <span>Những bài hát thể loại ballad rất là hay</span>
-          </li>
-          <li>
-            <span>Nhạc hay tháng 12</span>
-          </li>
-          <li>
-            <span>Những bài hát thể loại ballad rất là hay</span>
-          </li>
-          <li>
-            <span>Nhạc hay tháng 12</span>
-          </li>
-          <li>
-            <span>Những bài hát thể loại ballad rất là hay</span>
-          </li>
-          <li>
-            <span>Nhạc hay tháng 12</span>
-          </li>
-          <li>
-            <span>Những bài hát thể loại ballad rất là hay</span>
-          </li>
-          <li>
-            <span>Nhạc hay tháng 12</span>
-          </li>
-          <li>
-            <span>Những bài hát thể loại ballad rất là hay</span>
-          </li>
-          
+        {
+          userPlaylists.map(({ id, name}) => (
+            <li 
+              key={id} 
+              className={playlistId === id ? styles.activeColor : ''}
+              onClick={() => navigateToPlaylist(id)}
+            >
+              <span>{ name }</span>
+            </li>
+          ))
+        }
         </ul>
       </div>
     </div>

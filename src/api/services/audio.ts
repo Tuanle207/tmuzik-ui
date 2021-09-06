@@ -1,13 +1,18 @@
-import httpClient from '../../configs/axios';
+import BaseApiService from './base';
 
-class AudioApiService {
-  async postUploadAudioAsync(input: ApiRequest.UploadAudio) {
-    const result = await httpClient.postFormData<ApiResponse.UploadAudio>('/api/audios', input);
+class AudioApiService extends BaseApiService {
+
+  constructor() {
+    super('audios');
+  }
+
+  uploadAudioAsync = async (input: API.UploadAudioRequest) => {
+    const result = await this.postFormData<API.UploadAudioResponse>('', input);
     return result;
   }
 
-  async getUserUploadAudioAsync(input: ApiRequest.GetUserUploadAudio) {
-    const result = await httpClient.get<ApiResponse.GetUserUploadAudio>('/api/audios/uploaded', input);
+  getUserUploadAudioAsync = async (input: API.GetUserUploadAudioRequest) => {
+    const result = await this.get<API.GetUserUploadAudioResponse>('uploaded', input);
     return result;
   }
 }

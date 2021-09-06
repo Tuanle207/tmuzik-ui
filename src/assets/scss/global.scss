@@ -104,3 +104,9 @@ textarea, input, button {
   color: $color-gray-light;
   pointer-events: none;
 }
+
+// React-modal
+.ReactModal__Overlay {
+  z-index: 1000;
+  background-color: rgba($color-black, .7) !important;
+}

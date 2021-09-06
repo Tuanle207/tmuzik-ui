@@ -1,7 +1,7 @@
+import { push } from 'connected-react-router';
 import { FC } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import styles from './index.module.scss';
-
 
 interface ILinkProps {
   to?: string;
@@ -12,11 +12,11 @@ export const Link: FC<ILinkProps> = ({
   children
 }) => {
 
-  const history = useHistory();
+  const dispatch = useDispatch();
 
   const onClicked = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
-    history.push(to);
+    dispatch(push(to));
   }
 
   return (

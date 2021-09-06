@@ -1,6 +1,6 @@
 import { PageModelRequest } from '../../../utils/interfaces';
 
-export interface UploadAudio {
+export interface UploadAudioRequest {
   name: string;
   artists: string;
   albumTag?: string;
@@ -12,6 +12,6 @@ export interface UploadAudio {
   audioFile: File;
 }
 
-export interface GetUserUploadAudio extends PageModelRequest {
+export interface GetUserUploadAudioRequest extends PageModelRequest {
 
 }

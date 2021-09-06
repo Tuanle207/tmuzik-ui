@@ -1,10 +1,10 @@
-import { FC, MouseEventHandler } from 'react';
+import { FC } from 'react';
 import styles from './index.module.scss';
 
 interface IButtonProps {
   icon?: JSX.Element;
   title: string;
-  variant?: 'contained' | 'text' | 'outlined';
+  variant?: 'contained' | 'text' | 'outlined' | 'round';
   iconPosition?: 'left' | 'right';
   size?: 'small' | 'medium';
   className?: string;
@@ -31,6 +31,7 @@ export const Button: FC<IButtonProps> = ({
         styles.button, 
         variant === 'text' ? styles.buttonText :
         variant === 'outlined' ? styles.buttonOutlined : '',
+        variant === 'round' ? styles.buttonRound : '',
         size === 'medium' ? styles.buttonMedium : '',
         className || ''
       ].join(' ')}

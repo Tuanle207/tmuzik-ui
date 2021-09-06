@@ -9,10 +9,11 @@ export interface IUIState extends IObject {
   viewLoadingText: string;
   success: boolean | null;
   fail: boolean | null;
+  dominantColor?: string;
 }
 
 const initial: IUIState = {
-  startingApp: false,
+  startingApp: true,
   viewLoading: false,
   viewLoadingText: 'loading...',
   success: null,
@@ -37,4 +38,9 @@ export const uiReducer = createReducer(initial, build => {
         state[action.payload.type] = action.payload.loading;
         return state;
     })
+    .addCase(uiAction.setDominantColor,
+      (state, action) => {
+        state.dominantColor = action.payload;
+        return state;
+    });
 });

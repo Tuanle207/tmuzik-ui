@@ -80,7 +80,7 @@ const Uploader: FC<IUploaderProps> = ({
     const cover = customCover ?? (iPicture !== null ? 
       new File([iPicture.data.buffer], iPicture.name || 'cover', { type: iPicture.format }) 
       : null);
-    const input: ApiRequest.UploadAudio = {
+    const input: API.UploadAudioRequest = {
       name: data.name,
       artists: data.artist,
       length: metadata.duration || 0,

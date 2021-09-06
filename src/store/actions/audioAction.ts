@@ -6,17 +6,17 @@ export const audioAction = {
   // post user audio
   postUploadAudio: createAction(
     'app/audio/uploadAudio',
-    (payload: ApiRequest.UploadAudio) => ({payload}),
+    (payload: API.UploadAudioRequest) => ({payload}),
   ),
 
   // get user upload audio
   getUserUploadAudio: createAction(
     'app/audio/getUserUploadAudio',
-    (payload: ApiRequest.GetUserUploadAudio) => ({payload}),
+    (payload: API.GetUserUploadAudioRequest) => ({payload}),
   ),
   setUserUploadAudioStorage: createAction(
     'app/audio/setUserUploadAudioStorage',
-    (payload: ApiResponse.GetUserUploadAudio) => ({payload}),
+    (payload: API.GetUserUploadAudioResponse) => ({payload}),
   ),
   setUserUploadAudioStatus: createAction(
     'app/audio/setUserUploadAudioStatus',

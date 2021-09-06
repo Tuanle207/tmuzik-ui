@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Route, Redirect, RouteComponentProps } from 'react-router-dom';
+import { Redirect, Route, RouteComponentProps } from 'react-router';
 
 interface Props {
   component: FC<RouteComponentProps>;
@@ -19,7 +19,7 @@ export const ProtectedRoute: FC<Props> = ({
 }) => {
 
   return (
-    <Route 
+    <Route
       {...{ path, exact, ...rest }}
       render={props => 
         isAuthenticated ? 

@@ -1,0 +1,65 @@
+@import "../../assets/scss/_variable.scss";
+
+.container {
+  min-width: 48rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: none;
+  border-radius: 8px;
+  background-color: $color-gray-dark;
+}
+
+.container:focus-visible {
+  outline: none;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.6rem;
+  padding-right: 1rem;
+}
+
+.closeButton {
+  background-color: transparent;
+  color: $color-gray-xlight;
+
+  & > svg {
+    fill: currentColor;
+    stroke: currentColor;
+  }
+}
+
+.closeButton:hover {
+  background-color: $color-gray-medium;
+}
+
+.confirmClose {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: $color-white;
+  padding: .6rem;
+  margin: 0 1.6rem;
+  background-color: #2e77d0;
+  border-radius: 4px;
+
+  & > svg {
+    height: 1.6rem;
+    width: 1.6rem;
+    fill: currentColor;
+  }
+
+  & > p {
+    font-size: $font-size-tiny;
+    margin-left: .8rem;
+  }
+}
+
+.content {
+  padding: 1.6rem;
+}

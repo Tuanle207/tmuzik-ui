@@ -5,7 +5,7 @@ import { audioApiService } from '../../api/services';
 import { uiAction } from '../actions';
 import { audioAction } from '../actions/audioAction';
 
-function* postUploadAudio(action: PayloadAction<ApiRequest.UploadAudio>): SagaIterator {
+function* postUploadAudio(action: PayloadAction<API.UploadAudioRequest>): SagaIterator {
   try {
     const { payload } = action;
     yield put(uiAction.viewLoading({
@@ -13,7 +13,7 @@ function* postUploadAudio(action: PayloadAction<ApiRequest.UploadAudio>): SagaIt
       text: 'đang tải lên...'
     }));
 
-    const result = yield call(audioApiService.postUploadAudioAsync, payload);
+    yield call(audioApiService.uploadAudioAsync, payload);
 
     yield put(uiAction.setLoadingResult({
       type: 'success',
@@ -30,7 +30,7 @@ function* postUploadAudio(action: PayloadAction<ApiRequest.UploadAudio>): SagaIt
   }
 }
 
-function* getUserUploadAudio(action: PayloadAction<ApiRequest.GetUserUploadAudio>): SagaIterator {
+function* getUserUploadAudio(action: PayloadAction<API.GetUserUploadAudioRequest>): SagaIterator {
   try {
     const { payload } = action;
     yield put(audioAction.setUserUploadAudioStatus({

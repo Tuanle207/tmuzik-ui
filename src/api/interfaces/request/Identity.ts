@@ -1,9 +1,9 @@
-export interface Login {
+export interface LoginRequest {
   email: string;
   password: string;
 }
 
-export interface Signup {
+export interface SignupRequest {
   email: string;
   password: string;
   passwordConfirm: string;
@@ -11,16 +11,16 @@ export interface Signup {
   dob: string;
 }
 
-export interface RefreshLogin {
+export interface RefreshLoginRequest {
   refreshToken: string;
   userId: string;
 }
 
-export interface RevokeLogin {
+export interface RevokeLoginRequest {
   refreshToken: string;
   userId: string;
 }
 
-export interface LoginWithFacebook {
+export interface LoginWithFacebookRequest {
   fbAccessToken: string;
 }

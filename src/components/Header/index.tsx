@@ -1,11 +1,11 @@
+import { push } from 'connected-react-router';
 import { FC, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import { Icon } from '../../assets';
 import { useHiddenOnBlurred } from '../../hooks';
 import { paths } from '../../routings';
 import { authAction } from '../../store/actions';
-import { authSelector } from '../../store/selectors';
+import { authSelector, uiSelector } from '../../store/selectors';
 import { IconButton } from '../IconButton';
 import styles from './index.module.scss';
 
@@ -18,7 +18,6 @@ const HeaderMenu: FC<IHeaderMenuProps> = ({
 }) => {
 
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const onSignoutClicked = () => {
     dispatch(authAction.postLogout());
@@ -29,7 +28,7 @@ const HeaderMenu: FC<IHeaderMenuProps> = ({
   };
 
   const onProfileClicked = () => {
-    history.push(paths.Profile.replace(':userId', userId));
+    dispatch(push(paths.Profile.replace(':userId', userId)));
   };
 
   const onPremiumUpgradeClicked = () => {
@@ -65,19 +64,19 @@ const HeaderMenu: FC<IHeaderMenuProps> = ({
 };
 
 interface IHeaderProps {
-  transparent?: boolean;
+  opacity?: number;
 }
 
 export const Header: FC<IHeaderProps> = ({
-  transparent = true
+  opacity = 1
 }) => {
-
-  const history = useHistory();
-
+  
   const menuRef = useRef<HTMLDivElement>(null);
 
   const [ showMenu, setShowMenu ] = useState(false);
-  
+
+  const dispatch = useDispatch();
+  const dominentColor = useSelector(uiSelector.dominantColor);
   const userProfile = useSelector(authSelector.userProfile); 
 
   useHiddenOnBlurred({
@@ -91,11 +90,18 @@ export const Header: FC<IHeaderProps> = ({
   };
 
   const onUploadButtonClicked = () => {
-    history.push(paths.Upload);
+    dispatch(push(paths.Upload));
   };
 
+  const backgroundStyle = dominentColor
+    ? { backgroundColor: dominentColor, opacity }
+    : { backgroundColor: '#333333', opacity };
+
   return (
-    <div className={[styles.container, transparent ? styles.transparentBg : ''].join(' ')}>
+    <div 
+      className={styles.container}
+    >
+      <div className={styles.bgColor} style={backgroundStyle} />
       <div className={styles.navigation}>
         <IconButton>
           <Icon.Left />
@@ -112,7 +118,7 @@ export const Header: FC<IHeaderProps> = ({
           <Icon.Upload />
         </IconButton>
       </div>
-      <div className={styles.menuView}>
+      <div className={styles.menuView} ref={menuRef}>
         <div 
           className={[styles.button, showMenu ? styles.buttonBgLight : ''].join(' ')} 
           onClick={onMenuClicked}
@@ -130,7 +136,7 @@ export const Header: FC<IHeaderProps> = ({
         </div>
         {
           showMenu && (
-            <div ref={menuRef} id="header-menu" className={styles.menu}>
+            <div  id="header-menu" className={styles.menu}>
               <HeaderMenu userId={userProfile?.id || ''} />
             </div>
           )

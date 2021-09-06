@@ -86,7 +86,7 @@ export const TextArea: FC<ITextAreaProps> = ({
   onBlur = () => {},
   className,
   autoComplete = 'off',
-  lineCount = 1
+  lineCount = 3
 }) => {
 
   const error = validate.find((err) => err.when);

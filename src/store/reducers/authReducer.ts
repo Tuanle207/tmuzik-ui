@@ -8,7 +8,7 @@ export interface IAuthState {
   expiryTime: string;
   refreshToken: string;
   fb: IFbAuthResponse | null;
-  userProfile: ApiResponse.LoginResponseData | null; 
+  userProfile: API.LoginResponseData | null; 
 }
 
 const initial: IAuthState = {

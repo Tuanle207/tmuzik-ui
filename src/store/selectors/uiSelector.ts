@@ -18,4 +18,8 @@ export const uiSelector = {
     (state: RootState) => state.ui.success, 
     (success) => success
   ),
+  dominantColor: createSelector(
+    (state: RootState) => state.ui.dominantColor, 
+    (dominantColor) => dominantColor
+  ),
 };

@@ -1,13 +1,14 @@
 import { FC } from 'react';
+import { ConnectedRouter } from 'connected-react-router';
 import { Sidebar } from '../Sidebar';
 import { NowPlayingBar } from '../NowPlayingBar';
-import styles from './index.module.scss';
 import { SpinLoader } from '../Loader';
 import { useSelector } from 'react-redux';
 import { authSelector, uiSelector } from '../../store/selectors';
-import { AppRouter, paths } from '../../routings';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { AppRouter, history, paths } from '../../routings';
 import { LoginView } from '../../views';
+import styles from './index.module.scss';
+import { Route, Switch } from 'react-router';
 
 interface IMainViewProps { }
 
@@ -18,7 +19,7 @@ export const MainView: FC<IMainViewProps> = () => {
   const isAuthenticated = useSelector(authSelector.isAuthenticated);
 
   return (
-    <Router>
+    <ConnectedRouter history={history}>
       <Route>
         {
           !isAuthenticated ? (
@@ -48,7 +49,7 @@ export const MainView: FC<IMainViewProps> = () => {
           )
         }
       </Route>
-    </Router>
+    </ConnectedRouter>
   );
 };
 

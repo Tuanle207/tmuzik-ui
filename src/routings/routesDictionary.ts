@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { HomeView, LibraryView, LoginView, PlayingQueueView, SignupView, UploadedListView, UploadView, UserProfileView } from '../views'
+import { HomeView, LibraryView, LoginView, PlayingQueueView, PlaylistView, SignupView, UploadedListView, UploadView, UserProfileView } from '../views'
 
 interface IRouteDictionary {
   path: string;
@@ -17,6 +17,7 @@ export const paths = {
   UploadedList: '/upload/list',
   Upload: '/upload',
   Queue: '/queue',
+  Playlist: '/playlist/:playlistId'
 }
 
 export const routesDictionary: IRouteDictionary[] = [
@@ -52,4 +53,8 @@ export const routesDictionary: IRouteDictionary[] = [
     path: paths.Queue,
     view: PlayingQueueView
   },
+  {
+    path: paths.Playlist,
+    view: PlaylistView
+  }
 ];

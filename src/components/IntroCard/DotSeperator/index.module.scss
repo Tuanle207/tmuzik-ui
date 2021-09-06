@@ -1,0 +1,9 @@
+@import "../../../assets/scss/_variable.scss";
+
+.root {
+  height: .6rem;
+  width: .6rem;
+  margin: 0 .4rem;
+  border-radius: 50%;
+  background: $color-light;
+}

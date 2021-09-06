@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { Switch, Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router';
 import { authSelector } from '../store/selectors';
 import { HomeView } from '../views';
 import { ProtectedRoute } from './ProtectedRoute';

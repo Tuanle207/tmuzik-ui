@@ -9,10 +9,10 @@ import { isTokenExpired } from '../../utils/isTokenExpired';
 import { sleepAsync } from '../../utils/sleepAsync';
 import { authAction, uiAction } from '../actions';
 
-function* postLogin(action: PayloadAction<ApiRequest.Login>): SagaIterator {
+function* postLogin(action: PayloadAction<API.LoginRequest>): SagaIterator {
   try {
     const { payload } = action;
-    const result = yield call(authApiService.postLoginAsync, payload);
+    const result = yield call(authApiService.loginAsync, payload);
     logger.info('auth generator');
     logger.info(result);
 
@@ -32,7 +32,7 @@ function* postFbLogin(): SagaIterator {
     if (fb || xyz) {
       // const { accessToken } = fb?.authResponse || {};
 
-      const result: ApiResponse.Login = yield call(authApiService.postLoginWithFbAsync, {
+      const result: API.LoginResponse = yield call(authApiService.loginWithFbAsync, {
         fbAccessToken: xyz
       });
 
@@ -48,16 +48,16 @@ function* postFbLogin(): SagaIterator {
   
         logger.info({accessToken});
         
-        const result: ApiResponse.Login = yield call(authApiService.postLoginWithFbAsync, {
+        const result: API.LoginResponse = yield call(authApiService.loginWithFbAsync, {
           fbAccessToken: 'EAAqIMeKcZCmgBANqAv3D2ii91UPc1Cqy85gxPjgZAUMRS76gIdCGLrIJ5a8Wtsxx3gqrQEGiVUTrHp2RW1t38I7Ma3VVaUZCvpZA2TnDiZAmkoDZBT4YdSU27ZB6OyX929Qab2ZCipMrnhvyprm1jwSvJyFTODnMEYZCe2xPhJArraFN6e5MwQDdFzheZBOgvZA33ne8SuLt5FuUEB5kGEZBzkAF'
         });
   
         yield put(authAction.setLoginStorage(result));
       }
     }
-  } catch (err) {
+  } catch (err: any) {
     logger.error(err);
-    const res = err.response?.data;
+    const res = err?.response?.data;
     if (res?.status === 401) {
       const identity: IFbAuthResponse = yield call(fbHandler.loginAsync);
       
@@ -68,7 +68,7 @@ function* postFbLogin(): SagaIterator {
   
         logger.info({accessToken});
         
-        const result: ApiResponse.Login = yield call(authApiService.postLoginWithFbAsync, {
+        const result: API.LoginResponse = yield call(authApiService.loginWithFbAsync, {
           fbAccessToken: accessToken
         });
   
@@ -136,7 +136,7 @@ function* postLogout(): SagaIterator {
     yield call(authApiService.revokeLoginAsync, {
       refreshToken,
       userId
-    } as ApiRequest.RevokeLogin);
+    } as API.RevokeLoginRequest);
   } catch (err) {
     logger.error(err);
   }

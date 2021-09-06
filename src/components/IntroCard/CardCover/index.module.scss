@@ -1,0 +1,64 @@
+@import "../../../assets/scss/_variable.scss";
+
+.root {
+  position: relative;
+  width: 20rem;
+  height: 20rem;
+  overflow: hidden;
+  box-shadow: 4px 8px 100px $color-border;
+}
+
+.root:hover {
+
+  & > .hideOnHover {
+    visibility: hidden;
+  }
+
+  & > .edit {
+    visibility: visible;
+  }
+}
+
+.cover, .defaultCover {
+  height: 100%;
+  width: 100%;
+}
+
+.defaultCover {
+  background-color: $color-border;
+}
+
+.defaultCover + div {
+  background-color: $color-border;
+}
+
+.roundBorder {
+  border-radius: 50%;
+}
+
+.edit {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba($color-black, .65);
+  visibility: hidden;
+  color: $color-white;
+  font-size: $font-size-small;
+  & > * {
+    user-select: none;
+  }
+}
+
+.editIcon {
+  fill: currentColor;
+  height: 3.6rem;
+  width: 3.6rem;
+  margin-bottom: .8rem;
+}

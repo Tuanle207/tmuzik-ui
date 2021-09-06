@@ -6,3 +6,4 @@ export * from './UserProfileView';
 export * from './UploadView';
 export * from './UploadedListView';
 export * from './PlayingQueueView';
+export * from './PlaylistView';

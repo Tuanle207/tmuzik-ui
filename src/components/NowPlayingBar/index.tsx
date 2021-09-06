@@ -1,7 +1,7 @@
-import moment from 'moment';
 import { FC, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { push } from 'connected-react-router';
+import moment from 'moment';
 import { Icon } from '../../assets';
 import { paths } from '../../routings';
 import { queueAction } from '../../store/actions';
@@ -22,19 +22,14 @@ interface IPlayingItem {
   album?: string;
 }
 
-type PlayingState = 'play' | 'pause' | 'changing';
-
 export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
   
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  const history = useHistory();
-
   const [ currTime, setCurrTime ] = useState(0);
   const [ volumnPt, setVolumPt ] = useState(70);
   const [ mute, setMute ] = useState(false);
-  const [ playingStatus, setPlayingStatus ] = useState<PlayingState>('pause');
-  const playingStatus1 = useSelector(queueSelector.playingStatus);
+  const playingStatus = useSelector(queueSelector.playingStatus);
  
   const [ playingItem, setPlayingItem ] = useState<IPlayingItem>({
     name: '',
@@ -72,15 +67,15 @@ export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
   }, [ playingItem, dispatch ]);
   
   useEffect(() => {
-    if (playingStatus1 === 'changing') {
+    if (playingStatus === 'changing') {
       // setPlayingStatus1('play');
       dispatch(queueAction.changePlayingStatus('play'));
-    } else if (playingStatus1 === 'play') {
+    } else if (playingStatus === 'play') {
       play();
-    } else if (playingStatus1 === 'pause') {
+    } else if (playingStatus === 'pause') {
       pause();
     }
-  }, [ playingStatus1, dispatch ]);
+  }, [ playingStatus, dispatch ]);
 
   useEffect(() => {
     const audioIns = audioRef.current;
@@ -107,10 +102,10 @@ export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
   };
 
   const onTooglePlayClicked = async () => {
-    if (playingStatus1 === 'play') {
+    if (playingStatus === 'play') {
       // setPlayingStatus('pause');
       dispatch(queueAction.changePlayingStatus('pause'));
-    } else if (playingStatus1 === 'pause') {
+    } else if (playingStatus === 'pause') {
       dispatch(queueAction.changePlayingStatus('play'));
       // setPlayingStatus('play');
     }
@@ -165,13 +160,19 @@ export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
   };
 
   const onQueueClicked = () => {
-    history.push(paths.Queue);
+    dispatch(push(paths.Queue));
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.left}>
-        <img src={playingItem.cover || defaultCoverfrom} alt="cover" />
+        {
+          playingItem.cover ? (
+            <img src={playingItem.cover || defaultCoverfrom} alt="cover" />
+          ) : (
+            <Icon.MusicCover />
+          )
+        }
         <div>
           <p>{ playingItem.name }</p>
           <span>{ playingItem.album || '' }</span>
@@ -211,7 +212,7 @@ export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
             onClick={onTooglePlayClicked}
           >
           {
-            playingStatus1 === 'play' ? <Icon.Pause /> : <Icon.Play />
+            playingStatus === 'play' ? <Icon.Pause /> : <Icon.Play />
           }
           </IconButton>
           <IconButton 

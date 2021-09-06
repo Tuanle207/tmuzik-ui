@@ -1,0 +1,51 @@
+@import "../../assets/scss/_variable.scss";
+
+.container {
+  display: flex;
+  flex-direction: row;
+  padding: 3rem;
+  padding-top: 9rem !important;
+  background-color: $color-gray-light;
+  background-image: linear-gradient(transparent 0, rgba($color-black, .5) 100%);
+}
+
+
+.info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  color: $color-white;
+  margin-left: 3.2rem;
+
+  & > h2 {
+    font-size: 9rem;
+    margin-top: auto;
+    cursor: pointer;
+  }
+
+  & > p:first-child {
+    font-size: $font-size-small;
+    font-weight: $font-size-large;
+  }
+}
+
+.descriptionText {
+  font-size: $font-size-xsmall;
+  font-weight: $font-weight-bold;
+  color: #a5a5a5;
+  margin-bottom: .8rem;
+}
+
+.stats {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin-top: auto;
+  line-height: 1.2rem;
+  
+  & > p {
+    font-size: $font-size-xsmall;
+    font-weight: $font-weight-bold;
+    color: #a5a5a5;
+  }
+}
