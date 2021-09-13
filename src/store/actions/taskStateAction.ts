@@ -12,6 +12,13 @@ const generateActionCreator = (actionName: string) => {
 export const taskStateAction = {
 
   /**
+   * Identity action
+   */
+  signup: generateActionCreator('signup'),
+  login: generateActionCreator('login'),
+
+
+  /**
    * For playlist actions
    */
   createPlaylist: generateActionCreator('createPlaylist'),

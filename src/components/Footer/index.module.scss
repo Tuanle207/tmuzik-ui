@@ -1,6 +1,11 @@
 @import "../../assets/scss/_variable.scss";
 
 .container {
-  height: 50rem;
-  background-color: $color-blue-light;
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+  background-color: rgba($color-gray-medium, .25);
+  font-size: $font-size-xsmall;
+  font-weight: $font-weight-bold;
+  color: $color-gray-light;
 }

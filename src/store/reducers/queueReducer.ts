@@ -1,12 +1,13 @@
 import { createReducer } from '@reduxjs/toolkit';
+import { AudioItem } from '../../@types/API';
 import { IObject } from '../../utils/interfaces';
 import { queueAction } from '../actions';
-import { IPlayingAudioItem, PlayingState } from '../interface/queue';
+import { PlayingState } from '../interface/queue';
 
 
 export interface IQueueState extends IObject {
-  queue: IPlayingAudioItem[],
-  current: IPlayingAudioItem | null,
+  queue: AudioItem[],
+  current: AudioItem | null,
   loop: boolean;
   shuffle: boolean;
   canPlayNext: boolean;
@@ -76,6 +77,7 @@ export const queueReducer = createReducer(initial, build => {
 
         // delete item from queue
         state.queue.splice(index, 1);
+        state.queue = [...state.queue];
 
         // playing item is not this deleted item
         if (state.current?.id !== id) {
@@ -270,6 +272,15 @@ export const queueReducer = createReducer(initial, build => {
           if (!state.queue[index - 1]) {
             state.canPlayPrevious = false;
           }
+        }
+        return state;
+    })
+    .addCase(queueAction.playAlbumOrPlaylist,
+      (state, action) => {
+        state.queue = action.payload;
+        state.current = state.queue[0] ?? null;
+        if (state.queue[1]) {
+          state.canPlayNext = true;
         }
         return state;
     })

@@ -7,7 +7,7 @@ class AudioApiService extends BaseApiService {
   }
 
   uploadAudioAsync = async (input: API.UploadAudioRequest) => {
-    const result = await this.postFormData<API.UploadAudioResponse>('', input);
+    const result = await this.postFormData<API.AudioItem>('', input);
     return result;
   }
 

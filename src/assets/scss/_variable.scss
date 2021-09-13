@@ -17,7 +17,8 @@ $font-weight-bold: 700;
 
 // utility colors
 $color-success: #44bf46;
-$color-error: #ff0033;
+// $color-error: #ff0033;
+$color-error: #bf1650;
 $color-warning: #FFEF4A;
 $color-gray-xlight:  #999999;
 $color-gray-light:  #777777;
@@ -38,3 +39,5 @@ $color-blue-dark: #44bf46;
 $color-blue-light: #7ECA9C ;
 $color-light: #D8E3E7;
 $color-white: #fff;
+
+$box-shawdow-btn: 0 0 10px rgba($color-black, .4);

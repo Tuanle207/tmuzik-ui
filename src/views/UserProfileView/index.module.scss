@@ -2,4 +2,12 @@
 
 .content {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(to bottom, $color-gray-dark 1rem, $color-gray-xdark 25rem);
+  padding: 3rem;
+  
+  & > * {
+    position: relative;
+  }
 }

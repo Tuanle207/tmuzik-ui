@@ -1,4 +1,7 @@
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import { uiAction } from '../../store/actions';
+import { getPaletteFromImage } from '../../utils/getPaletteFromImage';
 import { CardCover } from './CardCover';
 import styles from './index.module.scss';
 
@@ -25,15 +28,27 @@ export const IntroCard: FC<IIntroCardProps> = ({
   prominentColor
 }) => {
 
+  const dispatch = useDispatch();
+
   const onClicked = () => {
     if (editable) {
       onEditClicked();
     }
   };
 
+  const setDominentColorCallback = useCallback((element: HTMLImageElement) => {
+    getPaletteFromImage(element)
+      .then((palatte) => {
+        const color = palatte ? palatte.Vibrant?.hex : palatte;
+        dispatch(uiAction.setDominantColor(color));
+      });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ dispatch, coverUrl ]);
+
   return (
     <div className={styles.container} style={prominentColor ? {backgroundColor: prominentColor} : {}}>
       <CardCover
+        ref={setDominentColorCallback}
         coverUrl={coverUrl}
         roundBorder={roundCover}
         onClick={onClicked}
@@ -44,9 +59,11 @@ export const IntroCard: FC<IIntroCardProps> = ({
         <h2 onClick={onClicked}>
         { title }
         </h2>
-        <p className={styles.descriptionText}>
-        { description }
-        </p>
+        <div className={styles.descriptionText}>
+          <p>
+          { description }
+          </p>
+        </div>
         <div className={styles.stats}>
         {
           children

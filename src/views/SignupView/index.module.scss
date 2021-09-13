@@ -1,0 +1,14 @@
+@import "../../assets/scss/_mixin.scss";
+@import "../../assets/scss/_mixin.scss";
+
+.container {
+  @include center-content;
+  // height: 100vh;
+  width: 100%;
+  background-image: url('../../assets/img/green-forest.jpg');
+  background-position: left;
+  padding: 5rem 0;
+  overflow-y: auto;
+
+  @include styled-scroll;
+}

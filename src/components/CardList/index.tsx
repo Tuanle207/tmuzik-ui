@@ -27,9 +27,9 @@ export const CardList: FC<ICardListProps> = ({
   return (
     <div className={styles.container}>
       <div className={styles.list}>
-        {
-          data.map((item) => render(item))
-        }
+      {
+        data.map((item) => render(item))
+      }
       </div>
     </div>
   );

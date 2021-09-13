@@ -3,16 +3,17 @@ import { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { Icon } from '../../assets';
-import { DotSeperator, IntroCard, LinearEffectBackground, Link, Playlist, ViewWrapper } from '../../components';
+import { DotSeperator, IntroCard, LinearEffectBackground,
+  Link, Playlist, PlaylistHeader, PlaylistItem, ViewWrapper } from '../../components';
 import { IconButton } from '../../components/IconButton';
-import { PlaylistHeader, PlaylistItem } from '../../components/Playlist/PlaylistItem';
 import { IPlaylistViewParams, paths } from '../../routings';
-import { playlistAction, uiAction } from '../../store/actions';
-import { playlistDetailSelectorCreator } from '../../utils/selectorCreators';
-import { getPaletteFromImage } from '../../utils/getPaletteFromImage';
-import { authSelector, uiSelector } from '../../store/selectors';
-import styles from './index.module.scss';
+import { playlistAction, queueAction, taskStateAction } from '../../store/actions';
+import { playlistDetailSelectorCreator, taskStateSelectorCreator } from '../../utils/selectorCreators';
+import { authSelector, queueSelector, uiSelector } from '../../store/selectors';
 import { UpdatePlaylistModal } from './UpdatePlaylistModal';
+import { PLAYLIST_MENU_ID } from '../../components/Playlist/PlaylistMenu';
+import styles from './index.module.scss';
+
 interface IPlaylistViewProps { }
 
 export const PlaylistView: FC<IPlaylistViewProps> = () => {
@@ -22,21 +23,22 @@ export const PlaylistView: FC<IPlaylistViewProps> = () => {
   const [ openEditModal, setOpenEditModal ] = useState(false);
 
   const dispatch = useDispatch();
+  const playingItem = useSelector(queueSelector.current);
   const userProfileId = useSelector(authSelector.userProfileId);
   const playlistDetail = useSelector(playlistDetailSelectorCreator(playlistId));
+  const getPlaylistDetailState = useSelector(
+    taskStateSelectorCreator(taskStateAction.getPlaylistDetail.toString()));
   const dominentColor = useSelector(uiSelector.dominantColor);
+
+  useEffect(() => {
+    if (getPlaylistDetailState.state === 'success')
+      dispatch(taskStateAction.getPlaylistDetail({state: 'idle'}));
+  }, [ getPlaylistDetailState,  dispatch]);
 
   useEffect(() => {
     if (!playlistDetail) {
       dispatch(playlistAction.getPlaylistDetail(playlistId));
-    } else {
-      getPaletteFromImage(playlistDetail.cover)
-        .then((palatte) => {
-          const color = palatte ? palatte.Vibrant?.hex : palatte;
-          dispatch(uiAction.setDominantColor(color));
-        });
-    }
-
+    } 
   }, [ dispatch, playlistDetail, playlistId ]);
 
   const onEditClicked = () => {
@@ -44,6 +46,11 @@ export const PlaylistView: FC<IPlaylistViewProps> = () => {
   };
   const onModalClosed = () => {
     setOpenEditModal(false);
+  };
+
+  const onPlayClicked = () => {
+    const items = playlistDetail?.items || [];
+    dispatch(queueAction.playAlbumOrPlaylist(items));
   };
 
   const durationInSec = playlistDetail 
@@ -54,12 +61,22 @@ export const PlaylistView: FC<IPlaylistViewProps> = () => {
 
   return (
     <ViewWrapper>
-      <UpdatePlaylistModal
-        shouldCloseOnOverlayClick={true}
-        onRequestClose={onModalClosed}
-        isOpen={openEditModal}
-        initData={playlistDetail}
-      />
+      {
+        getPlaylistDetailState.state === 'idle' && (
+          <UpdatePlaylistModal
+            shouldCloseOnOverlayClick={true}
+            onRequestClose={onModalClosed}
+            isOpen={openEditModal}
+            handleClose={() => setOpenEditModal(false)}
+            initData={{
+              id: playlistDetail?.id || '',
+              name: playlistDetail?.name || '',
+              description: playlistDetail?.description,
+              cover: playlistDetail?.cover
+            }}
+          />
+        )
+      }
       <IntroCard 
         title={playlistDetail?.name}
         description={playlistDetail?.description}
@@ -84,33 +101,28 @@ export const PlaylistView: FC<IPlaylistViewProps> = () => {
       <div className={styles.content}>
         <LinearEffectBackground color={dominentColor} />
         <div className={styles.actions}>
-          <IconButton className={styles.playButton}>
-            <Icon.Play />
-          </IconButton>
+          {
+            (playlistDetail?.items ?? []).length > 0 && (
+              <IconButton className={styles.playButton} onClick={onPlayClicked}>
+                <Icon.PlayV2 />
+              </IconButton>
+            )
+          }
           <IconButton className={styles.optionButton}>
             <Icon.ThreeDot />
           </IconButton>
         </div>
         <div className={styles.itemsList}>
           <Playlist
-            data={playlistDetail?.items.map((x) => ({
-              id: x.id,
-              name: x.name,
-              album: x.albumTag,
-              artist: x.albumTag,
-              length: x.length,
-              photo: x.cover,
-              url: x.file,
-              creationTime: x.creationTime
-            }))}
+            data={playlistDetail?.items}
             render={(data, index) => (
               <PlaylistItem
                 key={data.id} 
-                index={index + 1} 
+                index={index} 
                 data={data} 
                 hidden={{creationTime: false}} 
-                contextMenuId={'context-menu-id'}
-                // isActiveItem={el.id === activeItemId}
+                contextMenuId={PLAYLIST_MENU_ID}
+                isActiveItem={data.id === playingItem?.id}
               />
             )}
             showHeader

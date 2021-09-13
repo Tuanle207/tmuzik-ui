@@ -5,7 +5,7 @@ import { IPaginationModelState } from '../interface/common';
 
 
 export interface IAudioState extends IObject {
-  uploadedList: IPaginationModelState<API.UserUploadAudio>;
+  uploadedList: IPaginationModelState<API.AudioItem>;
 }
 
 const initial: IAudioState = {

@@ -30,4 +30,8 @@ export const queueSelector = {
     (state: RootState) => state.queue.playingStatus, 
     (playingStatus) => playingStatus
   ),
+  rehydrated: createSelector(
+    (state: RootState) => state.queue._persist.rehydrated,
+    (rehydrated) => rehydrated
+  )
 };

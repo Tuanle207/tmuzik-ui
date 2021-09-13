@@ -1,23 +1,30 @@
 import { AnyAction, configureStore, EmptyObject, EnhancedStore } from '@reduxjs/toolkit';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import storage  from 'redux-persist/es/storage';
 import reducers, { IState } from './reducers';
-import persistReducer, { PersistPartial } from 'redux-persist/es/persistReducer';
-import persistStore from 'redux-persist/es/persistStore';
+import { persistReducer, persistStore, PersistConfig } from 'redux-persist';
+import storage  from 'redux-persist/lib/storage';
+import { PersistPartial } from 'redux-persist/es/persistReducer';
 import { rootSaga } from './saga';
-import { history } from '../routings';
+import history from '../routings/history';
 import { routerMiddleware } from 'connected-react-router';
 
-const persistConfig = {
+
+const persistConfig: PersistConfig<IState> = {
   key: 'root',
-  storage: storage ,
-  whilelist: ['auth'],
-  blacklist: ['router', 'ui', 'audio', 'queue', 'playlist']
+  storage,
+  whitelist: ['auth'],
+  blacklist: [
+    'router', 
+    'ui', 
+    'audio', 
+    'playlist', 
+    'taskState',
+    // 'queue'
+  ],
 };
-
 const persistedReducer = persistReducer(persistConfig, reducers);
-const sagaMiddleware = createSagaMiddleware();
 
+const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
   reducer: persistedReducer,

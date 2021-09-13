@@ -1,13 +1,11 @@
 import { FC, useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { IPicture } from 'music-metadata-browser';
-import { Icon } from '../../../assets';
-import { Button, RadioGroup, Select, TextArea, TextField } from '../../../components';
+import { Button, CardCover, RadioGroup, Select, TextArea, TextField } from '../../../components';
 import { useDispatch, useSelector } from 'react-redux';
 import { audioAction, uiAction } from '../../../store/actions';
 import { Genres } from '../../../utils/const';
 import styles from './index.module.scss';
-import defaultCover from '../../../assets/img/default_music_cover.png';
 import { uiSelector } from '../../../store/selectors';
 
 interface IUploaderProps { 
@@ -121,17 +119,19 @@ const Uploader: FC<IUploaderProps> = ({
         new Blob([ scannedCover.data ], { type: scannedCover.format })
       );
     }
-    return defaultCover;
+    return undefined;
   };
+
+  const cover = getCover();
 
   return (
     <div className={styles.container}>
       <form id="upload-audio" className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.preview}>
-          <img
-            className={styles.image}
-            alt={"upload"}
-            src={getCover()}
+          <CardCover
+            coverUrl={cover}
+            onClick={onSelectCoverClicked}
+            editable
           />
           <input
             ref={fileInputRef}
@@ -139,12 +139,6 @@ const Uploader: FC<IUploaderProps> = ({
             onChange={onFileChanged}
             type="file"
             accept="image/*"
-          />
-          <Button
-            className={styles.uploadButton}
-            title="Upload image"
-            icon={<Icon.Upload />}
-            onClick={onSelectCoverClicked}
           />
         </div>
         <div>

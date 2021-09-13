@@ -1,7 +1,10 @@
 import { FC } from 'react';
+import { Icon } from '../../assets';
 import styles from './index.module.scss';
 
 interface IButtonProps {
+  loading?: boolean;
+  loadingText?: string;
   icon?: JSX.Element;
   title: string;
   variant?: 'contained' | 'text' | 'outlined' | 'round';
@@ -14,6 +17,8 @@ interface IButtonProps {
 }
 
 export const Button: FC<IButtonProps> = ({
+  loading = false,
+  loadingText = 'Đang xử lí',
   icon,
   iconPosition = 'left',
   title,
@@ -24,6 +29,18 @@ export const Button: FC<IButtonProps> = ({
   form,
   onClick = () => {}
 }) => {
+
+  const onClicked = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    if (!loading) {
+      console.log({loading});
+      onClick(e);
+    }
+  };
+
+  const renderIcon = loading 
+    ? <Icon.SpinningLoader className={styles.loader} />
+    : icon ? icon : null;
+  const renderTitle = loading ? loadingText : title;
 
   return (
     <button 
@@ -37,11 +54,11 @@ export const Button: FC<IButtonProps> = ({
       ].join(' ')}
       form={form}
       type={type}
-      onClick={onClick}
+      onClick={onClicked}
     >
-      { iconPosition === "left" ? icon : null }
-      <span className={icon ? '' : styles.alignMiddle}>{ title }</span>
-      { iconPosition === "right" ? icon : null  }
+      { iconPosition === "left" ? renderIcon : null }
+      <span className={icon ? '' : styles.alignMiddle}>{ renderTitle }</span>
+      { iconPosition === "right" ? renderIcon : null  }
     </button>
   );
 }

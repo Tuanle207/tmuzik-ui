@@ -1,5 +1,5 @@
 
-import { FC } from 'react';
+import { forwardRef } from 'react';
 import { Icon } from '../../../assets';
 import styles from './index.module.scss';
 
@@ -10,12 +10,12 @@ interface ICardCoverProps {
   editable?: boolean;
 }
 
-export const CardCover: FC<ICardCoverProps> = ({
+export const CardCover= forwardRef<HTMLImageElement, ICardCoverProps>(({
   roundBorder = false,
   coverUrl,
   editable = false,
   onClick = () => {}
-}) => {
+}, ref) => {
 
   const onClicked = () => {
     if (editable) {
@@ -28,6 +28,7 @@ export const CardCover: FC<ICardCoverProps> = ({
       {
         coverUrl ? (
           <img
+            ref={ref}
             alt={"cover"} 
             src={coverUrl}
             className={styles.cover}
@@ -46,4 +47,4 @@ export const CardCover: FC<ICardCoverProps> = ({
       }
     </div>
   )
-};
+});

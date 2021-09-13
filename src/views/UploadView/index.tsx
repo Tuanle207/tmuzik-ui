@@ -1,9 +1,10 @@
 import { FC, useState } from 'react';
-import { ViewWrapper } from '../../components';
-import FileSelector from './FileSelector';
-import Uploader, { IAudioMetadata } from './Uploader';
 import { parseBlob } from 'music-metadata-browser';
+import { ViewWrapper } from '../../components';
+import Uploader, { IAudioMetadata } from './Uploader';
+import FileSelector from './FileSelector';
 import UploadSuccess from './UploadSuccess';
+import styles from './index.module.scss';
 
 interface IUploadViewProps { }
 
@@ -60,7 +61,7 @@ export const UploadView: FC<IUploadViewProps> = () => {
   };
 
   return (
-    <ViewWrapper>
+    <ViewWrapper className={styles.container}>
       {
         uploadStatus === UploadStatus.SelectFile && (
           <FileSelector 

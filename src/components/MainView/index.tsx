@@ -5,8 +5,9 @@ import { NowPlayingBar } from '../NowPlayingBar';
 import { SpinLoader } from '../Loader';
 import { useSelector } from 'react-redux';
 import { authSelector, uiSelector } from '../../store/selectors';
-import { AppRouter, history, paths } from '../../routings';
-import { LoginView } from '../../views';
+import { AppRouter, paths } from '../../routings';
+import history from '../../routings/history';
+import { LoginView, SignupView } from '../../views';
 import styles from './index.module.scss';
 import { Route, Switch } from 'react-router';
 
@@ -28,6 +29,11 @@ export const MainView: FC<IMainViewProps> = () => {
                 path={paths.Login} 
                 exact 
                 component={LoginView}
+              />
+              <Route
+                path={paths.Signup} 
+                exact 
+                component={SignupView}
               />
               <Route component={LoginView} />
             </Switch>

@@ -21,12 +21,6 @@ export const Sidebar = () => {
     dispatch(playlistAction.getUserPlaylists());
   }, [dispatch]);
 
-  useEffect(() => {
-    // if (playlistId) {
-    //   console.log({playlistId});
-    // }
-  }, [playlistId]);
-
   const navigate = (path: string) => {
     history.push(path);
   };
@@ -48,7 +42,7 @@ export const Sidebar = () => {
   return (
     <div className={styles.container}>
       <div className={styles.logo}>
-        <Icon.Logo />
+        <Icon.Logo onClick={() => navigate(paths.Home)}/>
       </div>
       <ul>
         <li className={[styles.menuItem, styles.menuItemActive].join(' ')}

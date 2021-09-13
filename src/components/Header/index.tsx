@@ -37,12 +37,12 @@ const HeaderMenu: FC<IHeaderMenuProps> = ({
 
   return (
     <ul className={styles.menuList}>
-      <li className={styles.menuItem} onClick={onAccountClicked}>
+      {/* <li className={styles.menuItem} onClick={onAccountClicked}>
         <span>
           Tài khoản
         </span>
         <Icon.NewWindow />
-      </li>
+      </li> */}
       <li className={styles.menuItem} onClick={onProfileClicked}>
         <span>
           Hồ sơ
@@ -52,7 +52,12 @@ const HeaderMenu: FC<IHeaderMenuProps> = ({
         <span>
           Nâng cấp lên Premium
         </span>
-        <Icon.NewWindow />
+        {/* <Icon.NewWindow /> */}
+      </li>
+      <li className={styles.menuItem} onClick={onPremiumUpgradeClicked}>
+        <span>
+          Trở thành nghệ sĩ
+        </span>
       </li>
       <li className={styles.menuItem} onClick={onSignoutClicked}>
         <span>

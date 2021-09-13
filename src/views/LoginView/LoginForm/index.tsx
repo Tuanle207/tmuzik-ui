@@ -16,7 +16,7 @@ export const LoginForm: FC<ILoginFormProps> = () => {
   
   const { control, handleSubmit, formState: { errors } } = useForm<API.LoginRequest>({
     defaultValues: {
-      email: '',
+      email: localStorage.getItem('email') || '',
       password: '',
     }
   });
@@ -27,10 +27,11 @@ export const LoginForm: FC<ILoginFormProps> = () => {
   };
   
   const onSigninClicked = () => {
-    handleSubmit(onSubmit);
+    handleSubmit(onSubmit)();
   };
   
   const onSubmit = (data: API.LoginRequest) => {
+    localStorage.setItem('email', data.email);
     dispatch(authAction.postLogin(data));
   };
 
@@ -54,7 +55,7 @@ export const LoginForm: FC<ILoginFormProps> = () => {
               required: true
             }}
             render={({ field: { value, onChange, onBlur } }) => <TextField
-              id="email" 
+              id="email-asdasjkdn" 
               value={value}
               onValueChange={onChange}
               onBlur={onBlur}
@@ -99,7 +100,6 @@ export const LoginForm: FC<ILoginFormProps> = () => {
       <div className={styles.actions}>
         <Button 
           title="Sign in"
-          type="submit"
           onClick={onSigninClicked}
         />
         <Button 

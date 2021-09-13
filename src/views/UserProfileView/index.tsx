@@ -3,8 +3,10 @@ import { useParams } from 'react-router';
 import { DotSeperator, LinearEffectBackground, Link, ViewWrapper } from '../../components';
 import { IntroCard } from '../../components';
 import { IUserProfileViewParams } from '../../routings';
-import UserContentBox from './UserContentBox';
 import styles from './index.module.scss';
+import { useSelector } from 'react-redux';
+import { uiSelector } from '../../store/selectors';
+import { Follower, Following, PublicPlaylist, RecentPlay, Upload } from './Sections';
 
 interface IUserProfileView {
   
@@ -14,7 +16,7 @@ export const UserProfileView: FC<IUserProfileView> = () => {
 
   const { userId } = useParams<IUserProfileViewParams>();
 
-  const [ predominentColor, setPredominentColor ] = useState<string | undefined>();
+  const dominentColor = useSelector(uiSelector.dominantColor);
 
   useEffect(() => {
     console.log({userId});
@@ -26,6 +28,7 @@ export const UserProfileView: FC<IUserProfileView> = () => {
         title={'Lê Anh Tuấn'} 
         coverUrl={"https://media.macphun.com/img/uploads/customer/how-to/579/15531840725c93b5489d84e9.43781620.jpg?q=85&w=1340"}
         roundCover
+        prominentColor={dominentColor}
         category="Hồ sơ"
       >
         <p>
@@ -41,8 +44,12 @@ export const UserProfileView: FC<IUserProfileView> = () => {
         </Link>
       </IntroCard>
       <div className={styles.content}>
-        <LinearEffectBackground color={predominentColor} />
-        <UserContentBox />
+        <LinearEffectBackground color={dominentColor} />
+        <RecentPlay />
+        <Upload />
+        <PublicPlaylist />
+        <Follower />
+        <Following />
       </div>
     </ViewWrapper>
 

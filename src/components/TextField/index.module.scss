@@ -9,7 +9,7 @@
   display: flex;
   flex-direction: column-reverse;
   background-color: rgba($color-black, .5);
-  padding: 1rem ;
+  padding: 1rem;
   border-radius: 4px;
 }
 
@@ -29,7 +29,7 @@
   padding: .4em;
   background-color: transparent;
   border: none;
-  color: $color-light;
+  color: $color-light !important;
   font-size: $font-size-regular;
 
   &:focus {
@@ -49,29 +49,33 @@
   }
 }
 
+.password {
+  -webkit-text-security: disc;
+}
+
 .input-webkit-autofill,
 .input:-webkit-autofill:hover, 
 .input:-webkit-autofill:focus,
 .input:-internal-autofill-selected {
-  // border: unset;
-  // -webkit-text-fill-color: unset;
-  // box-shadow: unset;
-  // -webkit-box-shadow: unset;
-  // transition: unset;
   appearance: unset !important;
   background-color: unset !important;
-  color: unset !important;
-  // background-image: unset !important;
+  color: $color-light;
   transition: background-color 5000s ease-in-out 0s;
+}
 
+.input:-internal-autofill-selected {
+  color: $color-light !important;
 }
 
 .error {
+  height: 1.2rem;
+  padding-top: 3px;
   font-size: $font-size-tiny;
-  color: $color-error
-}
+  color: $color-error;
 
-.noError {
-  font-size: $font-size-tiny;
-  opacity: 0;
+  & > span::before {
+    content: "⚠";
+    margin-right: 8px;
+    margin-left: 4px;
+  }
 }

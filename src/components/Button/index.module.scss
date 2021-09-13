@@ -1,6 +1,7 @@
 
 @import "../../assets/scss/_variable.scss";
 @import "../../assets/scss/_mixin.scss";
+@import "../../assets/scss/animation";
 
 .button {
   display: flex;
@@ -76,6 +77,10 @@
 
 .buttonRound {
   border-radius: 100px;
+}
+
+.loader {
+  animation: spin 1000ms linear infinite;
 }
 
 .alignMiddle{

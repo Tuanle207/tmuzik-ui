@@ -4,12 +4,11 @@ import { Icon } from '../../../assets';
 import { IconButton } from '../../IconButton';
 import { ContextMenuTrigger } from 'react-contextmenu';
 import { triggerRightClick } from '../../../utils/triggerRightClick';
-import styles from './index.module.scss';
-import defaultCover from '../../../assets/img/default_music_cover.png';
 import equaliserAnimationGif from '../../../assets/img/equaliser-animated-green.gif';
 import { useDispatch, useSelector } from 'react-redux';
 import { queueSelector } from '../../../store/selectors';
 import { queueAction } from '../../../store/actions';
+import styles from './index.module.scss';
 
 export interface IData {
   id: string; 
@@ -22,21 +21,17 @@ export interface IData {
   url: string;
 }
 
-interface HiddenOptions {
+export interface HiddenOptions {
   creationTime?: boolean;
   album?: boolean;
 }
 
 interface IPlaylistItemProps {
-  data: IData;
+  data: API.AudioItem;
   index: number;
   hidden?: HiddenOptions;
   contextMenuId: string;
   isActiveItem?: boolean;
-}
-
-interface IPlaylistHeaderProps {
-  hidden?: HiddenOptions 
 }
 
 
@@ -72,15 +67,7 @@ export const PlaylistItem: FC<IPlaylistItemProps> = ({
 
   const onPlayClicked = () => {
     if (playingItem?.id !== data.id) {
-      dispatch(queueAction.addAndPlayAudio({
-        id: data.id,
-        name: data.name,
-        albumTag: data.album,
-        artist: data.artist,
-        cover: data.photo,
-        length: data.length,
-        url: data.url
-      }));
+      dispatch(queueAction.addAndPlayAudio(data));
     } else {
       dispatch(queueAction.changePlayingStatus('play'));
     }
@@ -113,17 +100,24 @@ export const PlaylistItem: FC<IPlaylistItemProps> = ({
           
         </div>
         <div className={styles.mainInfo}>
-          <img
-            className={styles.photo}
-            alt={ data.name }
-            src={ data.photo || defaultCover}
-          />
+          {
+            data.cover ? (
+              <img
+                className={styles.photo}
+                alt={ data.name }
+                src={ data.cover}
+              />
+            ) : (
+              <Icon.MusicCover className={styles.photo} />
+            )
+          }
+          
           <div>
             <p className={[styles.mainText, isActiveItem ? styles.activeColor : ''].join(' ')}>
               { data.name }
             </p>
             <p className={styles.secondaryText}>
-              { data.artist }
+              { data.artistTag || data.artist?.name || '' }
             </p>
           </div>
         </div>
@@ -131,7 +125,7 @@ export const PlaylistItem: FC<IPlaylistItemProps> = ({
           hidden.album !== true  && (
             <div className={styles.album}>
               <p className={styles.secondaryText}>
-                { data.album || 'Unknown' }
+                { data.albumTag || data.album?.name || 'Unknown' }
               </p>
             </div>
           )
@@ -163,42 +157,3 @@ export const PlaylistItem: FC<IPlaylistItemProps> = ({
   );
 };
 
-export const PlaylistHeader: FC<IPlaylistHeaderProps> = ({
-  hidden =  {
-    album: false,
-    creationTime: true
-  }
-}) => {
-
-  return (
-    <div className={[styles.root, styles.noHover].join(' ')}>
-      <div className={styles.index}>
-        <p className={styles.secondaryText}>#</p>
-      </div>
-      <div className={styles.mainInfo}>
-        <p className={styles.secondaryText}>TIÊU ĐỀ</p>
-      </div>
-      {
-        hidden.album !== true  && (
-          <div className={styles.album}>
-            <p className={styles.secondaryText}>
-              ALBUM
-            </p>
-          </div>
-        )
-      }
-      {
-        hidden.creationTime !== true && (
-          <div className={styles.creationTime}>
-            <p className={styles.secondaryText}>
-              NGÀY TẠO
-            </p>
-          </div>
-        )
-      }
-      <div className={styles.length}>
-        <Icon.Clock className={styles.durationIcon} />
-      </div>
-    </div>
-  );
-};

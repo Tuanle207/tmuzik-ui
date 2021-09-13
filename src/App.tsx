@@ -1,5 +1,6 @@
 import React, { FC, useEffect } from 'react';
 import { Provider, useDispatch, useSelector } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 import { PersistGate } from 'redux-persist/integration/react';
 import { MainView } from './components';
 import { persistor, store } from './store';
@@ -22,6 +23,12 @@ const Container: FC = () => {
         <div style={{ color: 'red' }}>loading...</div> :
         <MainView />
       }
+      <ToastContainer
+        autoClose={3000}
+        hideProgressBar={true}
+        pauseOnHover
+        position="top-right"
+      />
     </>
   );
 };

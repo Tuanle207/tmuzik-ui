@@ -9,7 +9,7 @@ export const Footer: FC<IFooterProps> = () => {
 
   return (
     <div className={styles.container}>
-      footer
+      &copy; 2021 Tuanle207
     </div>
   );
 };

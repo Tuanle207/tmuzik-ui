@@ -8,17 +8,17 @@ export interface AudioItem {
   id: string;
   name: string;
   artistTag: string;
-  artist: SimpleArtist;
+  artist?: SimpleArtist;
   albumTag: string;
-  album: SimpleAlbum;
+  album?: SimpleAlbum;
   description: string;
   length: number;
   genre: string;
   privacy: string;
-  cover: string;
+  cover?: string;
   file: string;
   creationTime: string;
-  creator: Creator;
+  creator?: Creator;
   plays: number;
   loves: number;
 }
@@ -50,7 +50,7 @@ export interface UploadAudioResponse {
   cover: string;
   file: string;
 }
-export interface GetUserUploadAudioResponse extends PageModelResponse<UserUploadAudio>
+export interface GetUserUploadAudioResponse extends PageModelResponse<AudioItem>
 {
 
 }

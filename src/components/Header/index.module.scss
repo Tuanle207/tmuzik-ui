@@ -53,8 +53,9 @@
 
 .uploadButton {
   background-color: transparent;
-
   & > svg {
+    width: 1.8rem;
+    height: 1.8rem;
     fill: $color-white;
   }
 }

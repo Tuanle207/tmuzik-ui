@@ -18,11 +18,17 @@ export const playlistReducer = createReducer(intial, builder => {
       (state, action) => {
         const items = action.payload;
         items.forEach((item) => {
+          
           const index = state.userPlaylists.findIndex((x) => x.id === item.id);
           if (index !== -1) {
             state.userPlaylists[index] = item;
           } else {
             state.userPlaylists.unshift(item);
+          }
+
+          const detailIndex = state.playlistDetails.findIndex((x) => x.id === item.id);
+          if (index !== -1) {
+            state.playlistDetails.splice(detailIndex, 1);
           }
         });
         return state;
@@ -40,7 +46,7 @@ export const playlistReducer = createReducer(intial, builder => {
         const detail = state.playlistDetails.find((x) => x.id === action.payload.id);
 
         if (detail) {
-          action.payload.items.forEach((item) => detail.items.push(item)); 
+          detail.items = [...detail.items, ...action.payload.items];
         }
         return state;
     })

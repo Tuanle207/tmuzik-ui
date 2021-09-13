@@ -2,7 +2,7 @@ import { createReducer } from '@reduxjs/toolkit';
 import { IObject } from '../../utils/interfaces';
 import { ITaskStateItem } from '../interface/taskState';
 
-export type ITaskState = IObject<ITaskStateItem>
+export type ITaskState = IObject<ITaskStateItem>;
 
 const initial: IObject = { };
 

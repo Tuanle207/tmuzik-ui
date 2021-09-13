@@ -17,7 +17,7 @@ function* createPlaylist(action: PayloadAction<API.CreatePlaylistRequest>): Saga
 
     const redirectPath = paths.Playlist.replace(':playlistId', result.id);
     yield put(push(redirectPath));
-    yield put(taskStateAction.createPlaylist({ state: 'idle' }));
+    yield put(taskStateAction.createPlaylist({ state: 'success' }));
 
   } catch (err: any) {
     console.log(err);
@@ -28,14 +28,19 @@ function* createPlaylist(action: PayloadAction<API.CreatePlaylistRequest>): Saga
 
 function* updatePlaylist(action: PayloadAction<API.UpdatePlaylistRequest>): SagaIterator {
   try {
+    yield put(taskStateAction.updatePlaylist({ state: 'processing' }));
+
     const { payload } = action;
 
     var result: API.UpdatePlaylistResponse = yield call(playlistApiService.updatePlaylistAsync, payload);
 
     yield put(playlistAction.setUserPlaylistsStorage([result]));
 
-  } catch (err) {
+    yield put(taskStateAction.updatePlaylist({ state: 'success' }));
+  } catch (err: any) {
     console.log(err);
+    const message = err?.message || err?.response?.message || undefined;
+    yield put(taskStateAction.updatePlaylist({ state: 'error', error: message }));
   }
 }
 
@@ -72,12 +77,12 @@ function* getUserPlaylistDetail(action: PayloadAction<string>): SagaIterator {
 
     yield put(playlistAction.setPlaylistDetailStorage(result));
 
-    yield put(taskStateAction.getPlaylistDetail({ state: 'idle' }));
+    yield put(taskStateAction.getPlaylistDetail({ state: 'success' }));
 
   } catch (err: any) {
     console.log(err);
     const message = err?.message || err?.response?.message || undefined;
-    yield put(taskStateAction.createPlaylist({ state: 'error', error: message }));
+    yield put(taskStateAction.getPlaylistDetail({ state: 'error', error: message }));
   }
 }
 
@@ -85,9 +90,9 @@ function* addPlaylistItem(action: PayloadAction<{ id: string; items: string[]; }
   try {
     const { payload: { id, items } } = action;
 
-    const result: API.PlaylistDetail = yield call(playlistApiService.addPlaylistItemAsync, id, { items });
+    const result: API.AddPlaylistItemResponse = yield call(playlistApiService.addPlaylistItemAsync, id, { items });
 
-    yield put(playlistAction.setPlaylistDetailStorage(result));
+    yield put(playlistAction.setPlaylistItemStorage({ id, items: result.items }));
 
   } catch (err) {
     console.log(err);

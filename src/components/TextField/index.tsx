@@ -1,9 +1,9 @@
-import { FC } from 'react';
+import React, { FC, forwardRef } from 'react';
 import { IInputError } from '../../utils/interfaces';
 import styles from './index.module.scss';
 
 
-interface ITextFieldProps {
+interface ITextFieldProps extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
   id: string;
   value?: string;
   type?: 'text' | 'password';
@@ -15,7 +15,7 @@ interface ITextFieldProps {
   required?: boolean;
   className?: string;
   placeholder?: string;
-  autoComplete?: 'on' | 'off';
+  autoComplete?: string;
 }
 
 interface ITextAreaProps extends Omit<ITextFieldProps, 'onBlur'> {
@@ -23,7 +23,7 @@ interface ITextAreaProps extends Omit<ITextFieldProps, 'onBlur'> {
   lineCount?: number;
 }
 
-export const TextField: FC<ITextFieldProps> = ({
+export const TextField = forwardRef<HTMLInputElement, ITextFieldProps>(({
   id, 
   variant,
   label, 
@@ -33,10 +33,18 @@ export const TextField: FC<ITextFieldProps> = ({
   required, 
   type = 'text', 
   onValueChange = () => {},
-  onBlur = () => {},
+  onChange = () => {},
+  onBlur,
+  onClick,
   className,
-  autoComplete = 'off'
-}) => {
+  autoComplete = 'off',
+  ...rest
+}, ref) => {
+
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onValueChange(e.target.value);
+    onChange(e);
+  };
 
   const error = validate.find((err) => err.when);
 
@@ -44,14 +52,16 @@ export const TextField: FC<ITextFieldProps> = ({
     <div className={[styles.container, className || ''].join(' ')}>
       <div className={styles.inputWrapper}>
         <input
-          className={styles.input} 
+          ref={ref}
+          className={[styles.input, type === 'password' ? styles.password : ''].join(' ')} 
           id={id} 
           value={value} 
-          onChange={(e) => onValueChange(e.target.value)}
+          onChange={handleOnChange}
           placeholder={placeholder}
-          type={type}
           autoComplete={autoComplete}
-          onBlur={(e) => onBlur(e)}
+          onBlur={onBlur}
+          onClick={onClick}
+          {...rest}
         />
         { label && 
           <label 
@@ -62,14 +72,15 @@ export const TextField: FC<ITextFieldProps> = ({
           </label>
         }
       </div>
+      <div className={styles.error}>
       {
-        error ? 
-        <span className={styles.error}>{error.message}</span> :
-        <span className={styles.noError}>no error</span>
+        error &&
+        <span className={styles.error}>{error.message}</span>
       }
+      </div>
     </div>
   );
-};
+});
 
 
 

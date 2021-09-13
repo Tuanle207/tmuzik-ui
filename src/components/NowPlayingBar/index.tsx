@@ -9,18 +9,8 @@ import { queueSelector } from '../../store/selectors';
 import { IconButton } from '../IconButton';
 import { SliderInput } from '../SliderInput';
 import styles from './index.module.scss';
-import defaultCoverfrom from '../../assets/img/default_music_cover.png';
-interface INowPlayingBarProps {
 
-}
-
-interface IPlayingItem {
-  src: string;
-  length: number;
-  cover?: string;
-  name: string;
-  album?: string;
-}
+interface INowPlayingBarProps { }
 
 export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
   
@@ -29,85 +19,72 @@ export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
   const [ currTime, setCurrTime ] = useState(0);
   const [ volumnPt, setVolumPt ] = useState(70);
   const [ mute, setMute ] = useState(false);
-  const playingStatus = useSelector(queueSelector.playingStatus);
- 
-  const [ playingItem, setPlayingItem ] = useState<IPlayingItem>({
-    name: '',
-    length: 0,
-    album: '',
-    cover: '',
-    src: ''
-  })
 
+  // this was born for handling PLAYING QUEUE PERSISTENCE IN REDUX problem: on property PLAYINGSTATUS.
+  // const [ currentItemChangeTime, setCurrentItemChangeTime ] = useState(1);
+
+  const [ playingItem, setPlayingItem ] = useState<API.AudioItem | null>(null);
+  
   const dispatch = useDispatch();
   const currentPlaying = useSelector(queueSelector.current);
+  const playingStatus = useSelector(queueSelector.playingStatus);
   const canPlayNext = useSelector(queueSelector.canPlayNext);
   const canPlayPrevious = useSelector(queueSelector.canPlayPrevious);
   const loop = useSelector(queueSelector.loop);
   const shuffle = useSelector(queueSelector.shuffle);
 
   useEffect(() => {
-    if (currentPlaying) {
-      setCurrTime(0);
-      setPlayingItem({
-        name: currentPlaying.name,
-        length: currentPlaying.length,
-        src: currentPlaying.url,
-        album: currentPlaying.albumTag,
-        cover: currentPlaying.cover
-      });
-    }
-  }, [ currentPlaying ]);
+    setCurrTime(0);
+    setPlayingItem(currentPlaying);
+  }, [currentPlaying]);
 
   useEffect(() => {
-    if (playingItem.src && playingItem.src.trim() !== '') {
+    
+
+    if (playingItem?.file?.trim() !== '') {
       dispatch(queueAction.changePlayingStatus('changing'));
-      // setPlayingStatus('changing');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ playingItem, dispatch ]);
   
   useEffect(() => {
-    if (playingStatus === 'changing') {
-      // setPlayingStatus1('play');
-      dispatch(queueAction.changePlayingStatus('play'));
-    } else if (playingStatus === 'play') {
-      play();
-    } else if (playingStatus === 'pause') {
-      pause();
+    // if (currentItemChangeTime <= 1) {
+    //   setCurrentItemChangeTime((prev) => prev + 1);
+    //   return;
+    // }
+    switch (playingStatus) {
+      case 'changing':
+        dispatch(queueAction.changePlayingStatus('play')); break;
+      case 'play':
+        play(); break;
+      case 'pause':
+        pause(); break;
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ playingStatus, dispatch ]);
 
   useEffect(() => {
     const audioIns = audioRef.current;
-    if (audioIns === null) { return; }
+    if (audioIns === null) return;
     
-    if (mute) {
-      audioIns.volume = 0;
-    } else {
-      audioIns.volume = volumnPt / 100;
-    }
+    const newVol = mute ? 0 : volumnPt / 100;
+    audioIns.volume = newVol;
   }, [ volumnPt, mute ]);
 
 
   const play = async () => {
-    const audioIns = audioRef.current;
-    if (audioIns === null) { return; }
-    await audioIns.play();
+    audioRef.current?.play();
   };
 
-  const pause = async () => {
-    const audioIns = audioRef.current;
-    if (audioIns === null) { return; }
-    audioIns.pause();
+  const pause = () => {
+    audioRef.current?.pause();
   };
 
   const onTooglePlayClicked = async () => {
     if (playingStatus === 'play') {
-      // setPlayingStatus('pause');
       dispatch(queueAction.changePlayingStatus('pause'));
     } else if (playingStatus === 'pause') {
       dispatch(queueAction.changePlayingStatus('play'));
-      // setPlayingStatus('play');
     }
   };
 
@@ -133,7 +110,6 @@ export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
     if (canPlayNext) {
       onPlayNextClicked();
     } else {
-      // setPlayingStatus('pause');
       dispatch(queueAction.changePlayingStatus('pause'));
     }
   };
@@ -167,15 +143,15 @@ export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
     <div className={styles.container}>
       <div className={styles.left}>
         {
-          playingItem.cover ? (
-            <img src={playingItem.cover || defaultCoverfrom} alt="cover" />
+          playingItem?.cover ? (
+            <img src={playingItem.cover} alt="cover" />
           ) : (
             <Icon.MusicCover />
           )
         }
         <div>
-          <p>{ playingItem.name }</p>
-          <span>{ playingItem.album || '' }</span>
+          <p>{ playingItem?.name || '' }</p>
+          <span>{ playingItem?.artistTag || playingItem?.artist?.name || '' }</span>
         </div>
         <IconButton className={styles.iconButton}>
           <Icon.Love />
@@ -189,7 +165,7 @@ export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
           ref={audioRef} 
           hidden 
           autoPlay={false}
-          src={playingItem.src}
+          src={playingItem?.file}
           onTimeUpdate={onAudioCurrentTimeChange}
           onEnded={onCurrentPlayEnd}
         />
@@ -235,10 +211,10 @@ export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
               value={currTime}
               onValueChange={onInputCurrentTimeChange}
               min={0}
-              max={playingItem.length}
+              max={playingItem?.length}
             />
           </div>
-          <span>{ moment(playingItem.length * 1000).format("mm:ss") }</span>
+          <span>{ moment((playingItem?.length || 0) * 1000).format("mm:ss") }</span>
         </div>
 
       </div>

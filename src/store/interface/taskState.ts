@@ -1,5 +1,9 @@
 
-export type ITaskProcessState = 'processing' | 'idle' | 'error';
+export type ITaskProcessState = 
+  | 'processing' 
+  | 'idle' 
+  | 'success' 
+  | 'error';
 
 export interface ITaskStateItem {
   state: ITaskProcessState;

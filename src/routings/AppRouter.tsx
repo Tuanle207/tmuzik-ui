@@ -13,7 +13,9 @@ export const AppRouter = () => {
     <Route>
       <Switch>
         {
-          routesDictionary.map((route) => route.path === paths.Login ? 
+          routesDictionary.map((route) =>[
+            paths.Login, paths.Signup
+          ].includes(route.path) ? 
             null : (
             <ProtectedRoute 
               key={route.path} 

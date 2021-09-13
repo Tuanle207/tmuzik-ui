@@ -8,7 +8,7 @@ export interface SignupRequest {
   password: string;
   passwordConfirm: string;
   fullName: string;
-  dob: string;
+  dob: Date;
 }
 
 export interface RefreshLoginRequest {

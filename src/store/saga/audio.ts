@@ -45,7 +45,7 @@ function* getUserUploadAudio(action: PayloadAction<API.GetUserUploadAudioRequest
       loading: false
     }));
 
-  } catch (err) {
+  } catch (err: any) {
     console.log(err);
     yield put(audioAction.setUserUploadAudioStatus({
       loading: false,
