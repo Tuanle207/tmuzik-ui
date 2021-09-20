@@ -8,9 +8,10 @@ import { authApiService } from '../../../api/services';
 import { Button, TextField } from '../../../components';
 import { taskStateAction } from '../../../store/actions';
 import { taskStateSelectorCreator } from '../../../utils/selectorCreators';
+import { sleepAsync } from '../../../utils/sleepAsync';
 import styles from './index.module.scss';
 
-const EMAIL_PATTERN = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const EMAIL_PATTERN = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 interface ISignupFormProps { }
 
@@ -34,10 +35,6 @@ export const SignupForm: FC<ISignupFormProps> = () => {
     history.goBack();
   };
 
-  const handleSignup = () => {
-    handleSubmit(onSubmit)();
-  };
-
   const onSubmit = async (data: API.SignupRequest) => {
     try {
       dispatch(taskStateAction.signup({ state: 'processing' }));
@@ -46,10 +43,14 @@ export const SignupForm: FC<ISignupFormProps> = () => {
       localStorage.setItem('email', data.email);
 
       dispatch(taskStateAction.signup({ state: 'success' }));
+      toast.success(`You have register successfully! Let's login!`);
+      await sleepAsync(2000, () => {
+        history.goBack();
+      });
     } catch (err: any) {
-      const errMessage = err?.response?.detail || 'Unknown error has occurred. Failed to register!'; 
-      dispatch(taskStateAction.signup({ state: 'error', error: errMessage }));
-      toast.error(errMessage);
+      const message = err?.message || 'Unknown error has occurred. Failed to register!'; 
+      toast.error(message);
+      dispatch(taskStateAction.signup({ state: 'error', error: message }));
     }
   };
 
@@ -223,7 +224,7 @@ export const SignupForm: FC<ISignupFormProps> = () => {
         <Button
           loading={signupState.state === 'processing'}
           title="Submit"
-          onClick={handleSignup}
+          type="submit"
         />
       </div>
     </form>

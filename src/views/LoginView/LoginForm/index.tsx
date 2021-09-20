@@ -1,12 +1,13 @@
 import { FC } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Icon } from '../../../assets';
-import { paths } from '../../../routings';
-import { authAction } from '../../../store/actions';
+import { routes } from '../../../routings';
+import { authAction, taskStateAction } from '../../../store/actions';
 import { Button, TextField } from '../../../components';
 import styles from './index.module.scss';
+import { taskStateSelectorCreator } from '../../../utils/selectorCreators';
 
 interface ILoginFormProps { }
 
@@ -21,13 +22,10 @@ export const LoginForm: FC<ILoginFormProps> = () => {
     }
   });
 
+  const loginState = useSelector(taskStateSelectorCreator(taskStateAction.login.toString()));
 
   const onSignupClicked = () => {
-    dispatch(push(paths.Signup));
-  };
-  
-  const onSigninClicked = () => {
-    handleSubmit(onSubmit)();
+    dispatch(push(routes.Signup));
   };
   
   const onSubmit = (data: API.LoginRequest) => {
@@ -55,7 +53,7 @@ export const LoginForm: FC<ILoginFormProps> = () => {
               required: true
             }}
             render={({ field: { value, onChange, onBlur } }) => <TextField
-              id="email-asdasjkdn" 
+              id="email" 
               value={value}
               onValueChange={onChange}
               onBlur={onBlur}
@@ -98,9 +96,11 @@ export const LoginForm: FC<ILoginFormProps> = () => {
         </div>
       </div>
       <div className={styles.actions}>
-        <Button 
+        <Button
+          loading={loginState.state === 'processing'}
+          loadingText="Đang tải"
           title="Sign in"
-          onClick={onSigninClicked}
+          type="submit"
         />
         <Button 
           title="Create account" 

@@ -6,7 +6,7 @@ import { Icon } from '../../assets';
 import { DotSeperator, IntroCard, LinearEffectBackground,
   Link, Playlist, PlaylistHeader, PlaylistItem, ViewWrapper } from '../../components';
 import { IconButton } from '../../components/IconButton';
-import { IPlaylistViewParams, paths } from '../../routings';
+import { IPlaylistViewParams, routes } from '../../routings';
 import { playlistAction, queueAction, taskStateAction } from '../../store/actions';
 import { playlistDetailSelectorCreator, taskStateSelectorCreator } from '../../utils/selectorCreators';
 import { authSelector, queueSelector, uiSelector } from '../../store/selectors';
@@ -60,7 +60,7 @@ export const PlaylistView: FC<IPlaylistViewProps> = () => {
   const [ min, sec ] = durationInMin.split(':');
 
   return (
-    <ViewWrapper>
+    <ViewWrapper title="Danh sách phát" contentReady={getPlaylistDetailState.state !== 'processing'}>
       {
         getPlaylistDetailState.state === 'idle' && (
           <UpdatePlaylistModal
@@ -86,7 +86,7 @@ export const PlaylistView: FC<IPlaylistViewProps> = () => {
         editable={userProfileId === playlistDetail?.creator.id}
         onEditClicked={onEditClicked}
       >
-        <Link to={playlistDetail && paths.Profile.replace(':userId', playlistDetail.creator.id)}>
+        <Link to={playlistDetail && routes.Profile.replace(':userId', playlistDetail.creator.id)}>
           {playlistDetail?.creator.fullName || ''}
         </Link>
         <DotSeperator />

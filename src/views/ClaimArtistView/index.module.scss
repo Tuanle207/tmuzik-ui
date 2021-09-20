@@ -1,0 +1,110 @@
+@import "../../assets/scss/_variable.scss";
+
+.fields {
+  display: flex;
+  flex-direction: row;
+}
+
+.col {
+  flex: 1;
+  padding: 0 3rem;
+}
+
+.input {
+
+  &:not(:last-child) {
+    margin-bottom: .8rem;
+  }
+}
+
+.description {
+  flex: 1;
+}
+
+.title {
+  margin: 3rem;
+  margin-bottom: 1.6rem;
+}
+
+.action {
+  display: flex;
+  justify-content: flex-end;
+  padding: .8rem 3rem;
+  margin-bottom: 3rem;
+}
+
+.imageSelect {
+  padding: 0 3rem;
+}
+
+.photos {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.addBtnWrapper {
+  height: 18rem;
+  width: 18rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $color-border;
+  cursor: pointer;
+
+  & > * {
+    user-select: none;
+  }
+
+  &:hover {
+    background-color: $color-gray-dark;
+  }
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: $font-size-small;
+  
+    & > svg {
+      height: 3.6rem;
+      width: 3.6rem;
+      stroke: none;
+      fill: currentColor;
+      margin-bottom: 1.6rem;
+    }
+  }
+
+}
+
+.addPhotoBtn {
+  width: 7.2rem;
+  height: 7.2rem;
+  color: $color-light;
+}
+
+.photoItem {
+  margin-bottom: 2rem;
+
+  &:not(:last-child) {
+    margin-right: 2rem;
+  }
+}
+
+.docSelect {
+  padding: 0 3rem;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  & > button {
+    width: 90%;
+    margin: 0 1.2rem;
+    margin-bottom: 1.2rem;
+  }
+}

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { push } from 'connected-react-router';
 import moment from 'moment';
 import { Icon } from '../../assets';
-import { paths } from '../../routings';
+import { routes } from '../../routings';
 import { queueAction } from '../../store/actions';
 import { queueSelector } from '../../store/selectors';
 import { IconButton } from '../IconButton';
@@ -136,7 +136,7 @@ export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
   };
 
   const onQueueClicked = () => {
-    dispatch(push(paths.Queue));
+    dispatch(push(routes.Queue));
   };
 
   return (

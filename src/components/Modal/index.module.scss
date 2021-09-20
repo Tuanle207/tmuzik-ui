@@ -9,6 +9,10 @@
   border: none;
   border-radius: 8px;
   background-color: $color-gray-dark;
+
+  & > * {
+    user-select: none;
+  } 
 }
 
 .container:focus-visible {

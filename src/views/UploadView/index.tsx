@@ -61,7 +61,7 @@ export const UploadView: FC<IUploadViewProps> = () => {
   };
 
   return (
-    <ViewWrapper className={styles.container}>
+    <ViewWrapper title="Tải lên" className={styles.container}>
       {
         uploadStatus === UploadStatus.SelectFile && (
           <FileSelector 

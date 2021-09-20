@@ -19,6 +19,7 @@
   font-weight: 700;
   font-size: $font-size-xsmall;
   text-transform: uppercase;
+  box-sizing: content-box;
 
   & > span {
     flex: 1;

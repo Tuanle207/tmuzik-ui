@@ -1,9 +1,9 @@
-import { push } from 'connected-react-router';
 import { FC, useRef, useState } from 'react';
+import { push } from 'connected-react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { Icon } from '../../assets';
 import { useHiddenOnBlurred } from '../../hooks';
-import { paths } from '../../routings';
+import { routes } from '../../routings';
 import { authAction } from '../../store/actions';
 import { authSelector, uiSelector } from '../../store/selectors';
 import { IconButton } from '../IconButton';
@@ -23,26 +23,20 @@ const HeaderMenu: FC<IHeaderMenuProps> = ({
     dispatch(authAction.postLogout());
   };
 
-  const onAccountClicked = () => {
-
-  };
-
   const onProfileClicked = () => {
-    dispatch(push(paths.Profile.replace(':userId', userId)));
+    dispatch(push(routes.Profile.replace(':userId', userId)));
   };
 
   const onPremiumUpgradeClicked = () => {
 
   };
 
+  const onClaimArtist = () => {
+    dispatch(push(routes.ClaimArtistView));
+  };
+
   return (
     <ul className={styles.menuList}>
-      {/* <li className={styles.menuItem} onClick={onAccountClicked}>
-        <span>
-          Tài khoản
-        </span>
-        <Icon.NewWindow />
-      </li> */}
       <li className={styles.menuItem} onClick={onProfileClicked}>
         <span>
           Hồ sơ
@@ -54,7 +48,7 @@ const HeaderMenu: FC<IHeaderMenuProps> = ({
         </span>
         {/* <Icon.NewWindow /> */}
       </li>
-      <li className={styles.menuItem} onClick={onPremiumUpgradeClicked}>
+      <li className={styles.menuItem} onClick={onClaimArtist}>
         <span>
           Trở thành nghệ sĩ
         </span>
@@ -95,7 +89,7 @@ export const Header: FC<IHeaderProps> = ({
   };
 
   const onUploadButtonClicked = () => {
-    dispatch(push(paths.Upload));
+    dispatch(push(routes.Upload));
   };
 
   const backgroundStyle = dominentColor

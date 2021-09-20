@@ -45,3 +45,57 @@
     padding-top: 6rem;
   }
 }
+
+
+// loading
+
+.snippet {
+  height: calc(100vh - 9rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.stage {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+.dotTypingAnimate {
+  position: relative;
+  left: -9999px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: $color-light;
+  color: $color-light;
+  box-shadow: 9984px 0 0 0 $color-light, 9999px 0 0 0 $color-light, 10014px 0 0 0 $color-light;
+  animation: dotTyping 1.5s infinite linear;
+}
+
+@keyframes dotTyping {
+  0% {
+    box-shadow: 9984px 0 0 0 $color-light, 9999px 0 0 0 $color-light, 10014px 0 0 0 $color-light;
+  }
+  16.667% {
+    box-shadow: 9984px -10px 0 0 $color-light, 9999px 0 0 0 $color-light, 10014px 0 0 0 $color-light;
+  }
+  33.333% {
+    box-shadow: 9984px 0 0 0 $color-light, 9999px 0 0 0 $color-light, 10014px 0 0 0 $color-light;
+  }
+  50% {
+    box-shadow: 9984px 0 0 0 $color-light, 9999px -10px 0 0 $color-light, 10014px 0 0 0 $color-light;
+  }
+  66.667% {
+    box-shadow: 9984px 0 0 0 $color-light, 9999px 0 0 0 $color-light, 10014px 0 0 0 $color-light;
+  }
+  83.333% {
+    box-shadow: 9984px 0 0 0 $color-light, 9999px 0 0 0 $color-light, 10014px -10px 0 0 $color-light;
+  }
+  100% {
+    box-shadow: 9984px 0 0 0 $color-white, 9999px 0 0 0 $color-white, 10014px 0 0 0 $color-white;
+  }
+}

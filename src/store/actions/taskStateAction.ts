@@ -33,4 +33,14 @@ export const taskStateAction = {
   /**
    * For audio actions
    */
+
+  /**
+   * For artist actions
+   */
+  claimArtist: generateActionCreator('claimArtist'),
+
+  /**
+   * Others
+   */
+  getDominantColor: generateActionCreator('getDominantColor'),
 };

@@ -1,4 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 import { SagaIterator } from 'redux-saga';
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 import { store } from '..';
@@ -7,19 +8,21 @@ import { FbAuthStatus, fbHandler, IFbAuthResponse } from '../../configs/fb';
 import logger from '../../configs/logger';
 import { isTokenExpired } from '../../utils/isTokenExpired';
 import { sleepAsync } from '../../utils/sleepAsync';
-import { authAction, uiAction } from '../actions';
+import { authAction, taskStateAction, uiAction } from '../actions';
 
 function* postLogin(action: PayloadAction<API.LoginRequest>): SagaIterator {
   try {
+    yield put(taskStateAction.login({state: 'processing'}));
+
     const { payload } = action;
     const result = yield call(authApiService.loginAsync, payload);
-    logger.info('auth generator');
-    logger.info(result);
 
     yield put(authAction.setLoginStorage(result));
-  } catch (err) {
+    yield put(taskStateAction.login({state: 'idle'}));
+  } catch (err: any) {
     logger.error(err);
-    // put(authAction.setLoginStorage({}));
+    yield put(taskStateAction.login({state: 'error'}));
+    toast.error(err.message || 'Unknow error. Cannot login!');
   }
 }
 

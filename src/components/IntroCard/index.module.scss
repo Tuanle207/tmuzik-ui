@@ -1,6 +1,7 @@
 @import "../../assets/scss/_variable.scss";
 
 .container {
+  position: relative;
   display: flex;
   flex-direction: row;
   padding: 3rem;
@@ -9,6 +10,16 @@
   background-image: linear-gradient(transparent 0, rgba($color-black, .5) 100%);
 }
 
+.background {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  z-index: 0;
+  filter: opacity(.85);
+  -webkit-filter: opacity(.85);
+}
 
 .info {
   flex: 1;
@@ -16,8 +27,13 @@
   flex-direction: column;
   color: $color-white;
   margin-left: 3.2rem;
+  z-index: 1;
 
   & > h2 {
+    // TODO: this not working
+    word-wrap: break-word;
+    word-break: break-all;
+    hyphens: auto;
     font-size: 9rem;
     margin-top: auto;
     cursor: pointer;
@@ -31,10 +47,10 @@
 }
 
 .descriptionText {
-  height: 4rem;
+  min-height: 4rem;
   font-size: $font-size-xsmall;
   font-weight: $font-weight-bold;
-  color: #a5a5a5;
+  color: $color-white;
   margin-bottom: .8rem;
 }
 
@@ -48,6 +64,6 @@
   & > p {
     font-size: $font-size-xsmall;
     font-weight: $font-weight-bold;
-    color: #a5a5a5;
+    color: $color-white;
   }
 }

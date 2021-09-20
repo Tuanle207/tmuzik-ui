@@ -2,11 +2,7 @@ const timeout = (ms: number) => {
   return new Promise(resolve => setTimeout(resolve, ms));
 };
 
-export const sleepWithCallbackAsync = async (fn: Function, ms: number) => {
-  await timeout(ms || 1000);
-  return fn();
-};
-
-export const sleepAsync =  async ( ms: number) => {
-  await timeout(ms || 1000);
+export const sleepAsync =  async (ms: number = 1000, fn: Function = () => {}) => {
+  await timeout(ms);
+  fn();
 };

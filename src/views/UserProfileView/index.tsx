@@ -23,7 +23,7 @@ export const UserProfileView: FC<IUserProfileView> = () => {
   }, [userId]);
 
   return (
-    <ViewWrapper>
+    <ViewWrapper title="Hồ sơ">
       <IntroCard 
         title={'Lê Anh Tuấn'} 
         coverUrl={"https://media.macphun.com/img/uploads/customer/how-to/579/15531840725c93b5489d84e9.43781620.jpg?q=85&w=1340"}

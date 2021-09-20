@@ -9,7 +9,7 @@ interface IHomeViewProps { }
 export const HomeView: FC<IHomeViewProps> = () => {
 
   return (
-    <ViewWrapper className={styles.root}>
+    <ViewWrapper title="Trang chủ" className={styles.root}>
       <Playlist />
     </ViewWrapper>
   )

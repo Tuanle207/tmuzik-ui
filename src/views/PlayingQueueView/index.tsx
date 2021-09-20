@@ -13,7 +13,7 @@ export const PlayingQueueView: FC<IPlayingQueueViewProps> = () => {
   const queueItems = useSelector(queueSelector.queue);
 
   return (
-    <ViewWrapper className={styles.container}>
+    <ViewWrapper title="Danh sách chờ" className={styles.container}>
       <Typography className={styles.heading}>Danh sách chờ</Typography>
       {
         playingItem && (

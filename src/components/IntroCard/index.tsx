@@ -1,19 +1,21 @@
 import { FC, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { uiAction } from '../../store/actions';
+import { taskStateAction, uiAction } from '../../store/actions';
 import { getPaletteFromImage } from '../../utils/getPaletteFromImage';
 import { CardCover } from './CardCover';
 import styles from './index.module.scss';
 
 interface IIntroCardProps {
   category?: string;
-  coverUrl: string;
+  coverUrl?: string;
+  secondaryCoverUrl?: string;
   roundCover?: boolean;
   title?: string;
   description?: string;
   editable?: boolean;
   prominentColor?: string;
   onEditClicked?: () => void;
+  defaultIcon?: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
 }
 
 export const IntroCard: FC<IIntroCardProps> = ({
@@ -21,11 +23,13 @@ export const IntroCard: FC<IIntroCardProps> = ({
   description = '',
   category = '',
   coverUrl,
+  secondaryCoverUrl,
   roundCover = false,
   children,
   editable = false,
   onEditClicked = () => {},
-  prominentColor
+  prominentColor,
+  defaultIcon
 }) => {
 
   const dispatch = useDispatch();
@@ -37,22 +41,38 @@ export const IntroCard: FC<IIntroCardProps> = ({
   };
 
   const setDominentColorCallback = useCallback((element: HTMLImageElement) => {
+    dispatch(taskStateAction.getDominantColor({state: 'processing'}));
     getPaletteFromImage(element)
       .then((palatte) => {
         const color = palatte ? palatte.Vibrant?.hex : palatte;
         dispatch(uiAction.setDominantColor(color));
+        dispatch(taskStateAction.getDominantColor({state: 'success'}));
       });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ dispatch, coverUrl ]);
 
+  const bgStyle = prominentColor ? {
+    backgroundColor: prominentColor
+  } : {};
+
   return (
-    <div className={styles.container} style={prominentColor ? {backgroundColor: prominentColor} : {}}>
+    <div className={styles.container} style={bgStyle}>
+      {
+        secondaryCoverUrl && (
+          <img
+            alt="secondary-cover"
+            src={secondaryCoverUrl}
+            className={styles.background}
+          />
+        )
+      }
       <CardCover
         ref={setDominentColorCallback}
         coverUrl={coverUrl}
         roundBorder={roundCover}
         onClick={onClicked}
         editable={editable}
+        defaultIcon={defaultIcon}
       />
       <div className={styles.info}>
         <p>{ category }</p>
@@ -60,9 +80,7 @@ export const IntroCard: FC<IIntroCardProps> = ({
         { title }
         </h2>
         <div className={styles.descriptionText}>
-          <p>
-          { description }
-          </p>
+        { description.split('\n').map((text) => <p>{ text }</p>) }
         </div>
         <div className={styles.stats}>
         {

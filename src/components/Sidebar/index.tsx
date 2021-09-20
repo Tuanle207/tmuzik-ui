@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Icon } from '../../assets';
-import { IPlaylistViewParams, paths } from '../../routings';
+import { IPlaylistViewParams, routes } from '../../routings';
 import { playlistAction } from '../../store/actions';
 import { playlistSelector } from '../../store/selectors';
 import { paramsSelectorCreator } from '../../utils/selectorCreators';
@@ -15,7 +15,7 @@ export const Sidebar = () => {
   
   const dispatch = useDispatch();
   const userPlaylists = useSelector(playlistSelector.userPlaylists);
-  const { playlistId } = useSelector(paramsSelectorCreator<IPlaylistViewParams>(paths.Playlist));
+  const { playlistId } = useSelector(paramsSelectorCreator<IPlaylistViewParams>(routes.Playlist));
 
   useEffect(() => {
     dispatch(playlistAction.getUserPlaylists());
@@ -26,7 +26,7 @@ export const Sidebar = () => {
   };
 
   const navigateToPlaylist = (id: string) => {
-    const path = paths.Playlist.replace(':playlistId', id);
+    const path = routes.Playlist.replace(':playlistId', id);
     history.push(path);
   };
 
@@ -42,23 +42,24 @@ export const Sidebar = () => {
   return (
     <div className={styles.container}>
       <div className={styles.logo}>
-        <Icon.Logo onClick={() => navigate(paths.Home)}/>
+        <Icon.Logo onClick={() => navigate(routes.Home)}/>
+        <p>Tmuzik</p>
       </div>
       <ul>
         <li className={[styles.menuItem, styles.menuItemActive].join(' ')}
-          onClick={() => navigate(paths.Home)}
+          onClick={() => navigate(routes.Home)}
         >
           <Icon.Home />
           <span>Trang chủ</span>
         </li>
         <li className={styles.menuItem}
-          onClick={() => navigate(paths.Home)}
+          onClick={() => navigate(routes.Home)}
         >
           <Icon.Search />
           <span>Tìm kiếm</span>
         </li>
         <li className={styles.menuItem}
-          onClick={() => navigate(paths.Library)}
+          onClick={() => navigate(routes.Library)}
         >
           <Icon.Library />
           <span>Thư viện</span>

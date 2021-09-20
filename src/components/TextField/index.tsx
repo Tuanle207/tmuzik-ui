@@ -21,6 +21,7 @@ interface ITextFieldProps extends React.DetailedHTMLProps<React.InputHTMLAttribu
 interface ITextAreaProps extends Omit<ITextFieldProps, 'onBlur'> {
   onBlur?: (e: React.FocusEvent<HTMLTextAreaElement>) => void;
   lineCount?: number;
+  inputClass?: string;
 }
 
 export const TextField = forwardRef<HTMLInputElement, ITextFieldProps>(({
@@ -93,6 +94,7 @@ export const TextArea: FC<ITextAreaProps> = ({
   validate = [],
   required, 
   type = 'text', 
+  inputClass = '',
   onValueChange = () => {},
   onBlur = () => {},
   className,
@@ -106,7 +108,7 @@ export const TextArea: FC<ITextAreaProps> = ({
     <div className={[styles.container, className || ''].join(' ')}>
       <div className={styles.inputWrapper}>
         <textarea
-          className={styles.input} 
+          className={[styles.input, inputClass && ''].join(' ')}
           id={id} 
           value={value} 
           onChange={(e) => onValueChange(e.target.value)}
@@ -124,11 +126,12 @@ export const TextArea: FC<ITextAreaProps> = ({
           </label>
         }
       </div>
+      <div className={styles.error}>
       {
-        error ? 
-        <span className={styles.error}>{error.message}</span> :
-        <span className={styles.noError}>no error</span>
+        error &&
+        <span className={styles.error}>{error.message}</span>
       }
+      </div>
     </div>
   );
 };

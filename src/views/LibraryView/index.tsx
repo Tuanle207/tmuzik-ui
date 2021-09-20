@@ -8,7 +8,7 @@ interface ILibraryViewProps {
 export const LibraryView:FC<ILibraryViewProps> = () => {
 
   return (
-    <ViewWrapper>
+    <ViewWrapper title="Thư viện">
       <div>
         library
       </div>

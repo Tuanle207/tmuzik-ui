@@ -3,7 +3,7 @@ import { push } from 'connected-react-router';
 import { SagaIterator } from 'redux-saga';
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 import { playlistApiService } from '../../api/services';
-import { paths } from '../../routings';
+import { routes } from '../../routings';
 import { playlistAction, taskStateAction } from '../actions';
 
 function* createPlaylist(action: PayloadAction<API.CreatePlaylistRequest>): SagaIterator {
@@ -15,7 +15,7 @@ function* createPlaylist(action: PayloadAction<API.CreatePlaylistRequest>): Saga
 
     yield put(playlistAction.setUserPlaylistsStorage([result]));
 
-    const redirectPath = paths.Playlist.replace(':playlistId', result.id);
+    const redirectPath = routes.Playlist.replace(':playlistId', result.id);
     yield put(push(redirectPath));
     yield put(taskStateAction.createPlaylist({ state: 'success' }));
 

@@ -8,19 +8,28 @@ interface ICardCoverProps {
   onClick?: () => void;
   coverUrl?: string;
   editable?: boolean;
+  defaultIcon?: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
 }
 
 export const CardCover= forwardRef<HTMLImageElement, ICardCoverProps>(({
   roundBorder = false,
   coverUrl,
   editable = false,
-  onClick = () => {}
+  onClick = () => {},
+  defaultIcon: DefaultIcon
 }, ref) => {
 
   const onClicked = () => {
     if (editable) {
       onClick();
     }
+  };
+
+  const renderDefaulIcon = () => {
+    return (
+      DefaultIcon ? DefaultIcon({className: [styles.defaultCover, editable ? styles.hideOnHover : ''].join(' ')}) :
+          <Icon.MusicCover className={[styles.defaultCover, editable ? styles.hideOnHover : ''].join(' ')} />
+    );
   };
 
   return (
@@ -34,7 +43,7 @@ export const CardCover= forwardRef<HTMLImageElement, ICardCoverProps>(({
             className={styles.cover}
           />
         ): (
-          <Icon.MusicCover className={[styles.defaultCover, editable ? styles.hideOnHover : ''].join(' ')} />
+          renderDefaulIcon()
         )
       }
       {

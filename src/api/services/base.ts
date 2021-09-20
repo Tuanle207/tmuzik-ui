@@ -31,7 +31,13 @@ abstract class BaseApiService {
 
     const formData = new FormData();
     Object.keys(body).forEach((key) => {
-      formData.append(key, body[key]);
+      if (Array.isArray(body[key])) {
+        Array.from<File>(body[key]).forEach((el) => {
+          formData.append(key, el);
+        });
+      } else {
+        formData.append(key, body[key]);
+      }
     });
 
     return httpClient.postFormData<T>(endpoint, formData);

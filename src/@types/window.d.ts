@@ -5,7 +5,8 @@ window.fbAsyncInit = window.fbAsyncInit || (() => {});
 export declare global {
   interface Window {
     FB: any;
-    fbAsyncInit: any; 
+    fbAsyncInit: any;
+    loadPromise: Promise<void>;
   }
 }
 

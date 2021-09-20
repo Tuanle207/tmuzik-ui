@@ -1,12 +1,13 @@
 import { FC } from 'react'
 import { HomeView, LibraryView, LoginView, PlayingQueueView, PlaylistView, SignupView, UploadedListView, UploadView, UserProfileView } from '../views'
+import { ClaimArtistView } from '../views/ClaimArtistView';
 
 interface IRouteDictionary {
   path: string;
   view: FC
 }
 
-export const paths = {
+export const routes = {
   // Main
   Home: '/',
   Library: '/library',
@@ -17,44 +18,50 @@ export const paths = {
   UploadedList: '/upload/list',
   Upload: '/upload',
   Queue: '/queue',
-  Playlist: '/playlist/:playlistId'
+  Playlist: '/playlist/:playlistId',
+
+  ClaimArtistView: '/claim-artist'
 }
 
 export const routesDictionary: IRouteDictionary[] = [
   {
-    path: paths.Home,
+    path: routes.Home,
     view: HomeView 
   },
   {
-    path: paths.Library,
+    path: routes.Library,
     view: LibraryView
   },
   {
-    path: paths.Login,
+    path: routes.Login,
     view: LoginView
   },
   {
-    path: paths.Signup,
+    path: routes.Signup,
     view: SignupView
   },
   {
-    path: paths.Profile,
+    path: routes.Profile,
     view: UserProfileView
   },
   {
-    path: paths.UploadedList,
+    path: routes.UploadedList,
     view: UploadedListView
   },
   {
-    path: paths.Upload,
+    path: routes.Upload,
     view: UploadView
   },
   {
-    path: paths.Queue,
+    path: routes.Queue,
     view: PlayingQueueView
   },
   {
-    path: paths.Playlist,
+    path: routes.Playlist,
     view: PlaylistView
+  },
+  {
+    path: routes.ClaimArtistView,
+    view: ClaimArtistView
   }
 ];

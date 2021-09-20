@@ -1,0 +1,40 @@
+// navigating animation
+.slide-enter,
+.slide-exit {
+  transition: transform 1000ms ease-in-out;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.slide-enter {
+  transform: translateX(100%);
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.slide-enter.slide-enter-active {
+  transform: translateX(0%);
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.slide-exit {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transform: translateX(0%);
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.slide-exit-active {
+  transform: translateX(100%);
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

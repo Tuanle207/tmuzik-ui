@@ -1,4 +1,7 @@
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+import { replace } from 'connected-react-router';
+import { toast } from 'react-toastify';
+import { routes } from '../../routings';
 import { store } from '../../store';
 import { authAction } from '../../store/actions';
 import { isTokenExpired } from '../../utils/isTokenExpired';
@@ -47,23 +50,18 @@ export const interceptHttpRequest = (axios: AxiosInstance) => {
 
 export const interceptHttpResponse = (axios: AxiosInstance) => {
   axios.interceptors.response.use((response: AxiosResponse) => {
-      if (response.status === 401) {
-        console.log('Not authorized');
-      } else if (response.status === 403) {
-        console.log('Forbbiden');
-      }
       return response;
     },
-    // TODO: handle exception
     function(err: any) {
       if (err?.response?.status === 401) {
-        console.log('Not authorized');
+
       } else if (err?.response?.status === 403) {
-        console.log('Forbbiden');
+        toast.error('You have no right to access this page!');
+        store.dispatch(replace(routes.Home));
       }
-      console.log('error');
       console.log({err});
-      return err;
+      const message = err?.response?.data?.detail || 'Unknown error has occurred!'
+      throw new Error(message);
     }
   );
 };

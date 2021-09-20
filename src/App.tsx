@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -28,6 +28,7 @@ const Container: FC = () => {
         hideProgressBar={true}
         pauseOnHover
         position="top-right"
+        theme="light"
       />
     </>
   );
@@ -36,7 +37,7 @@ const Container: FC = () => {
 const App: FC = () => {
 
 
-  React.useEffect(() => {
+  useEffect(() => {
     // const preventRightClick = (e: any) => e.preventDefault();
     // window.addEventListener('contextmenu', preventRightClick, false);
 

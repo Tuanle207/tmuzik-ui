@@ -25,7 +25,7 @@ export const UploadedListView: FC<IUploadedListViewProps> = () => {
   }, [ pageModel, dispatch ]);
 
   return (
-    <ViewWrapper>
+    <ViewWrapper title="Danh sách tải lên">
       <div className={styles.container}>
         <Typography variant="h3" className={styles.title}>Danh sách tải lên</Typography>
         <Typography variant="p2" className={styles.note}>Chỉ hiển thị với bạn</Typography>

@@ -18,7 +18,7 @@ interface IButtonProps {
 
 export const Button: FC<IButtonProps> = ({
   loading = false,
-  loadingText = 'Đang xử lí',
+  loadingText = 'Đang xử lí...',
   icon,
   iconPosition = 'left',
   title,

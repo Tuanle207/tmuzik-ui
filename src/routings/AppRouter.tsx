@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router';
 import { authSelector } from '../store/selectors';
 import { HomeView } from '../views';
 import { ProtectedRoute } from './ProtectedRoute';
-import { paths, routesDictionary } from './routesDictionary';
+import { routes, routesDictionary } from './routesDictionary';
 
 export const AppRouter = () => {
 
@@ -14,7 +14,7 @@ export const AppRouter = () => {
       <Switch>
         {
           routesDictionary.map((route) =>[
-            paths.Login, paths.Signup
+            routes.Login, routes.Signup
           ].includes(route.path) ? 
             null : (
             <ProtectedRoute 
