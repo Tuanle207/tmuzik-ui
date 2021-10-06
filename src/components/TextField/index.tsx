@@ -1,5 +1,8 @@
-import React, { FC, forwardRef } from 'react';
+import React, { FC, forwardRef, MutableRefObject, 
+  useCallback , useState } from 'react';
+import { Icon } from '../../assets';
 import { IInputError } from '../../utils/interfaces';
+import { IconButton } from '../IconButton';
 import styles from './index.module.scss';
 
 
@@ -9,13 +12,15 @@ interface ITextFieldProps extends React.DetailedHTMLProps<React.InputHTMLAttribu
   type?: 'text' | 'password';
   onValueChange?: (value: string) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
-  variant?: any;
+  variant?: 'normal' | 'search-bar';
+  mode?: 'light' | 'dark';
   label?: string;
   validate?: IInputError[];
   required?: boolean;
   className?: string;
   placeholder?: string;
   autoComplete?: string;
+  clearButton?: boolean;
 }
 
 interface ITextAreaProps extends Omit<ITextFieldProps, 'onBlur'> {
@@ -26,7 +31,9 @@ interface ITextAreaProps extends Omit<ITextFieldProps, 'onBlur'> {
 
 export const TextField = forwardRef<HTMLInputElement, ITextFieldProps>(({
   id, 
-  variant,
+  variant = 'normal',
+  mode = 'light',
+  clearButton = true,
   label, 
   placeholder = '',
   value,
@@ -42,19 +49,47 @@ export const TextField = forwardRef<HTMLInputElement, ITextFieldProps>(({
   ...rest
 }, ref) => {
 
+  const [ inputEl, setInputEl ] = useState<HTMLInputElement>();
+
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onValueChange(e.target.value);
     onChange(e);
   };
 
+  const onClearClicked = () => {
+    if (inputEl) {
+      inputEl.value = '';
+      inputEl.focus();
+    }
+  };
+
+  const inputRefCallback = useCallback((node: HTMLInputElement) => {
+    setInputEl(node);
+    if (typeof ref === 'function') {
+      ref(node);
+    } else if (ref) {
+      (ref as MutableRefObject<HTMLInputElement>).current = node;
+    }
+  }, [ref]);
+
   const error = validate.find((err) => err.when);
 
   return (
-    <div className={[styles.container, className || ''].join(' ')}>
-      <div className={styles.inputWrapper}>
+    <div className={[ styles.container, className || '' ].join(' ')}
+    >
+      <div className={[
+        styles.inputWrapper,
+        variant === 'search-bar' ? styles.searchBar : '',
+        mode === 'light' ? styles.inputWrapperLight : ''
+        ].join(' ')}
+      >
         <input
-          ref={ref}
-          className={[styles.input, type === 'password' ? styles.password : ''].join(' ')} 
+          ref={inputRefCallback}
+          className={[
+            styles.input, 
+            type === 'password' ? styles.password : '',
+            mode === 'light' ? styles.inputLight : ''
+          ].join(' ')} 
           id={id} 
           value={value} 
           onChange={handleOnChange}
@@ -64,21 +99,39 @@ export const TextField = forwardRef<HTMLInputElement, ITextFieldProps>(({
           onClick={onClick}
           {...rest}
         />
-        { label && 
+        {
+          variant === 'search-bar' && (
+            <Icon.Search className={styles.searchIcon} />
+          )
+        }
+        {
+          value && value?.length > 0 && clearButton ? (
+            <IconButton className={styles.clearButton} onClick={onClearClicked}>
+              <Icon.Close className={styles.clearIcon} />
+            </IconButton>
+          ) : null
+        }
+        { variant === 'normal' && label && 
           <label 
-            className={styles.label} 
+            className={[
+              styles.label,
+              mode === 'light' ? styles.label : ''
+            ].join(' ')}
             htmlFor={id}>
               { label }
               {required ? <span>{' *'}</span> : ''}
           </label>
         }
       </div>
-      <div className={styles.error}>
       {
-        error &&
-        <span className={styles.error}>{error.message}</span>
+        variant === 'normal' && (
+          <div className={styles.error}>
+          {
+            error && <span className={styles.error}>{error.message}</span>
+          }
+          </div>
+        )
       }
-      </div>
     </div>
   );
 });

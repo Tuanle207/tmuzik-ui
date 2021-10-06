@@ -2,9 +2,13 @@ import { FC } from 'react';
 import { CardList, Typography } from '../../../components';
 import styles from './index.module.scss';
 
-interface IPublicPlaylistProps { }
+interface IPublicPlaylistProps {
+  items: API.SimplePlaylist[];
+}
 
-export const PublicPlaylist: FC<IPublicPlaylistProps> = () => {
+export const PublicPlaylist: FC<IPublicPlaylistProps> = ({
+  items
+}) => {
 
   return (
     <div className={styles.section}>
@@ -13,7 +17,13 @@ export const PublicPlaylist: FC<IPublicPlaylistProps> = () => {
           Playlist công khai
         </Typography>
       </div>
-      <CardList />
+      <CardList 
+        data={items.map((el) => ({
+          id: el.id,
+          cover: el.cover,
+          title: el.name
+        }))}
+      />
     </div>
   );
 };

@@ -2,9 +2,13 @@ import { FC } from 'react';
 import { CardList, Typography } from '../../../components';
 import styles from './index.module.scss';
 
-interface IFollowerProps { }
+interface IFollowerProps {
+  items: API.SimpleUserProfile[];
+}
 
-export const Follower: FC<IFollowerProps> = () => {
+export const Follower: FC<IFollowerProps> = ({
+  items
+}) => {
 
   return (
     <div className={styles.section}>
@@ -13,7 +17,13 @@ export const Follower: FC<IFollowerProps> = () => {
           Người theo dõi
         </Typography>
       </div>
-      <CardList />
+      <CardList
+        data={items.map((el) => ({
+          id: el.id,
+          title: el.name,
+          cover: el.avatar
+        }))} 
+      />
     </div>
   );
 };

@@ -17,5 +17,21 @@ export const uiAction = {
   setDominantColor: createAction(
     'app/ui/setDominantColor',
     (payload: string | undefined) => ({ payload })
+  ),
+  setBackButtonDisabled: createAction(
+    'app/ui/setBackButtonDisabled',
+    (payload: boolean) => ({ payload })
+  ),
+  setForwardButtonDisabled: createAction(
+    'app/ui/setForwardButtonDisabled',
+    (payload: boolean) => ({ payload })
+  ),
+  setListenPartyBoxDisplay: createAction(
+    'app/ui/setListenPartyBoxDisplay',
+    (payload: boolean) => ({ payload })
+  ),
+  setListenPartyBoxDisplayStorage: createAction(
+    'app/ui/setListenPartyBoxDisplayStorage',
+    (payload: boolean) => ({ payload })
   )
 };

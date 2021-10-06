@@ -2,9 +2,13 @@ import { FC } from 'react';
 import { Playlist, Typography } from '../../../components';
 import styles from './index.module.scss';
 
-interface IUploadProps { }
+interface IUploadProps {
+  items: API.AudioItem[];
+}
 
-export const Upload: FC<IUploadProps> = () => {
+export const Upload: FC<IUploadProps> = ({
+  items
+}) => {
 
   return (
     <div className={styles.section}>
@@ -14,7 +18,7 @@ export const Upload: FC<IUploadProps> = () => {
           Chỉ hiển thị với bạn
         </Typography>
       </div>
-      <Playlist />
+      <Playlist data={items} />
     </div>
   );
 };

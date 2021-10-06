@@ -4,8 +4,8 @@ import { push } from 'connected-react-router';
 import moment from 'moment';
 import { Icon } from '../../assets';
 import { routes } from '../../routings';
-import { queueAction } from '../../store/actions';
-import { queueSelector } from '../../store/selectors';
+import { queueAction, uiAction } from '../../store/actions';
+import { queueSelector, uiSelector } from '../../store/selectors';
 import { IconButton } from '../IconButton';
 import { SliderInput } from '../SliderInput';
 import styles from './index.module.scss';
@@ -32,6 +32,8 @@ export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
   const canPlayPrevious = useSelector(queueSelector.canPlayPrevious);
   const loop = useSelector(queueSelector.loop);
   const shuffle = useSelector(queueSelector.shuffle);
+  const showListenParty = useSelector(uiSelector.showListenParty);
+
 
   useEffect(() => {
     setCurrTime(0);
@@ -139,6 +141,10 @@ export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
     dispatch(push(routes.Queue));
   };
 
+  const onListenPartyToggle = () => {
+    dispatch(uiAction.setListenPartyBoxDisplay(!showListenParty));
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.left}>
@@ -224,6 +230,9 @@ export const NowPlayingBar: FC<INowPlayingBarProps> = () => {
         </IconButton>
         <IconButton className={styles.iconButton} onClick={onQueueClicked}>
           <Icon.PlayingQueue />
+        </IconButton>
+        <IconButton className={styles.iconButton} onClick={onListenPartyToggle}>
+          <Icon.Friends />
         </IconButton>
         <IconButton className={styles.iconButton} onClick={onMuteClicked}>
         {

@@ -5,7 +5,7 @@ import styles from './index.module.scss';
 interface ICardData {
   id: string;
   cover?: string;
-  title?: string;
+  title: string;
   subTitle?: string;
 }
 
@@ -15,12 +15,14 @@ interface ICardListProps {
 }
 
 export const CardList: FC<ICardListProps> = ({
-  data = [1,2,3,4,5,6,7,8,9].map((index) => ({
+  data = 
+  [1,2,3,4,5,6,7,8,9].map((index) => ({
     id: `${index}`,
     cover: 'https://media.macphun.com/img/uploads/customer/how-to/579/15531840725c93b5489d84e9.43781620.jpg?q=85&w=1340',
     subTitle: `Artist ${index}`,
     title: `Song ${index}` 
-  })),
+  }))
+  ,
   render = (data) => <SquareCard key={data.id} cover={data.cover} subTitle={data.subTitle} title={data.title} />
 }) => {
 
@@ -29,6 +31,11 @@ export const CardList: FC<ICardListProps> = ({
       <div className={styles.list}>
       {
         data.map((item) => render(item))
+      }
+      {
+        data.length === 0 && (
+          <p className={styles.emptyText}>Danh sách trống</p>
+        )
       }
       </div>
     </div>

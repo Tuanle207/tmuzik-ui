@@ -9,6 +9,14 @@ export interface UserPlaylist {
   cover: string;
 }
 
+export interface SimplePlaylist {
+  id: string;
+  name: string;
+  description?: string;
+  cover?: string;
+  creationTime: string;
+}
+
 export interface CreatePlaylistResponse extends UserPlaylist {
   
 }

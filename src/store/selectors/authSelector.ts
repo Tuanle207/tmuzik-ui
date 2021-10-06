@@ -14,4 +14,8 @@ export const authSelector = {
     (state: RootState) => state.auth.userProfile?.profileId, 
     (userProfileId) => userProfileId
   ),
+  artistInfo: createSelector(
+    (state: RootState) => state.auth.userProfile?.artistInfo, 
+    (artistInfo) => artistInfo
+  )
 };

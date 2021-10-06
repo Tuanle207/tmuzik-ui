@@ -1,5 +1,6 @@
 import { FC, useState } from 'react';
 import { parseBlob } from 'music-metadata-browser';
+import { Prompt } from 'react-router';
 import { ViewWrapper } from '../../components';
 import Uploader, { IAudioMetadata } from './Uploader';
 import FileSelector from './FileSelector';
@@ -62,6 +63,7 @@ export const UploadView: FC<IUploadViewProps> = () => {
 
   return (
     <ViewWrapper title="Tải lên" className={styles.container}>
+      <Prompt message="You have unsaved changes, are you sure you want to leave?" />
       {
         uploadStatus === UploadStatus.SelectFile && (
           <FileSelector 

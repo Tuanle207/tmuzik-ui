@@ -4,3 +4,4 @@ export * from './Audio';
 export * from './Album';
 export * from './Artist';
 export * from './Playlist';
+export * from './Dashboard';

@@ -16,22 +16,26 @@
   text-decoration: none;
   -webkit-appearance: none;
   -moz-appearance: none;
+  color: $color-white;
 
   svg {
     width: 2rem;
     height: 2rem;
-    stroke: $color-white;
+    stroke: currentColor;
+    fill: currentColor;
   }
 }
 
 .container:focus-visible {
   outline: none;
   border-radius: 50%;
-  border: 2px solid $color-white;
+  // border: 2px solid $color-white;
+  border: none;
 }
 
 .container:disabled {
-  color: $color-gray-light !important;
+  background-color: $color-gray-medium;
   // cursor: default;
   pointer-events: none;
+  color: $color-gray-light !important;
 }

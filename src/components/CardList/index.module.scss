@@ -1,3 +1,6 @@
+
+@import "../../assets/scss/_mixin.scss";
+
 .container {
   width: 100%;
 }
@@ -8,6 +11,11 @@
   flex-wrap: wrap;
 
   & > * {
-    margin:  1.6rem;
+    margin-right:  2rem;
+    margin-bottom: 2rem
   }
+}
+
+.emptyText {
+  @include empty-text;
 }

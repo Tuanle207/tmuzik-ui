@@ -47,6 +47,11 @@ export const Playlist: FC<IPlaylistProps> = ({
             />
           )
         }
+        {
+          data.length === 0 && (
+            <p className={styles.empty}>Danh sách trống</p>
+          )
+        }
         <PlaylistMenu data={data} />
       </div>
     </div>

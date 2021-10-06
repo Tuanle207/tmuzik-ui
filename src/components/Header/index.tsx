@@ -8,13 +8,23 @@ import { authAction } from '../../store/actions';
 import { authSelector, uiSelector } from '../../store/selectors';
 import { IconButton } from '../IconButton';
 import styles from './index.module.scss';
+import { useHistory } from 'react-router';
 
 
 
-interface IHeaderMenuProps { userId: string; }
+interface IHeaderMenuProps { 
+  userId: string;
+  isArtist?: boolean;
+  isPremium?: boolean;
+  artist?: API.ArtistInfo;
+}
 
 const HeaderMenu: FC<IHeaderMenuProps> = ({ 
-  userId
+  userId,
+  isArtist = false,
+  isPremium = false,
+  artist,
+  children
 }) => {
 
   const dispatch = useDispatch();
@@ -27,12 +37,20 @@ const HeaderMenu: FC<IHeaderMenuProps> = ({
     dispatch(push(routes.Profile.replace(':userId', userId)));
   };
 
+  const onPremiumAccountClicked = () => {
+
+  };
+
   const onPremiumUpgradeClicked = () => {
 
   };
 
-  const onClaimArtist = () => {
+  const onClaimArtistClicked = () => {
     dispatch(push(routes.ClaimArtistView));
+  };
+
+  const onMyArtistPageClicked = () => {
+    dispatch(push(routes.ArtistView.replace(':artistId', artist?.id || '')));
   };
 
   return (
@@ -42,17 +60,39 @@ const HeaderMenu: FC<IHeaderMenuProps> = ({
           Hồ sơ
         </span>
       </li>
-      <li className={styles.menuItem} onClick={onPremiumUpgradeClicked}>
-        <span>
-          Nâng cấp lên Premium
-        </span>
-        {/* <Icon.NewWindow /> */}
-      </li>
-      <li className={styles.menuItem} onClick={onClaimArtist}>
-        <span>
-          Trở thành nghệ sĩ
-        </span>
-      </li>
+      {
+        isPremium ? (
+          <li className={styles.menuItem} onClick={onPremiumAccountClicked}>
+            <span>
+              Tài khoản Premium
+            </span>
+            {/* <Icon.NewWindow /> */}
+          </li>
+        ) : (
+          <li className={styles.menuItem} onClick={onPremiumUpgradeClicked}>
+            <span>
+              Nâng cấp lên Premium
+            </span>
+            {/* <Icon.NewWindow /> */}
+          </li>
+        )
+      }
+      {
+        isArtist ? (
+          <li className={styles.menuItem} onClick={onMyArtistPageClicked}>
+            <span>
+              Trang nghệ sĩ của tôi
+            </span>
+          </li>
+        ) : (
+          <li className={styles.menuItem} onClick={onClaimArtistClicked}>
+            <span>
+              Trở thành nghệ sĩ
+            </span>
+          </li>
+        )
+      }
+      
       <li className={styles.menuItem} onClick={onSignoutClicked}>
         <span>
           Đăng xuất
@@ -67,16 +107,22 @@ interface IHeaderProps {
 }
 
 export const Header: FC<IHeaderProps> = ({
-  opacity = 1
+  opacity = 1,
+  children
 }) => {
   
+  const history = useHistory();
+
   const menuRef = useRef<HTMLDivElement>(null);
 
   const [ showMenu, setShowMenu ] = useState(false);
 
   const dispatch = useDispatch();
   const dominentColor = useSelector(uiSelector.dominantColor);
-  const userProfile = useSelector(authSelector.userProfile); 
+  const userProfile = useSelector(authSelector.userProfile);
+  const artistInfo = useSelector(authSelector.artistInfo);
+  const goBackDisabled = useSelector(uiSelector.goBackDisabled);
+  const goForwardDisabled = useSelector(uiSelector.goForwardDisabled);
 
   useHiddenOnBlurred({
     display: showMenu,
@@ -92,6 +138,14 @@ export const Header: FC<IHeaderProps> = ({
     dispatch(push(routes.Upload));
   };
 
+  const onBackClicked = () => {
+    history.goBack();
+  };
+
+  const onForwardClicked = () => {
+    history.goForward();
+  };
+
   const backgroundStyle = dominentColor
     ? { backgroundColor: dominentColor, opacity }
     : { backgroundColor: '#333333', opacity };
@@ -102,15 +156,15 @@ export const Header: FC<IHeaderProps> = ({
     >
       <div className={styles.bgColor} style={backgroundStyle} />
       <div className={styles.navigation}>
-        <IconButton>
+        <IconButton onClick={onBackClicked} disabled={goBackDisabled} >
           <Icon.Left />
         </IconButton>
-        <IconButton>
+        <IconButton onClick={onForwardClicked} disabled={goForwardDisabled} >
           <Icon.Right />
         </IconButton>
       </div>
       <div className={styles.customChildren}>
-
+      { children }
       </div>
       <div className={styles.buttonGroup}>
         <IconButton className={styles.uploadButton} onClick={onUploadButtonClicked}>
@@ -136,7 +190,12 @@ export const Header: FC<IHeaderProps> = ({
         {
           showMenu && (
             <div  id="header-menu" className={styles.menu}>
-              <HeaderMenu userId={userProfile?.id || ''} />
+              <HeaderMenu 
+                userId={userProfile?.id || ''}
+                isArtist={userProfile?.isArtist}
+                isPremium={userProfile?.isPremium}
+                artist={artistInfo}
+              />
             </div>
           )
         }

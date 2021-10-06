@@ -1,4 +1,5 @@
 @import "../../assets/scss/_variable.scss";
+@import "../../assets/scss/mixin";
 
 .container {
   display: flex;
@@ -80,10 +81,7 @@
   flex: 1;
   margin: 1.5rem 2.5rem;
   overflow-y: auto;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  @include styled-scroll;
 
   & li {
     text-indent: 0;

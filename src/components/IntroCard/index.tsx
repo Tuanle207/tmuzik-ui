@@ -80,7 +80,7 @@ export const IntroCard: FC<IIntroCardProps> = ({
         { title }
         </h2>
         <div className={styles.descriptionText}>
-        { description.split('\n').map((text) => <p>{ text }</p>) }
+        { description?.split('\n').map((text, index) => <p key={index}>{ text }</p>) }
         </div>
         <div className={styles.stats}>
         {

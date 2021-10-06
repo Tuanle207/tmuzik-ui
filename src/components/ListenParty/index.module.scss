@@ -1,0 +1,80 @@
+@import "../../assets/scss/_variable.scss";
+@import "../../assets/scss/_mixin.scss";
+
+@keyframes bottomSlideIn {
+  0% {
+    transform: scale(0, 0);
+    opacity: 0;
+
+  }
+
+  50% {
+    transform: scale(0.5, 0.5);
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: scale(1, 1);
+    opacity: 1;
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  z-index: 10;
+  bottom: calc(9rem + 8px);
+  right: calc(1.3rem + 8px);
+  height: 0;
+  width: 50rem;
+  background-color: $color-gray-medium;
+  box-shadow: $box-shawdow-btn;
+  border-radius: 4px;
+  overflow: hidden;
+  transform: scale(0, 0);
+  opacity: 0;
+  animation-name: bottomSlideIn;
+  transition: all .4s ease;
+}
+
+.containerActive {
+  transform: scale(1, 1) translateY(0);
+  opacity: 1;
+  height: calc(100% - 15rem - 12px);
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  background-color: $color-gray-dark;
+  padding: .4rem .8rem;
+}
+
+.iconButton {
+  background-color: transparent;
+
+  &:hover {
+    background-color: $color-gray-dark;
+  }
+}
+
+.participantButton {
+  margin-left: .8rem;
+}
+
+.closeButton {
+  margin-left: auto;
+}
+
+.unavailable {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  & > p {
+    margin-bottom: 1rem;
+  }
+}

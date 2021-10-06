@@ -1,4 +1,5 @@
 @import "../../assets/scss/_variable.scss";
+@import "../../assets/scss/_mixin.scss";
 
 .container {
   width: 100%;
@@ -14,4 +15,9 @@
   border-bottom: 1px solid $color-gray-medium;
   padding-bottom: .8rem;
   margin-bottom: 1.6rem;
+}
+
+.empty {
+  @include empty-text;
+  margin-left: 1.6rem;
 }

@@ -17,6 +17,11 @@ export const taskStateAction = {
   signup: generateActionCreator('signup'),
   login: generateActionCreator('login'),
 
+  /**
+   * Dashboard
+   */
+  getUserProfile: generateActionCreator('getUserProfile'),
+  getSearchResults: generateActionCreator('getSearchResults'),
 
   /**
    * For playlist actions

@@ -1,0 +1,94 @@
+@import "../../../../assets/scss/mixin";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 48rem;
+  width: 48rem;
+}
+
+
+.tabs {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid rgba($color-gray-xdark, .65);
+}
+
+.tabItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: .8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: $font-size-xsmall;
+  font-weight: $font-weight-bold;
+  border-bottom: 2px solid transparent;
+
+  &:hover {
+    background-color: $color-gray-medium;
+  }
+
+  &:not(:first-child) {
+    margin-left: 1.6rem;
+  }
+}
+
+.tabActiveItem {
+  border-bottom: 2px solid $color-blue-dark;
+  border-radius: 0;
+
+  &:hover {
+    background-color: transparent;
+  }
+}
+
+.tabContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+  min-height: 0;
+}
+
+.input {
+  margin-bottom: .8rem;
+}
+
+.selectedPeople {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-bottom: 1.6rem;
+  max-height: 14rem;
+  @include styled-scroll;
+}
+
+.selectedItem {
+  margin: .8rem;
+}
+
+.searchResult {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  @include styled-scroll;
+}
+
+.checkgroup {
+  padding-right: 1.6rem;
+  margin-top: .8rem;
+}
+
+.action {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 1rem;
+  margin-top: .4rem;
+  border-top: 1px solid $color-gray-xlight;
+}
+
+.startButton {
+  width: 100%;
+}

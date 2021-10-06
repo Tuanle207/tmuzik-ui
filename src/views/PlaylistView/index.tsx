@@ -83,11 +83,11 @@ export const PlaylistView: FC<IPlaylistViewProps> = () => {
         coverUrl={playlistDetail?.cover || ''}
         category="Playlist"
         prominentColor={dominentColor}
-        editable={userProfileId === playlistDetail?.creator.id}
+        editable={userProfileId === playlistDetail?.creator?.id}
         onEditClicked={onEditClicked}
       >
-        <Link to={playlistDetail && routes.Profile.replace(':userId', playlistDetail.creator.id)}>
-          {playlistDetail?.creator.fullName || ''}
+        <Link to={playlistDetail && routes.Profile.replace(':userId', playlistDetail?.creator?.id)}>
+          {playlistDetail?.creator?.fullName || ''}
         </Link>
         <DotSeperator />
         <p>

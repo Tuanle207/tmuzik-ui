@@ -55,6 +55,9 @@ export const Select: FC<ISelectProps> = ({
   });
 
   const onTextChange = (value: string) => {
+    if (!dropdown) {
+      setDropdown(true);
+    }
     setKeyword(value);
   };
 

@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 3rem;
+}
+
+.section {
+  width: 100%;
+}
+
+.section:not(:first-child) {
+  margin-top: 3.6rem;
+}
+
+.about {
+  margin-bottom: 1.6rem;
+}
+
+.title {
+  margin-bottom: .8rem;
+}

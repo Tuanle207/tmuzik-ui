@@ -5,3 +5,7 @@ export interface IUserProfileViewParams {
 export interface IPlaylistViewParams {
   playlistId: string;
 }
+
+export interface IArtistViewParams {
+  artistId: string;
+}

@@ -42,17 +42,21 @@ export const Modal: FC<IModalProps> = ({
       {...rest}
       ariaHideApp={false}
     >
-      <div className={styles.header}>
-        <Typography variant="h3">
-          { title }
-        </Typography>
-        <IconButton 
-          className={styles.closeButton}
-          onClick={requestClose}
-        >
-          <Icon.Close />
-        </IconButton>
-      </div>
+      <IconButton 
+        className={styles.closeButton}
+        onClick={requestClose}
+      >
+        <Icon.Close />
+      </IconButton>
+      {
+        title && (
+          <div className={styles.header}>
+            <Typography variant="h3">
+              { title }
+            </Typography>
+          </div>
+        )
+      }
       {
         confirmBeforeExit && (
           <div className={styles.confirmClose}>
@@ -61,11 +65,9 @@ export const Modal: FC<IModalProps> = ({
           </div>
         )
       }
-      <div className={styles.content}>
       {
         children
       }
-      </div>
     </ReactModal>
   );
 };

@@ -20,7 +20,8 @@ const FileSelector: FC<IUploadProps> = ({
 
   const { getRootProps, getInputProps, open: openFileDialog, isDragActive } = useDropzone({ 
     onDrop: onDropped,
-    noClick: true, 
+    noClick: true,
+    accept: 'audio/*'
   });
 
   return (

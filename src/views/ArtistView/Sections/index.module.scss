@@ -1,0 +1,74 @@
+@import "../../../assets/scss/_variable.scss";
+@import "../../../assets/scss/_mixin.scss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(to bottom, $color-gray-dark 1rem, $color-gray-xdark 25rem);
+  padding: 3rem;
+}
+
+.section {
+  width: 100%;
+}
+
+.section:not(:first-child) {
+  margin-top: 3.6rem;
+}
+
+.about {
+  margin-bottom: 1.6rem;
+}
+
+.title {
+  margin-bottom: .8rem;
+}
+
+.infoCard {
+  display: flex;
+  flex-direction: column;
+  width: 80rem;
+  height: 45rem;
+  border-radius: 8px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%), 
+    url("https://nguoinoitieng.tv/images/nnt/96/0/bbn8.jpg");
+  margin-bottom: 3rem;
+  transition: all .35s ease-in-out;
+}
+
+.infoCard:hover {
+  transform: scale(1.01, 1.02);
+}
+
+.content {
+  width: 80%;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 0 4rem 2.4rem 3rem;
+  color: $color-white;
+  font-size: $font-size-small;
+  & > * {
+    user-select: none; 
+  }
+}
+
+.stats {
+  height: 2rem;
+  font-weight: $font-weight-bold;
+  margin-bottom: .8rem;
+}
+
+.description {
+  height: 11.2rem;
+  overflow: hidden;
+  line-height: 1.6;
+  padding: .4rem 0;
+  box-sizing: border-box;
+}
+
+.detailModal {
+  padding: 0 !important;
+  width: 72rem;
+  height: 48rem;
+}

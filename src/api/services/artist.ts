@@ -7,7 +7,7 @@ class ArtistApiService extends BaseApiService {
   }
 
   claimArtistAsync = async (input: API.ClaimArtistRequest) => {
-    const result = await this.postFormData<void>('', input);
+    const result = await this.postFormData<API.ArtistInfo>('', input);
     return result;
   }
 

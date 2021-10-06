@@ -1,3 +1,5 @@
+import { ArtistInfo } from '.';
+
 export interface AccessTokenResponse {
   accessToken: string;
   accessTokenExpiresAt: string;
@@ -15,6 +17,7 @@ export interface LoginResponseData {
   cover?: string;
   isPremium: boolean;
   isArtist: boolean;
+  artistInfo?: ArtistInfo; 
 }
 
 export interface LoginResponseToken extends AccessTokenResponse {

@@ -1,5 +1,6 @@
-import { FC, useEffect, useState } from 'react';
-import { ContextMenu, MenuItem, SubMenu } from 'react-contextmenu';
+import { FC, useEffect } from 'react';
+import { Item, ItemParams, PredicateParams, Menu, Separator, Submenu } from 'react-contexify';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { playlistAction, queueAction } from '../../store/actions';
 import { playlistSelector, queueSelector } from '../../store/selectors';
@@ -9,14 +10,19 @@ interface IPlaylistMenuProps {
 }
 
 export const PLAYLIST_MENU_ID = 'PLAYLIST_MENU_ID'; 
-const ITEM_ID_ATTR = 'itemId';
-const PLAYLIST_ID_ATTR = 'playlistId';
+
+export interface IPlaylistMenuItemProps {
+  itemId?: string;
+}
+
+export interface IPlaylistMenuItemData {
+  playlistId?: string;
+}
+
 
 export const PlaylistMenu: FC<IPlaylistMenuProps> = ({
   data = []
 }) => {
-
-  const [ itemId, setItemId ] = useState('');
 
   const dispatch = useDispatch();
   const userPlaylists = useSelector(playlistSelector.userPlaylists);
@@ -26,89 +32,89 @@ export const PlaylistMenu: FC<IPlaylistMenuProps> = ({
     console.log('render menu');
   }, []);
 
-  const onMenuShow = (e: any) => {
-    console.log('menu showed');
-    const id = e?.detail?.target?.getAttribute(ITEM_ID_ATTR);
-    setItemId(id);
+  const handleItemClick = ({ event, triggerEvent, data = {}, props = {} }:
+    ItemParams<IPlaylistMenuItemProps, IPlaylistMenuItemData>) => {
+      const menuItemId = event.currentTarget.id;
+
+      switch(menuItemId) {
+        case 'addToQueue':
+          return onAddToQueue(props);
+        case 'removeFromQueue':
+          return onRemoveFromQueue(props);
+        case 'goToArtist':
+        case 'goToAlbum':
+        case 'addToFavourite':
+        case menuItemId.match(/^playlist/)?.input:
+          return onAddToPlaylist(data, props);
+      }
   };
 
-  const onAddToQueue = (e: 
-    | React.TouchEvent<HTMLDivElement> 
-    | React.MouseEvent<HTMLDivElement, MouseEvent>, 
-    cdata: Object, 
-    target: HTMLDivElement) => {
-    console.log('adding');
-    const id = target.getAttribute(ITEM_ID_ATTR);
-    const item = data.find((x) => x.id === id);
+  const onAddToQueue = (props: IPlaylistMenuItemProps) => {
+    const { itemId } = props;
+    const item = data.find((x) => x.id === itemId);
     if (!item) return;
-
     dispatch(queueAction.addAudio(item));
   };
 
-  const onRemoveFromQueue = (e: 
-    | React.TouchEvent<HTMLDivElement> 
-    | React.MouseEvent<HTMLDivElement, MouseEvent>, 
-    cdata: Object, 
-    target: HTMLDivElement) => {
-    console.log('removing');
-    const id = target.getAttribute(ITEM_ID_ATTR);
-    const item = data.find((x) => x.id === id);
+  const onRemoveFromQueue = (props: IPlaylistMenuItemProps) => {
+    const { itemId } = props;
+    const item = data.find((x) => x.id === itemId);
     if (!item) return;
-
     dispatch(queueAction.removeAudio(item));
   };
 
-  const onAddToPlaylistClicked = (e: 
-    | React.TouchEvent<HTMLDivElement> 
-    | React.MouseEvent<HTMLDivElement, MouseEvent>, 
-    cdata: any, 
-    target: HTMLDivElement) => {
-    console.log('onAddToPlaylistClicked');
+  const onAddToPlaylist = (data: IPlaylistMenuItemData, props: IPlaylistMenuItemProps) => {
 
-    const playlistId = cdata[PLAYLIST_ID_ATTR];
-    const id = target.getAttribute(ITEM_ID_ATTR);
-    if (!id) return;
+    const { playlistId } = data;
+    const { itemId } = props;
+    if (!itemId || !playlistId) return;
     
     dispatch(playlistAction.addPlaylistItem({
       id: playlistId, 
-      items: [ id ]
+      items: [ itemId ]
     }));
   };
 
-  const removable = queue.findIndex((x) => x.id === itemId) !== -1; 
+  const isRemoveFromQueueDisable = ({ props = {} }: PredicateParams<IPlaylistMenuItemProps, IPlaylistMenuItemData>) => {
+    const { itemId } = props;
+    if (!itemId) return false;
+    const isNotInQueue = queue.findIndex((x) => x.id === itemId) === -1;
+    return isNotInQueue;
+  };
 
   return (
-    <ContextMenu id={PLAYLIST_MENU_ID} onShow={onMenuShow}>
-      <MenuItem onClick={onAddToQueue}>
+    <Menu id={PLAYLIST_MENU_ID} >
+      <Item id="addToQueue" onClick={handleItemClick}>
         Thêm vào danh sách chờ
-      </MenuItem>
-      <MenuItem onClick={onRemoveFromQueue} disabled={!removable}>
-        Xóa danh sách chờ
-      </MenuItem>
-      <MenuItem divider />
-      <MenuItem onClick={() => {console.log('koasfnklsadfkosa')}}>
+      </Item>
+      <Item id="removeFromQueue" onClick={handleItemClick} disabled={isRemoveFromQueueDisable}>
+        Xóa khỏi danh sách chờ
+      </Item>
+      <Separator />
+      <Item id="goToArtist" onClick={handleItemClick}>
         Chuyển tới nghệ sĩ
-      </MenuItem>
-      <MenuItem onClick={() => {}}>
+      </Item>
+      <Item id="goToAlbum" onClick={handleItemClick}>
         Chuyển tới album
-      </MenuItem>
-      <MenuItem divider />
-      <MenuItem onClick={() => {}}>
+      </Item>
+      <Separator />
+      <Item id="addToFavourite" onClick={handleItemClick}>
         Thêm vào danh sách yêu thích
-      </MenuItem>
-      <SubMenu title="Thêm vào danh sách phát">
+      </Item>
+      <Submenu label="Thêm vào danh sách phát">
       {
         userPlaylists.map((playlist) => (
-          <MenuItem 
+          <Item
+            id={`playlist-${playlist.id}`} 
             key={playlist.id} 
-            data={{ [PLAYLIST_ID_ATTR]: playlist.id }}
-            onClick={onAddToPlaylistClicked}
+            data={{ playlistId: playlist.id } as IPlaylistMenuItemData}
+            onClick={handleItemClick}
           >
             { playlist.name }
-          </MenuItem>
+          </Item>
         ))
       }
-      </SubMenu>
-    </ContextMenu>
+      </Submenu>
+    </Menu>
   );
 };

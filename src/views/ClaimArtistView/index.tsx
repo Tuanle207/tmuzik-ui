@@ -1,12 +1,15 @@
-import { FC, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
+import { Prompt, useHistory } from 'react-router';
 import { artistApiService } from '../../api/services';
 import { Icon } from '../../assets';
 import { Button, IntroCard, Modal, TextArea, TextField, Typography, ViewWrapper } from '../../components';
-import { uiSelector } from '../../store/selectors';
-import styles from './index.module.scss';
 import { RemovableFileItem } from './RemovableFileItem';
+import { authSelector, uiSelector } from '../../store/selectors';
+import styles from './index.module.scss';
+import { routes } from '../../routings';
+import { toast } from 'react-toastify';
 
 interface IClaimArtistViewProps {
 
@@ -16,6 +19,8 @@ const MAX_PHOTOS = 10;
 const MAX_DOCS = 5;
 
 export const ClaimArtistView: FC<IClaimArtistViewProps> = () => {
+
+  const history = useHistory();
 
   const imgFileInputRef = useRef<HTMLInputElement>(null);
   const docFileInputRef = useRef<HTMLInputElement>(null);
@@ -29,6 +34,7 @@ export const ClaimArtistView: FC<IClaimArtistViewProps> = () => {
   const [ openProfileCoversModal, setOpenProfileCoversModal ] = useState(false);
   
   const dominentColor = useSelector(uiSelector.dominantColor);
+  const userProfile = useSelector(authSelector.userProfile);
 
   const { control, handleSubmit, watch, formState: { errors } } = useForm<API.ClaimArtistRequest>({
     defaultValues: {
@@ -40,6 +46,13 @@ export const ClaimArtistView: FC<IClaimArtistViewProps> = () => {
       youtubeUrl: '',
     },
   });
+
+  useEffect(() => {
+    if (userProfile?.isArtist === true) {
+      toast.error('Bạn không có quyền truy cập vào trang này!')
+      history.replace(routes.Home);
+    }
+  }, [ userProfile, history ]);
 
   const onSubmitClicked = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     handleSubmit(onSubmit)(e);
@@ -143,6 +156,11 @@ export const ClaimArtistView: FC<IClaimArtistViewProps> = () => {
 
   return (
     <ViewWrapper title="Trở thành nghệ sĩ">
+      {
+        userProfile?.isArtist === false && (
+          <Prompt message="You have unsaved changes, are you sure you want to leave?" />
+        )
+      }
       <IntroCard
         title={watch("name") || "Your Artist Name"}
         roundCover

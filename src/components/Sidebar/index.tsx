@@ -41,8 +41,8 @@ export const Sidebar = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.logo}>
-        <Icon.Logo onClick={() => navigate(routes.Home)}/>
+      <div className={styles.logo} onClick={() => navigate(routes.Home)}>
+        <Icon.Logo />
         <p>Tmuzik</p>
       </div>
       <ul>
@@ -53,7 +53,7 @@ export const Sidebar = () => {
           <span>Trang chủ</span>
         </li>
         <li className={styles.menuItem}
-          onClick={() => navigate(routes.Home)}
+          onClick={() => navigate(routes.Search)}
         >
           <Icon.Search />
           <span>Tìm kiếm</span>
@@ -68,7 +68,9 @@ export const Sidebar = () => {
           <Icon.Favorite />
           <span>Bài hát yêu thích</span>
         </li>
-        <li className={styles.menuItem} onClick={onCreatePlaylistClicked}>
+        <li className={styles.menuItem}
+          onClick={onCreatePlaylistClicked}
+        >
           <Icon.AddPlaylist />
           <span>Tạo playlist</span>
         </li>

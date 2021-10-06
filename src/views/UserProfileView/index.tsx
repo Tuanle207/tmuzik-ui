@@ -1,12 +1,16 @@
 import { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
 import { DotSeperator, LinearEffectBackground, Link, ViewWrapper } from '../../components';
 import { IntroCard } from '../../components';
 import { IUserProfileViewParams } from '../../routings';
-import styles from './index.module.scss';
-import { useSelector } from 'react-redux';
 import { uiSelector } from '../../store/selectors';
 import { Follower, Following, PublicPlaylist, RecentPlay, Upload } from './Sections';
+import { authApiService } from '../../api/services';
+import { toast } from 'react-toastify';
+import { taskStateAction } from '../../store/actions';
+import { taskStateSelectorCreator } from '../../utils/selectorCreators';
+import styles from './index.module.scss';
 
 interface IUserProfileView {
   
@@ -16,40 +20,72 @@ export const UserProfileView: FC<IUserProfileView> = () => {
 
   const { userId } = useParams<IUserProfileViewParams>();
 
+  const [ userInfo, setUserInfo ] = useState<API.UserInfo>();
+  const [ playlists, setPlaylists ] = useState<API.SimplePlaylist[]>([]); 
+  const [ followers, setFollowers ] = useState<API.SimpleUserProfile[]>([]); 
+  const [ followings, setFollowings ] = useState<API.SimpleUserProfile[]>([]);
+  const [ uploads, setUploads ] = useState<API.AudioItem[]>();
+  const [ recentPlays, setRecentPlays ] = useState<API.AudioItem[]>();
+  
+  const dispatch = useDispatch();
   const dominentColor = useSelector(uiSelector.dominantColor);
+  const getUserProfileState = useSelector(
+    taskStateSelectorCreator(taskStateAction.getUserProfile.toString()));
 
   useEffect(() => {
-    console.log({userId});
-  }, [userId]);
+    if (userId) {
+      dispatch(taskStateAction.getUserProfile({state: 'processing'}));
+      authApiService.getUserProfileAsync(userId)
+        .then((data) => {
+          setUserInfo(data.userInfo);
+          setPlaylists(data.playlists);
+          setFollowers(data.followers);
+          setFollowings(data.followings);
+          setUploads(data.uploads);
+          setRecentPlays(data.recentPlays);
+        })
+        .catch((err: any) => {
+          const message = err.message;
+          toast.error(message);
+        })
+        .finally(() => {
+          dispatch(taskStateAction.getUserProfile({state: 'idle'}));
+        });
+    }
+  }, [userId, dispatch]);
 
   return (
-    <ViewWrapper title="Hồ sơ">
+    <ViewWrapper title="Hồ sơ" contentReady={getUserProfileState.state !== 'processing'}>
       <IntroCard 
-        title={'Lê Anh Tuấn'} 
-        coverUrl={"https://media.macphun.com/img/uploads/customer/how-to/579/15531840725c93b5489d84e9.43781620.jpg?q=85&w=1340"}
+        title={userInfo?.fullName || ''} 
+        coverUrl={userInfo?.avatar}
         roundCover
         prominentColor={dominentColor}
         category="Hồ sơ"
       >
         <p>
-          1 Playlist công khai
+          {playlists.length} Playlist công khai
         </p>
         <DotSeperator />
         <Link>
-          1 người theo dõi
+          {followers.length} người theo dõi
         </Link>
         <DotSeperator />
         <Link>
-          13 đang theo dõi
+          {followings.length} đang theo dõi
         </Link>
       </IntroCard>
       <div className={styles.content}>
         <LinearEffectBackground color={dominentColor} />
         <RecentPlay />
-        <Upload />
-        <PublicPlaylist />
-        <Follower />
-        <Following />
+        {
+          uploads && (
+            <Upload items={uploads} />
+          )
+        }
+        <PublicPlaylist items={playlists} />
+        <Follower items={followers} />
+        <Following items={followings} />
       </div>
     </ViewWrapper>
 

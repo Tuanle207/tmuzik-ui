@@ -30,7 +30,7 @@ export const SliderInput = ({
         style={{  }}
       >
       </input>
-      <div style={{ width: `${progressWidthPt}%` }}></div>
+      <div className={styles.progress} style={{ width: `${progressWidthPt}%` }}></div>
       <div className={styles.faceMask}></div>
     </div>
   );

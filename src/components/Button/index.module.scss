@@ -1,6 +1,6 @@
 
-@import "../../assets/scss/_variable.scss";
-@import "../../assets/scss/_mixin.scss";
+@import "../../assets/scss/variable";
+@import "../../assets/scss/mixin";
 @import "../../assets/scss/animation";
 
 .button {
@@ -20,6 +20,10 @@
   font-size: $font-size-xsmall;
   text-transform: uppercase;
   box-sizing: content-box;
+
+  & > * {
+    user-select: none;
+  }
 
   & > span {
     flex: 1;
@@ -72,7 +76,11 @@
   &:hover {
     background-color: transparent;
     color: $color-blue-light;
-    border: 1px solid $color-blue-light;
+    border: 1px solid $color-blue-light !important;
+  }
+
+  &:focus {
+    border: 1px solid $color-blue-dark;
   }
 }
 

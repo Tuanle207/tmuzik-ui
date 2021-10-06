@@ -12,7 +12,10 @@
   cursor: pointer;
 }
 
-@mixin styled-scroll {
+@mixin styled-scroll($zIndex: 10) {
+  overflow: overlay;
+  z-index: $zIndex;
+
   &::-webkit-scrollbar-track {
     border-radius: 10px;
     background: transparent; 
@@ -20,15 +23,23 @@
     // right: -10px;
     overflow: overlay;
     scrollbar-gutter: stable;
-    z-index: 10;
+    z-index: $zIndex;
 
   }
   
   &::-webkit-scrollbar {
     width: 12px;
+    z-index: $zIndex;
   }
   
-  &::-webkit-scrollbar-thumb{
-    background-color: rgba($color-gray-light, .8);
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba($color-gray-light, .4);
+    z-index: $zIndex;
   }
+}
+
+@mixin empty-text {
+  font-size: $font-size-xsmall;
+  color: $color-gray-light;
+  font-weight: $font-weight-bold;
 }

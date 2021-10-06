@@ -1,4 +1,5 @@
 @import "../../assets/scss/_variable.scss";
+@import "../../assets/scss/_mixin.scss";
 
 .viewContainter {
   display: flex;
@@ -13,27 +14,28 @@
   flex: 1;
   min-height: 0;
   box-sizing: border-box;
-  overflow-x: auto;
-  overflow-y: auto;
+  // overflow-x: auto;
+  // overflow-y: auto;
 
-  &::-webkit-scrollbar-track {
-    border-radius: 10px;
-    background: transparent; 
-    position: absolute;
-    // right: -10px;
-    overflow: overlay;
-    scrollbar-gutter: stable;
-    z-index: 10;
+  // &::-webkit-scrollbar-track {
+  //   border-radius: 10px;
+  //   background: transparent; 
+  //   position: absolute;
+  //   // right: -10px;
+  //   overflow: overlay;
+  //   scrollbar-gutter: stable;
+  //   z-index: 10;
 
-  }
+  // }
   
-  &::-webkit-scrollbar {
-    width: 12px;
-  }
+  // &::-webkit-scrollbar {
+  //   width: 12px;
+  // }
   
-  &::-webkit-scrollbar-thumb{
-    background-color: rgba($color-gray-light, .8);
-  }
+  // &::-webkit-scrollbar-thumb{
+  //   background-color: rgba($color-gray-light, .8);
+  // }
+  @include styled-scroll(9);
 }
 
 .content {

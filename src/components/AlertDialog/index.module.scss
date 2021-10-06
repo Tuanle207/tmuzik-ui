@@ -1,0 +1,19 @@
+@import "../../assets/scss/_variable.scss";
+
+.container {
+  min-width: 28rem;
+  min-height: 28rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: none;
+  border-radius: 8px;
+  background-color: $color-gray-dark;
+  padding: 1.6rem;
+  overflow: hidden;
+
+  & > * {
+    user-select: none;
+  } 
+}

@@ -35,7 +35,7 @@ export const ViewWrapper: FC<IViewWrapperProps> = ({
   return (
     <div className={styles.viewContainter}>
       { header ? header({ opacity: headerOpacity}) : (
-          <Header opacity={headerOpacity} />
+        <Header opacity={headerOpacity} />
       )}
       <div className={styles.viewContent} onScroll={onScrolled}>
         <div className={styles.scrollBar}></div>

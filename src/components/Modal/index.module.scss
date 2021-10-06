@@ -9,6 +9,8 @@
   border: none;
   border-radius: 8px;
   background-color: $color-gray-dark;
+  padding: 1.6rem;
+  overflow: hidden;
 
   & > * {
     user-select: none;
@@ -22,15 +24,21 @@
 .header {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  padding: 1.6rem;
-  padding-right: 1rem;
+  padding-bottom: 1.2rem;
+  margin-top: -0.4rem;
+  margin-bottom: 1.2rem;
+  border-bottom: 1px solid $color-gray-xlight;
 }
 
 .closeButton {
+  position: absolute;
+  right: 1.2rem;
+  top: 1.2rem;
   background-color: transparent;
   color: $color-gray-xlight;
+  z-index: 999;
 
   & > svg {
     fill: currentColor;
@@ -62,8 +70,4 @@
     font-size: $font-size-tiny;
     margin-left: .8rem;
   }
-}
-
-.content {
-  padding: 1.6rem;
 }

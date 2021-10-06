@@ -10,6 +10,9 @@ export interface IUIState extends IObject {
   success: boolean | null;
   fail: boolean | null;
   dominantColor?: string;
+  goBackDisabled: boolean;
+  goForwardDisabled: boolean;
+  showListenParty: boolean;
 }
 
 const initial: IUIState = {
@@ -17,7 +20,10 @@ const initial: IUIState = {
   viewLoading: false,
   viewLoadingText: 'loading...',
   success: null,
-  fail: null
+  fail: null,
+  goBackDisabled: true,
+  goForwardDisabled: true,
+  showListenParty: false,
 };
 
 export const uiReducer = createReducer(initial, build => {
@@ -41,6 +47,21 @@ export const uiReducer = createReducer(initial, build => {
     .addCase(uiAction.setDominantColor,
       (state, action) => {
         state.dominantColor = action.payload;
+        return state;
+    })
+    .addCase(uiAction.setBackButtonDisabled,
+      (state, action) => {
+        state.goBackDisabled = action.payload;
+        return state;
+    })
+    .addCase(uiAction.setForwardButtonDisabled,
+      (state, action) => {
+        state.goForwardDisabled = action.payload;
+        return state;
+    })
+    .addCase(uiAction.setListenPartyBoxDisplayStorage,
+      (state, action) => {
+        state.showListenParty = action.payload;
         return state;
     });
 });

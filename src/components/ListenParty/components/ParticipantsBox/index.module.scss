@@ -1,0 +1,93 @@
+@import "../../../../assets/scss/_variable.scss";
+@import "../../../../assets/scss/_mixin.scss";
+
+.container {
+  height: 40rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.tabs {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid rgba($color-gray-xdark, .65);
+}
+
+.tabItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: .8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: $font-size-xsmall;
+  font-weight: $font-weight-bold;
+  border-bottom: 2px solid transparent;
+
+  &:hover {
+    background-color: $color-gray-medium;
+  }
+
+  &:not(:first-child) {
+    margin-left: 1.6rem;
+  }
+}
+
+.tabActiveItem {
+  border-bottom: 2px solid $color-blue-dark;
+  border-radius: 0;
+
+  &:hover {
+    background-color: transparent;
+  }
+}
+
+.tabModalContent {
+  min-height: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.list {
+  flex: 1;
+  // min-height: 0;
+  padding: 1.2rem 0;
+  @include styled-scroll;
+}
+
+.listItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.removeParticipantButton {
+  margin-left: auto;
+  margin-right: 1.6rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  background-color: transparent;
+
+  & > svg {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+
+  &:hover {
+    background-color: $color-gray-light;
+  }
+}
+
+.addParticipantIcon {
+  fill: none;
+}
+
+.inputWrapper {
+  width: 100%;
+  margin-top: 1.2rem;
+}
+
+.input {
+  border-radius: 100px;
+}

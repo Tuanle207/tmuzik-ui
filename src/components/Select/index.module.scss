@@ -1,4 +1,5 @@
 @import "../../assets/scss/_variable.scss";
+@import "../../assets/scss/_mixin.scss";
 
 .container {
   display: flex;
@@ -67,23 +68,6 @@
   }
 }
 
-.input-webkit-autofill,
-.input:-webkit-autofill:hover, 
-.input:-webkit-autofill:focus,
-.input:-internal-autofill-selected {
-  // border: unset;
-  // -webkit-text-fill-color: unset;
-  // box-shadow: unset;
-  // -webkit-box-shadow: unset;
-  // transition: unset;
-  appearance: unset !important;
-  background-color: unset !important;
-  color: unset !important;
-  // background-image: unset !important;
-  transition: background-color 5000s ease-in-out 0s;
-
-}
-
 .error {
   font-size: $font-size-tiny;
   color: $color-error
@@ -95,6 +79,7 @@
 }
 
 .dropdownList {
+  z-index: 100;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -106,10 +91,11 @@
   background-color: $color-gray-dark;
   padding: 1rem 0;
   max-height: 20rem;
-  overflow-y: auto;
+  @include styled-scroll;
+  box-shadow: $box-shawdow-btn;
 
   & > p {
-    padding: .4rem 1.6rem;
+    padding: .8rem 1.6rem;
     font-size: $font-size-xsmall;
     user-select: none;
   }

@@ -29,6 +29,10 @@ class AuthApiService extends BaseApiService {
   revokeLoginAsync = async (input: API.RevokeLoginRequest) => {
     return await this.post<void>('revoke', input);
   }
+
+  getUserProfileAsync = async (userId: string) => {
+    return await this.get<API.GetUserProfileResponse>(userId);
+  }
 }
 
 export const authApiService = new AuthApiService();

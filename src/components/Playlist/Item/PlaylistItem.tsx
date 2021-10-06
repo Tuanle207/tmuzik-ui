@@ -1,14 +1,14 @@
-import moment from 'moment';
 import { FC, useRef } from 'react';
-import { Icon } from '../../../assets';
-import { IconButton } from '../../IconButton';
-import { ContextMenuTrigger } from 'react-contextmenu';
-import { triggerRightClick } from '../../../utils/triggerRightClick';
-import equaliserAnimationGif from '../../../assets/img/equaliser-animated-green.gif';
+import { useContextMenu } from 'react-contexify';
 import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
 import { queueSelector } from '../../../store/selectors';
 import { queueAction } from '../../../store/actions';
+import { PLAYLIST_MENU_ID } from '../PlaylistMenu';
+import { IconButton } from '../../IconButton';
+import { Icon } from '../../../assets';
 import styles from './index.module.scss';
+import equaliserAnimationGif from '../../../assets/img/equaliser-animated-green.gif';
 
 export interface IData {
   id: string; 
@@ -47,19 +47,12 @@ export const PlaylistItem: FC<IPlaylistItemProps> = ({
 }) => {
 
   const optionsButtonRef = useRef<HTMLButtonElement>(null);
+  
+  const { show } = useContextMenu({id: PLAYLIST_MENU_ID});
 
   const dispatch = useDispatch();
   const playingStatus = useSelector(queueSelector.playingStatus);
   const playingItem = useSelector(queueSelector.current);
-
-  const onOptionsClicked = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    const element = optionsButtonRef.current;
-    if (!element) { return; }
-    const x = e.clientX;
-    const y = e.clientY;
-    triggerRightClick(element, {x,y});
-    triggerRightClick(element, {x,y});
-  };
 
   const onPauseClicked = () => {
     dispatch(queueAction.changePlayingStatus('pause'))
@@ -73,9 +66,16 @@ export const PlaylistItem: FC<IPlaylistItemProps> = ({
     }
   };
 
+  const showContextMenu = (e: any) => {
+    e.preventDefault();
+    show(e, {props: {
+      itemId: data.id
+    }});
+  };
+
   return (
-    <ContextMenuTrigger id={contextMenuId} attributes={{ itemID: data.id }}>
-      <div className={styles.root}>
+    // <ContextMenuTrigger id={contextMenuId} attributes={{ itemID: data.id }}>
+      <div className={styles.root} onContextMenu={showContextMenu}>
         <div className={styles.index}>
           {
             isActiveItem && playingStatus === 'play' ? (
@@ -125,7 +125,7 @@ export const PlaylistItem: FC<IPlaylistItemProps> = ({
           hidden.album !== true  && (
             <div className={styles.album}>
               <p className={styles.secondaryText}>
-                { data.albumTag || data.album?.name || 'Unknown' }
+                { data.albumTag || data.album?.name || '' }
               </p>
             </div>
           )
@@ -148,12 +148,12 @@ export const PlaylistItem: FC<IPlaylistItemProps> = ({
             moment(data.length * 1000).format("mm:ss")
           }
           </span>
-          <IconButton ref={optionsButtonRef} onClick={onOptionsClicked}>
+          <IconButton ref={optionsButtonRef} onClick={showContextMenu}>
             <Icon.ThreeDot />
           </IconButton>
         </div>
       </div>
-    </ContextMenuTrigger>
+    // </ContextMenuTrigger>
   );
 };
 

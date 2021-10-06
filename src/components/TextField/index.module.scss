@@ -13,6 +13,10 @@
   border-radius: 4px;
 }
 
+.inputWrapperLight {
+  background-color: $color-white;
+}
+
 .label {
   text-transform: uppercase;
   font-size: $font-size-small;
@@ -25,12 +29,49 @@
   }
 }
 
+.labelLight {
+  color: $color-gray-dark;
+}
+
 .input, .textarea {
   padding: .4em;
+  padding-right: 2.4em;
   background-color: transparent;
   border: none;
   color: $color-light !important;
   font-size: $font-size-regular;
+
+  &::placeholder {
+    color: $color-gray-light;
+  }
+
+  &:focus {
+    outline: none;
+
+    &::placeholder {
+      color: $color-gray-xlight;
+    }
+
+    & + .label, & ~ .clearButton {
+      color: $color-white;
+    }
+
+    & + .searchIcon {
+      fill: $color-light;
+    }
+
+    & ~ .clearButton {
+      color: $color-white;
+
+      & > .clearIcon {
+        stroke: none;
+      }
+    }
+  }
+}
+
+.inputLight {
+  color: $color-gray-xdark !important;
 
   &:focus {
     outline: none;
@@ -40,31 +81,68 @@
   }
 
   &::placeholder {
-    color: $color-gray-light;
-    text-transform: lowercase;
+    color: $color-gray-xlight;
   }
 
   &:focus + .label {
-    color: $color-white;
+    color: $color-gray-dark;
   }
+
+  &:focus + .searchIcon {
+    fill: $color-gray-dark;
+  }
+
+  &:focus ~ .clearButton {
+    color: $color-gray-dark;
+  }
+}
+
+.searchBar {
+  position: relative;
+  border-radius: 100px;
+  padding: .6rem 1rem;
+
+  & > input {
+    padding-left: 2.4em;
+    font-size: $font-size-small;
+  }
+}
+
+.searchIcon {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 1.2rem;
+  transform: translateY(-50%);
+  height: 2.4rem;
+  width: 2.4rem;
+  fill: $color-gray-xlight;
+
+}
+
+.clearButton {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  right: 1.2rem;
+  transform: translateY(-50%);
+  height: 2.4rem;
+  width: 2.4rem;
+  background-color: transparent;
+  color: $color-gray-xlight;
+
+  & > svg {
+    stroke: none;
+  }
+}
+
+.clearIcon {
+  height: 2.4rem !important;
+  width: 2.4rem !important;
 }
 
 .password {
   -webkit-text-security: disc;
-}
-
-.input-webkit-autofill,
-.input:-webkit-autofill:hover, 
-.input:-webkit-autofill:focus,
-.input:-internal-autofill-selected {
-  appearance: unset !important;
-  background-color: unset !important;
-  color: $color-light;
-  transition: background-color 5000s ease-in-out 0s;
-}
-
-.input:-internal-autofill-selected {
-  color: $color-light !important;
 }
 
 .error {

@@ -22,4 +22,16 @@ export const uiSelector = {
     (state: RootState) => state.ui.dominantColor, 
     (dominantColor) => dominantColor
   ),
+  goBackDisabled: createSelector(
+    (state: RootState) => state.ui.goBackDisabled, 
+    (goBackDisabled) => goBackDisabled
+  ),
+  goForwardDisabled: createSelector(
+    (state: RootState) => state.ui.goForwardDisabled, 
+    (goForwardDisabled) => goForwardDisabled
+  ),
+  showListenParty: createSelector(
+    (state: RootState) => state.ui.showListenParty, 
+    (showListenParty) => showListenParty
+  )
 };

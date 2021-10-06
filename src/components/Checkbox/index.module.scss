@@ -1,0 +1,50 @@
+@import "../../assets/scss/variable";
+
+.input:checked + .label > .checkbox::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: 5px;
+  transform: rotate(45deg);
+  height: 70%;
+  width: 28%;
+  border-bottom: 2px solid $color-blue-dark;
+  border-right: 2px solid $color-blue-dark;
+}
+
+.input:checked + .label > .checkbox {
+  border-color: $color-blue-dark;
+}
+
+.label {
+  display: flex;
+  flex-direction: row;
+  padding: .4rem;
+  flex: 1;
+  font-size: $font-size-small;
+  cursor: pointer;
+}
+
+.labelWithComponent {
+  align-items: center;
+  border-radius: 4px;
+  padding-left: 1rem;
+  
+  &:hover {
+    background-color: $color-gray-medium;
+  }
+  
+  & > .checkbox {
+    margin-left: auto;
+  }
+}
+
+.checkbox {
+  margin-right: 1.2rem;
+  position: relative;
+  height: 1.6rem;
+  width: 1.6rem;
+  border: 1px solid $color-white;
+  cursor: pointer;
+  border-radius: 2px;
+}
