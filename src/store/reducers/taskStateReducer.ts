@@ -22,6 +22,5 @@ export const taskStateReducer = createReducer(initial, (builder) => {
         state[taskName].error = payload.error || 'Unknown error has occurred!'
       }
       return state;
-    }  
-  )
+    })
 });

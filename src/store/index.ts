@@ -1,12 +1,11 @@
-import { AnyAction, configureStore, EmptyObject, EnhancedStore } from '@reduxjs/toolkit';
-import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import reducers, { IState } from './reducers';
+import { configureStore } from '@reduxjs/toolkit';
 import { persistReducer, persistStore, PersistConfig } from 'redux-persist';
+import { routerMiddleware } from 'connected-react-router';
 import storage  from 'redux-persist/lib/storage';
-import { PersistPartial } from 'redux-persist/es/persistReducer';
+import createSagaMiddleware from 'redux-saga';
+import reducers, { IState } from './reducers';
 import { rootSaga } from './saga';
 import history from '../routings/history';
-import { routerMiddleware } from 'connected-react-router';
 
 
 const persistConfig: PersistConfig<IState> = {
@@ -19,7 +18,8 @@ const persistConfig: PersistConfig<IState> = {
     'audio', 
     'playlist', 
     'taskState',
-    // 'queue'
+    'queue',
+    'search'
   ],
 };
 const persistedReducer = persistReducer(persistConfig, reducers);
@@ -33,8 +33,6 @@ export const store = configureStore({
     sagaMiddleware,
   ]
 });
-
-export type IStore = EnhancedStore<EmptyObject & IState & PersistPartial, AnyAction, SagaMiddleware<object>[]>;
 
 export const persistor = persistStore(store);
 

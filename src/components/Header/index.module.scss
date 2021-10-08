@@ -32,6 +32,14 @@
   height: 100%;
   padding: 0 2rem;
 
+  & > button {
+    background-color: $color-gray-xdark;
+  }
+
+  & > button:disabled {
+    background-color: #303030;
+  }
+
   & > button:first-child() {
     margin-right: 2rem;
   }
@@ -89,7 +97,7 @@
     user-select: none;
   }
 
-  & > img {
+  & > .avatar {
     width: 2.8rem;
     height: 2.8rem;
     border-radius: 50%;
@@ -102,7 +110,7 @@
     margin-right: auto;
   }
 
-  & > svg {
+  & > .stateButton {
     fill: $color-white;
     width: 1.4rem;
     height: 1.4rem;

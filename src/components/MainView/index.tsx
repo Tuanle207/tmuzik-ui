@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { ConnectedRouter } from 'connected-react-router';
 import { Sidebar } from '../Sidebar';
 import { NowPlayingBar } from '../NowPlayingBar';
@@ -8,9 +8,8 @@ import { authSelector, uiSelector } from '../../store/selectors';
 import { AppRouter, routes } from '../../routings';
 import history from '../../routings/history';
 import { LoginView, SignupView } from '../../views';
-import { Route, Switch, useHistory } from 'react-router';
+import { Redirect, Route, Switch } from 'react-router';
 import { IState } from '../../store/reducers';
-import { uiAction } from '../../store/actions';
 import { ListenParty } from '..';
 import { ListenPartyMenu } from '../ListenParty/components';
 import styles from './index.module.scss';
@@ -81,45 +80,53 @@ const Router = () => {
   // // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [ index ]);
 
+  useEffect(() => {
+    // if (!isAuthenticated) {
+    //   history.push(routes.Login);
+    // } else {
+    //   history.push(routes.Home);
+    // }
+  }, [ isAuthenticated ]);
+
   return (
     <Switch location={location}>
-        <Route>
-          {
-            !isAuthenticated ? (
-              <Switch>
-                <Route
-                  path={routes.Login} 
-                  exact 
-                  component={LoginView}
-                />
-                <Route
-                  path={routes.Signup} 
-                  exact 
-                  component={SignupView}
-                />
-                <Route component={LoginView} />
-              </Switch>
-            ) : (
-              <div className={styles.container}>
-                <div className={styles.content}>
-                  <Sidebar />
-                  {
-                    viewLoading && (
-                      <div className={styles.loaderWrapper}>
-                        <SpinLoader text={viewLoadingText}/>
-                      </div>    
-                    )
-                  }
-                  <AppRouter />
-                </div>
-                <NowPlayingBar />
-                <ListenParty />
-                <ListenPartyMenu />
+      <Route>
+        {
+          !isAuthenticated ? (
+            <Switch>
+              <Route
+                path={routes.Login} 
+                exact 
+                component={LoginView}
+              />
+              <Route
+                path={routes.Signup} 
+                exact 
+                component={SignupView}
+              />
+              <Redirect to={{ pathname: '/login' }} />
+            </Switch>
+          ) : (
+            <div className={styles.container}>
+              <div className={styles.content}>
+                <Sidebar />
+                {
+                  viewLoading && (
+                    <div className={styles.loaderWrapper}>
+                      <SpinLoader text={viewLoadingText}/>
+                    </div>    
+                  )
+                }
+                <AppRouter />
               </div>
-            )
-          }
-        </Route>
-      </Switch>
+              <NowPlayingBar />
+              <ListenParty />
+              <ListenPartyMenu />
+            </div>
+          )
+        }
+      </Route>
+    </Switch>
   )
 }
 

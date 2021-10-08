@@ -1,18 +1,18 @@
-import React, { FC, forwardRef, MutableRefObject, 
-  useCallback , useState } from 'react';
+import { FC, forwardRef, MutableRefObject, 
+  useCallback , useState, DetailedHTMLProps, InputHTMLAttributes } from 'react';
 import { Icon } from '../../assets';
 import { IInputError } from '../../utils/interfaces';
 import { IconButton } from '../IconButton';
 import styles from './index.module.scss';
 
 
-interface ITextFieldProps extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
+interface ITextFieldProps extends Omit<DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, 'size'> {
   id: string;
   value?: string;
   type?: 'text' | 'password';
   onValueChange?: (value: string) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
-  variant?: 'normal' | 'search-bar';
+  variant?: 'normal' | 'search-bar' | 'no-validate';
   mode?: 'light' | 'dark';
   label?: string;
   validate?: IInputError[];
@@ -21,6 +21,7 @@ interface ITextFieldProps extends React.DetailedHTMLProps<React.InputHTMLAttribu
   placeholder?: string;
   autoComplete?: string;
   clearButton?: boolean;
+  size?: 'small' | 'medium',
 }
 
 interface ITextAreaProps extends Omit<ITextFieldProps, 'onBlur'> {
@@ -32,8 +33,9 @@ interface ITextAreaProps extends Omit<ITextFieldProps, 'onBlur'> {
 export const TextField = forwardRef<HTMLInputElement, ITextFieldProps>(({
   id, 
   variant = 'normal',
-  mode = 'light',
-  clearButton = true,
+  mode = 'dark',
+  clearButton = false,
+  size = 'small',
   label, 
   placeholder = '',
   value,
@@ -80,7 +82,8 @@ export const TextField = forwardRef<HTMLInputElement, ITextFieldProps>(({
       <div className={[
         styles.inputWrapper,
         variant === 'search-bar' ? styles.searchBar : '',
-        mode === 'light' ? styles.inputWrapperLight : ''
+        mode === 'light' ? styles.inputWrapperLight : '',
+        size === 'small' ? styles.smallSize : '',
         ].join(' ')}
       >
         <input
@@ -111,7 +114,7 @@ export const TextField = forwardRef<HTMLInputElement, ITextFieldProps>(({
             </IconButton>
           ) : null
         }
-        { variant === 'normal' && label && 
+        { variant === 'normal' && size === 'medium' && label && 
           <label 
             className={[
               styles.label,
@@ -121,6 +124,13 @@ export const TextField = forwardRef<HTMLInputElement, ITextFieldProps>(({
               { label }
               {required ? <span>{' *'}</span> : ''}
           </label>
+        }
+        {
+          size === 'small' && label && (
+            <label htmlFor={id}>
+              { label }
+            </label>
+          )
         }
       </div>
       {

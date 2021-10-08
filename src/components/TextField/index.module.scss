@@ -108,6 +108,29 @@
   }
 }
 
+.smallSize {
+  position: relative;
+  padding: .4rem .8rem;
+
+  & > input {
+    font-size: $font-size-small;
+  }
+
+  & > input:focus + label {
+    opacity: 1;
+  }
+
+  & > label {
+    position: absolute;
+    top: -.8rem;
+    left: 1.2rem;
+    font-size: $font-size-tiny;
+    font-weight: $font-weight-bold;
+    color: $color-light;
+    opacity: 0;
+  }
+}
+
 .searchIcon {
   position: absolute;
   z-index: 1;

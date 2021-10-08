@@ -1,14 +1,14 @@
 import { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { CardList, Typography } from '../../../components';
-import { dashboardSelector } from '../../../store/selectors';
+import { searchSelector } from '../../../store/selectors';
 import styles from './index.module.scss';
 
 interface IUserResultsProps { }
 
 export const UserResults: FC<IUserResultsProps> = () => {
 
-  const users = useSelector(dashboardSelector.usersTopResult);
+  const users = useSelector(searchSelector.usersTopResult);
 
   return (
     <div className={styles.section}>

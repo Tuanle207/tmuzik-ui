@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
-import { Route, Switch } from 'react-router';
+import { Redirect, Route, Switch } from 'react-router';
 import { authSelector } from '../store/selectors';
-import { HomeView } from '../views';
+import { HomeView, LoginView } from '../views';
 import { ProtectedRoute } from './ProtectedRoute';
 import { routes, routesDictionary } from './routesDictionary';
 
@@ -29,7 +29,8 @@ export const AppRouter = () => {
         <ProtectedRoute 
           isAuthenticated={isAuthenticated} 
           path="*" 
-          component={HomeView} 
+          component={HomeView}
+          redirect
         />
       </Switch>
     </Route>

@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { Redirect, Route, RouteComponentProps } from 'react-router';
+import { routes } from '.';
 
 interface Props {
   component: FC<RouteComponentProps>;
@@ -7,6 +8,7 @@ interface Props {
   path: string; 
   exact?: boolean;
   isAuthenticated: boolean;
+  redirect?: boolean;
 }
 
 export const ProtectedRoute: FC<Props> = ({
@@ -14,11 +16,14 @@ export const ProtectedRoute: FC<Props> = ({
   policyName = '',
   isAuthenticated,
   path,
-  exact = false, 
+  exact = false,
+  redirect = false,
   ...rest
 }) => {
 
-  return (
+  return redirect ? (
+    <Redirect to={{ pathname: routes.Home }} />
+  ): (
     <Route
       {...{ path, exact, ...rest }}
       render={props => 

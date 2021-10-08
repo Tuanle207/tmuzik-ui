@@ -20,18 +20,16 @@ const initial: IAudioState = {
 
 export const audioReducer = createReducer(initial, build => {
   build
-    .addCase(audioAction.setUserUploadAudioStorage, 
-      (state , action) => {
-        state.uploadedList.items = [...state.uploadedList.items, ...action.payload.items];
-        state.uploadedList.pageIndex = action.payload.pageIndex || 1;
-        state.uploadedList.pageSize = action.payload.pageSize || 0;
-        state.uploadedList.totalCount = action.payload.totalCount || 0;
-        return state;
+    .addCase(audioAction.setUserUploadAudioStorage, (state , action) => {
+      state.uploadedList.items = [...state.uploadedList.items, ...action.payload.items];
+      state.uploadedList.pageIndex = action.payload.pageIndex || 1;
+      state.uploadedList.pageSize = action.payload.pageSize || 0;
+      state.uploadedList.totalCount = action.payload.totalCount || 0;
+      return state;
     })
-    .addCase(audioAction.setUserUploadAudioStatus,
-      (state , action) => {
-        state.uploadedList.loading = action.payload.loading;
-        state.uploadedList.error = action.payload.error;
-        return state;
+    .addCase(audioAction.setUserUploadAudioStatus, (state , action) => {
+      state.uploadedList.loading = action.payload.loading;
+      state.uploadedList.error = action.payload.error;
+      return state;
     })
 });

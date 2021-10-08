@@ -5,10 +5,10 @@ import { all, call, put, takeLatest } from 'redux-saga/effects';
 import { store } from '..';
 import { authApiService } from '../../api/services';
 import { FbAuthStatus, fbHandler, IFbAuthResponse } from '../../configs/fb';
-import logger from '../../configs/logger';
 import { isTokenExpired } from '../../utils/isTokenExpired';
 import { sleepAsync } from '../../utils/sleepAsync';
 import { authAction, taskStateAction, uiAction } from '../actions';
+import logger from '../../configs/logger';
 
 function* postLogin(action: PayloadAction<API.LoginRequest>): SagaIterator {
   try {
@@ -103,7 +103,7 @@ function* checkLogin(): SagaIterator {
       const refreshTokenRes = yield call(authApiService.refreshLoginAsync, {
         refreshToken,
         userId
-      })
+      });
       yield put(authAction.setRefreshTokenResult(refreshTokenRes));
     } else {
       yield put(authAction.setAuthenticationStatus(false));

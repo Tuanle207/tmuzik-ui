@@ -176,15 +176,22 @@ export const Header: FC<IHeaderProps> = ({
           className={[styles.button, showMenu ? styles.buttonBgLight : ''].join(' ')} 
           onClick={onMenuClicked}
         >
-          <img 
-            src={ userProfile?.avatar || "https://i.pinimg.com/originals/eb/b0/2a/ebb02aedec9bc74f65e38311c7e14d34.png" } 
-            alt={ userProfile?.fullName || '' } 
-          />
+          {
+            false || userProfile?.avatar ? (
+              <img
+                className={styles.avatar}
+                src={ userProfile?.avatar || 'https://i.pinimg.com/originals/eb/b0/2a/ebb02aedec9bc74f65e38311c7e14d34.png'} 
+                alt={ userProfile?.fullName || '' } 
+              />
+            ) : (
+              <Icon.Avatar className={styles.avatar} />
+            )
+          }
           <p>{ userProfile?.fullName || '' }</p>
           {
             showMenu ? 
-            <Icon.CarretUp /> :
-            <Icon.CarretDown />
+            <Icon.CarretUp className={styles.stateButton} /> :
+            <Icon.CarretDown className={styles.stateButton} />
           }
         </div>
         {

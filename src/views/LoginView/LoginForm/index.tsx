@@ -60,6 +60,7 @@ export const LoginForm: FC<ILoginFormProps> = () => {
               autoComplete="off"
               label="Email Address"
               placeholder="you@company.com"
+              tabIndex={1}
               validate={[
                 {
                   when: errors.email?.type === 'required',
@@ -85,6 +86,7 @@ export const LoginForm: FC<ILoginFormProps> = () => {
               autoComplete="off"
               label="Password"
               placeholder="5+ characters"
+              tabIndex={2}
               validate={[
                 {
                   when: errors.password?.type === 'required',

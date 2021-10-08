@@ -1,4 +1,4 @@
-import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+import Axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { replace } from 'connected-react-router';
 import { toast } from 'react-toastify';
 import { routes } from '../../routings';
@@ -9,7 +9,7 @@ import { isTokenExpired } from '../../utils/isTokenExpired';
 export const interceptHttpRequest = (axios: AxiosInstance) => {
   axios.interceptors.request.use(async (config: AxiosRequestConfig) => {
 
-    // filter request
+    // Filter request that need access token
     const url = config.url || '';
     if ([
       '/api/auth/login',
@@ -21,30 +21,42 @@ export const interceptHttpRequest = (axios: AxiosInstance) => {
       return config;
     }
 
-
+  
     const { auth: { token, expiryTime, refreshToken, userProfile } } = store.getState();
     const { id: userId } = userProfile || {};
     let newToken = token;
-      
-    try { // Get new token with refresh token if it's expired
-      if (isTokenExpired(expiryTime) && userId && refreshToken && refreshToken.trim() !== '') {
+    
+    // Get new token with refresh token if it's expired
+    if (isTokenExpired(expiryTime) && userId && refreshToken && refreshToken.trim() !== '') {
+      try {
         const reqBody: API.RefreshLoginRequest = {
           refreshToken,
           userId
-        } 
+        }
         const refreshTokenResult = await axios.post<API.RefreshLoginRequest,
           AxiosResponse<API.RefreshLoginResponse>>('/api/auth/refresh', reqBody);
 
         newToken = refreshTokenResult.data.accessToken;
 
         store.dispatch(authAction.setRefreshTokenResult(refreshTokenResult.data));
+      } catch (err) {
+        
       }
-    } catch (err) {
-
-    } finally {
-      config.headers['Authorization'] = `Bearer ${newToken}`;
-      return config;
     }
+
+    // Cancel request an redirect to login view
+    if (isTokenExpired(expiryTime) && !refreshToken && refreshToken.trim() === '') {
+      store.dispatch(replace(routes.Login));
+
+      return {
+        ...config,
+        cancelToken: new Axios.CancelToken((cancel) => cancel('Cancel repeated request')),
+      }
+    }
+
+    // Return header with additional Bearer token in header
+    config.headers['Authorization'] = `Bearer ${newToken}`;
+    return config;
   });
 };
 

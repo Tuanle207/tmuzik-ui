@@ -22,46 +22,35 @@ const initial: IAuthState = {
 
 export const authReducer = createReducer(initial, (builder) => 
   builder
-    .addCase(authAction.setLoginStorage,
-      (state, action) => {
-        state.refreshToken = action.payload.token.refreshToken;
-        state.token = action.payload.token.accessToken;
-        state.expiryTime = action.payload.token.accessTokenExpiresAt;
-        state.userProfile = action.payload.data;
-        state.isAuthenticated = true;
-        return state;
-      }
-    )
-    .addCase(authAction.setFbIdentityStorage,
-      (state, action) => {
-        state.fb = action.payload;
-        return state;
-      }
-    )
-    .addCase(authAction.setAuthenticationStatus,
-      (state, action) => {
-        state.isAuthenticated = action.payload;
-        return state;
-      }
-    )
-    .addCase(authAction.setRefreshTokenResult,
-      (state, action) => {
-        state.isAuthenticated = true;
-        state.token = action.payload.accessToken;
-        state.expiryTime = action.payload.accessTokenExpiresAt;
-        return state;
-      }
-    )
-    .addCase(authAction.setToken,
-      (state, action) => {
-        state.token = action.payload.accessToken;
-        state.expiryTime = action.payload.accessTokenExpiresAt;
-        state.refreshToken = action.payload.refreshToken;
-      }
-    )
+    .addCase(authAction.setLoginStorage, (state, action) => {
+      state.refreshToken = action.payload.token.refreshToken;
+      state.token = action.payload.token.accessToken;
+      state.expiryTime = action.payload.token.accessTokenExpiresAt;
+      state.userProfile = action.payload.data;
+      state.isAuthenticated = true;
+      return state;
+    })
+    .addCase(authAction.setFbIdentityStorage, (state, action) => {
+      state.fb = action.payload;
+      return state;
+    })
+    .addCase(authAction.setAuthenticationStatus, (state, action) => {
+      state.isAuthenticated = action.payload;
+      return state;
+    })
+    .addCase(authAction.setRefreshTokenResult, (state, action) => {
+      state.isAuthenticated = true;
+      state.token = action.payload.accessToken;
+      state.expiryTime = action.payload.accessTokenExpiresAt;
+      return state;
+    })
+    .addCase(authAction.setToken, (state, action) => {
+      state.token = action.payload.accessToken;
+      state.expiryTime = action.payload.accessTokenExpiresAt;
+      state.refreshToken = action.payload.refreshToken;
+    })
     .addCase(authAction.setUserProfile,
-      (state, action) => {
-        state.userProfile = action.payload;
-      }
-    )
+    (state, action) => {
+      state.userProfile = action.payload;
+    })
 );

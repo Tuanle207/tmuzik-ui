@@ -1,12 +1,16 @@
 import { createAction } from '@reduxjs/toolkit';
 
-export const dashboardAction = {
+export const searchAction = {
   getSearchResults: createAction(
-    'app/dashboard/getSearchResults',
+    'app/search/getSearchResults',
     (payload: API.GetSearchResultsRequest) =>  ({ payload })
   ),
   setSearchResultsStorage: createAction(
-    'app/dashboard/setSearchResultsStorage',
+    'app/search/setSearchResultsStorage',
     (payload: API.GetSearchResultsResponse) => ({ payload })
+  ),
+  setQueryStorage: createAction(
+    'app/search/setQueryStorage',
+    (payload: string) => ({ payload })
   )
 };

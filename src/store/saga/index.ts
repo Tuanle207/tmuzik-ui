@@ -3,7 +3,7 @@ import authSaga from './auth';
 import audioSaga from './audio';
 import playlistSaga from './playlist';
 import uiSaga from './ui';
-import dashboardSaga from './dashboard';
+import searchSaga from './search';
 
 export function* rootSaga() {
   yield all([
@@ -11,6 +11,6 @@ export function* rootSaga() {
     fork(audioSaga),
     fork(playlistSaga),
     fork(uiSaga),
-    fork(dashboardSaga),
+    fork(searchSaga),
   ]);
 }

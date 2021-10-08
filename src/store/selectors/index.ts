@@ -3,4 +3,4 @@ export * from './authSelector';
 export * from './audioSelector';
 export * from './queueSelector';
 export * from './playlistSelector';
-export * from './dashboardSelector';
+export * from './searchSelector';

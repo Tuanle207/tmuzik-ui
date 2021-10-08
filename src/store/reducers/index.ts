@@ -7,7 +7,7 @@ import { connectRouter, RouterState } from 'connected-react-router';
 import history from '../../routings/history';
 import { IPlaylist, playlistReducer } from './playlistReducer';
 import { taskStateReducer, ITaskState  } from './taskStateReducer';
-import { dashboardReducer, IDashboardState  } from './dashboardReducer';
+import { searchReducer, ISearchState  } from './searchReducer';
 
 export interface IState {
   router: RouterState;
@@ -17,7 +17,7 @@ export interface IState {
   // queue: IQueueState & PersistPartial;
   queue: IQueueState;
   playlist: IPlaylist;
-  dashboard: IDashboardState;
+  search: ISearchState;
   taskState: ITaskState;
 }
 
@@ -40,7 +40,7 @@ const reducers = combineReducers<IState>({
   // queue: persistedQueue,
   queue: queueReducer,
   playlist: playlistReducer,
-  dashboard: dashboardReducer,
+  search: searchReducer,
   taskState: taskStateReducer,
 });
 

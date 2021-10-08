@@ -23,7 +23,7 @@ export const taskStateSelectorCreator = (actionName: string) => {
   const taskName = matches[2];
 
   return createSelector(
-    (state: RootState) => state.taskState[taskName] || { state: 'processing' },
+    (state: RootState) => state.taskState[taskName] || { state: 'idle' },
     (taskState) => taskState
   );
 };

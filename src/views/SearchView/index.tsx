@@ -1,17 +1,17 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { Header, TextField, ViewWrapper } from '../../components';
-import { dashboardAction } from '../../store/actions/dashboardAction';
+import { searchAction } from '../../store/actions';
 import { SearchCategory } from '../../utils/const';
-import styles from './index.module.scss';
 import { UserResults } from './Sections';
+import styles from './index.module.scss';
 
 interface ISearchViewProps { }
 
 export const SearchView: FC<ISearchViewProps> = () => {
 
-  const { control, handleSubmit } = useForm<API.GetSearchResultsRequest>({
+  const { control, handleSubmit, getValues } = useForm<API.GetSearchResultsRequest>({
     defaultValues: {
       query: '',
       category: [ SearchCategory.User ].join(','),
@@ -22,8 +22,14 @@ export const SearchView: FC<ISearchViewProps> = () => {
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    const data = getValues();
+    dispatch(searchAction.getSearchResults(data));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const onSearchSubmit = (data: API.GetSearchResultsRequest) => {
-    dispatch(dashboardAction.getSearchResults(data));
+    dispatch(searchAction.getSearchResults(data));
   };
 
   return (
@@ -46,6 +52,7 @@ export const SearchView: FC<ISearchViewProps> = () => {
                   id="search-bar"
                   placeholder="Người bạn, nghệ sĩ, bài hát, album hoặc playlist"
                   variant="search-bar"
+                  mode="light"
                   value={value}
                   onValueChange={onChange}
                   onBlur={onBlur}
